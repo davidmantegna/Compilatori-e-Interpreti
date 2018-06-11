@@ -30,3 +30,19 @@ Prove grammatica
         //test if con sole exp
         if(x <= 5) then { true } else { false }
     ;
+
+4)
+    let
+        int a = 10;
+        int x (int a, bool b)
+            let
+                int y = 1;
+            in
+                a = 9 ;
+                a == b
+            ;
+
+    in
+        x = 3 ;
+
+    ;
