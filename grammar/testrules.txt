@@ -46,3 +46,11 @@ Prove grammatica
         x = 3 ;
 
     ;
+
+5)
+    let
+            int x = 2 ;
+        in
+            if(true<=false)
+                then{false}
+        ;
