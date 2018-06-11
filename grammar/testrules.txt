@@ -1,0 +1,32 @@
+Prove grammatica
+
+11/06/2018
+
+1)
+    let
+        int x = 2 ;
+    in
+        if(true<=false)
+        then{false}
+        else{true}
+    ;
+
+2)
+
+    let
+
+        int x = if (false) then {true} else {true} ;
+    in
+
+3)
+    let
+        int x = if (false) then {true} else {true} ;
+    in
+        x = 3 ;
+
+        //test if con statements
+        if(y == 5) then { y = 6 ; } else { x = 5 ; }
+
+        //test if con sole exp
+        if(x <= 5) then { true } else { false }
+    ;

@@ -7,47 +7,55 @@ grammar FOOL;
    public int lexicalErrors=0;
 }
 
-/*------------------------------------------------------------------123
+/*------------------------------------------------------------------
  * PARSER RULES
  *------------------------------------------------------------------*/
   
 prog   : exp SEMIC                 #singleExp
-       | let exp SEMIC             #letInExp
+       | let (exp | stms)+ SEMIC             #letInExp
        ;
 
-let       : LET (dec SEMIC)+ IN ;
+let
+        : LET (dec SEMIC)+ IN ;
 
-vardec  : type ID ;
+vardec
+        : type ID ;
 
-varasm     : vardec ASM exp ;
+varasm
+        : vardec ASM exp ;
 
-fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (let)? exp ;
+fun  : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (let)? (stms | exp)+;
 
 dec   : varasm           #varAssignment
       | fun              #funDeclaration
       ;
          
    
-type   : INT  
-        | BOOL 
-      ;  
+type   :  INT
+        | BOOL
+      ;
     
-exp    :  ('-')? left=term ((PLUS | MINUS) right=exp)?
+exp    :  (MINUS)? left=term (operator=(PLUS | MINUS) right=exp)?
       ;
    
-term   : left=factor ((TIMES | DIV) right=term)?
+term   : left=factor (operator=(TIMES | DIV) right=term)?
       ;
    
-factor : left=value (EQ right=value)?
+factor : left=value (operator=(AND | OR | EQ | GEQ | EQ | LEQ | GREATER | LESS) right=value)?
       ;     
    
-value  :  INTEGER                           #intVal
-      | ( TRUE | FALSE )                   #boolVal
+value  :  INTEGER                          #intVal
+      | (NOT)? ( TRUE | FALSE )                   #boolVal
       | LPAR exp RPAR                      #baseExp
       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
       | ID                                             #varExp
       | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
-      ; 
+      ;
+
+stms : ( stm )+ ;
+stm :   ID ASM exp SEMIC                    #stmAssignment
+      | IF exp THEN CLPAR stms CRPAR ELSE CLPAR stms CRPAR     #stmIfExp
+      ;
 
    
 /*------------------------------------------------------------------
@@ -56,7 +64,14 @@ value  :  INTEGER                           #intVal
 SEMIC  : ';' ;
 COLON  : ':' ;
 COMMA  : ',' ;
-EQ     : '==' ;
+EQ     : '==';
+LEQ    : '<=';
+GEQ    : '>=';
+GREATER: '>' ;
+LESS   : '<' ;
+AND    : '&&';
+OR     : '||';
+NOT    : '!' ;
 ASM    : '=' ;
 PLUS   : '+' ;
 MINUS  : '-' ;
@@ -68,7 +83,7 @@ LPAR   : '(' ;
 RPAR   : ')' ;
 CLPAR  : '{' ;
 CRPAR  : '}' ;
-IF        : 'if' ;
+IF     : 'if' ;
 THEN   : 'then' ;
 ELSE   : 'else' ;
 //PRINT : 'print' ; 
@@ -94,9 +109,5 @@ WS              : (' '|'\t'|'\n'|'\r')-> skip;
 LINECOMENTS    : '//' (~('\n'|'\r'))* -> skip;
 BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
 
-
-
-
- //VERY SIMPLISTIC ERROR CHECK FOR THE LEXING PROCESS, THE OUTPUT GOES DIRECTLY TO THE TERMINAL
- //THIS IS WRONG!!!!
-ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN); 
+//ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN);
+ERR     : . { errors.add("Invalid char: " + getText());} -> channel(HIDDEN) ;

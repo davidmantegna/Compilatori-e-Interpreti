@@ -54,3 +54,6 @@ fabric.properties
 
 # GEN
 gen/
+
+#iml
+Compilatori-e-interpreti.iml
