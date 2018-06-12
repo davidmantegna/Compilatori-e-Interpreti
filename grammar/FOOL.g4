@@ -11,23 +11,25 @@ grammar FOOL;
  * PARSER RULES
  *------------------------------------------------------------------*/
   
-prog   : exp SEMIC                           #singleExp
-       | let (exp | stms)+ SEMIC             #letInExp
+prog   : exp SEMIC                             #singleExp
+       | let ((exp SEMIC)| stms)+              #letInExp
        ;
 
 let    : LET (dec SEMIC)+ IN ;
+
+letnest: LET (varasm SEMIC)+ IN;
 
 vardec : type ID ;
 
 varasm : vardec ASM exp ;
 
-fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (let)? (stms | exp)+;
+fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (letnest)? (stms | (exp SEMIC))+;
 
 dec    : varasm           #varAssignment
        | fun              #funDeclaration
        ;
 
-type   :  INT
+type   : INT
        | BOOL
        ;
     
@@ -40,16 +42,16 @@ term   : left=factor (operator=(TIMES | DIV) right=term)?
 factor : left=value (operator=(AND | OR | EQ | GEQ | LEQ | GREATER | LESS) right=value)?
        ;
    
-value  : (MINUS)? INTEGER                                    #intVal
+value  : (MINUS)? INTEGER                           #intVal
        | (NOT)? ( TRUE | FALSE )                    #boolVal
        | LPAR exp RPAR                              #baseExp
-       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR (ELSE CLPAR elseBranch=exp CRPAR)?  #ifExp
+       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
        | ID                                             #varExp
        | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
        ;
 
 stms   : ( stm )+ ;
-stm    : ID ASM exp SEMIC                    #stmAssignment
+stm    : ID ASM exp SEMIC                                       #stmAssignment
        | IF exp THEN CLPAR stms CRPAR ELSE CLPAR stms CRPAR     #stmIfExp
        ;
 

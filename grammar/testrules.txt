@@ -54,3 +54,18 @@ Prove grammatica
             if(true<=false)
                 then{false}
         ;
+
+
+12/06/2018
+6) La grammatica non può permettere funzioni annidate:
+    let
+        int x(int a)
+            let
+                int a(int f) <- qui deve segnare errore
+                    x=1;
+            ;
+            in 3
+            ;
+    in
+        4
+    ;
