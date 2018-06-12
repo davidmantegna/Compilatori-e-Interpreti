@@ -1,6 +1,5 @@
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
@@ -42,7 +41,7 @@ public class Test {
 
             Node ast = visitor.visit(parser.prog()); //generazione AST
 
-            SymbolTable env = new SymbolTable();
+            Environment env = new Environment();
             ArrayList<SemanticError> err = ast.checkSemantics(env);
 
             if (err.size() > 0) {
