@@ -35,18 +35,18 @@ type   : INT
        | BOOL
        ;
     
-exp    : left=term (operator=(PLUS | MINUS) right=exp)?
+exp    : (MINUS)? left=term (operator=(PLUS | MINUS) right=exp)?
        ;
    
 term   : left=factor (operator=(TIMES | DIV) right=term)?
        ;
    
-factor : left=value (operator=(AND | OR | EQ | GEQ | LEQ | GREATER | LESS) right=value)?
+factor : left=value  (operator=(AND | OR | EQ | GEQ | LEQ | GREATER | LESS) right=value)?
        ;
-   
-value  : (MINUS)? INTEGER                           #intVal
-       | (NOT)? ( TRUE | FALSE )                    #boolVal
-       | LPAR exp RPAR                              #baseExp
+
+value  : INTEGER                                        #intVal
+       | (NOT)? ( TRUE | FALSE )                        #boolVal
+       | LPAR exp RPAR                                  #baseExp
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
        | ID                                             #varExp
        | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
