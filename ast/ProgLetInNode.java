@@ -1,71 +1,75 @@
 package ast;
+
+
+import Type.IType;
+import exceptions.TypeException;
+import util.Semantic.SymbolTable;
+import util.Semantic.SymbolTableEntry;
+import util.VM.FunctionCode;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import lib.FOOLlib;
-import util.Environment;
-import util.SemanticError;
+public class ProgLetInNode implements INode {
 
-public class ProgLetInNode implements Node {
+    private ArrayList<INode> declarationArrayList;
+    private INode expression;
 
-  private ArrayList<Node> declist;
-  private Node exp;
-  
-  public ProgLetInNode (ArrayList<Node> d, Node e) {
-    declist=d;
-    exp=e;
-  }
-  
-  public String toPrint(String s) {
-	String declstr="";
-    for (Node dec:declist)
-      declstr+=dec.toPrint(s+"  ");
-	return s+"ProgLetIn\n" + declstr + exp.toPrint(s+"  ") ; 
-  }
-  
-  @Override
-	public ArrayList<SemanticError> checkSemantics(Environment env) {
-	  env.nestingLevel++;
-      HashMap<String,STentry> hm = new HashMap<String,STentry> ();
-      env.symTable.add(hm);
-      
-      //declare resulting list
-      ArrayList<SemanticError> res = new ArrayList<SemanticError>();
-      
-      //check semantics in the dec list
-      if(declist.size() > 0){
-    	  env.offset = -2;
-    	  //if there are children then check semantics for every child and save the results
-    	  for(Node n : declist)
-    		  res.addAll(n.checkSemantics(env));
-      }
-      
-      //check semantics in the exp body
-      res.addAll(exp.checkSemantics(env));
-      
-      //clean the scope, we are leaving a let scope
-      env.symTable.remove(env.nestingLevel--);
-      
-      //return the result
-      return res;
-	}
-  
-  public Node typeCheck () {
-    for (Node dec:declist)
-      dec.typeCheck();
-    return exp.typeCheck();
-  }
-  
-  public String codeGeneration() {
-	  String declCode="";
-	  for (Node dec:declist)
-		    declCode+=dec.codeGeneration();
-	  return  "push 0\n"+
-			  declCode+
-			  exp.codeGeneration()+"halt\n"+
-			  FOOLlib.getCode();
-  } 
-  
-  
-    
-}  
+    public ProgLetInNode(ArrayList<INode> dec, INode e) {
+        declarationArrayList = dec;
+        expression = e;
+    }
+
+    @Override
+    public ArrayList<String> checkSemantics(SymbolTable env) {
+        ArrayList<String> res = new ArrayList<>();
+
+        HashMap<String, SymbolTableEntry> hashMap = new HashMap<>();
+        //entro in un nuovo livello di scope
+        env.pushHashMap(hashMap);
+        //parte Let
+        //CheckSemantic nella lista di dichiarazioni
+        if (declarationArrayList.size() > 0) {
+            env.setOffset(-2);
+            //Checksemantic nei figli
+            for (INode n : declarationArrayList)
+                res.addAll(n.checkSemantics(env));
+        }
+
+        //Parte In
+        res.addAll(expression.checkSemantics(env));
+
+        //lascio il vecchio scope
+        env.popHashMap();
+
+        return res;
+    }
+
+    /*
+        @Override
+        public String toPrint(String indent) {
+            return indent;
+        }
+    */
+    @Override
+    public IType typeCheck() throws TypeException {
+        //parte let
+        for (INode dec : declarationArrayList)
+            dec.typeCheck();
+        //parte in
+        return expression.typeCheck();
+    }
+
+    @Override
+    public String codeGeneration() {
+        StringBuilder declCode = new StringBuilder();
+        for (INode dec : declarationArrayList)
+            declCode.append(dec.codeGeneration());
+        return "push 0\n" +
+                declCode +
+                expression.codeGeneration() + "halt\n" +
+                FunctionCode.getFunctionsCode();
+    }
+
+}

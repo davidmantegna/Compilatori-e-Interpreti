@@ -1,23 +1,26 @@
-package ast;
+package astBrutto;
 
 import java.util.ArrayList;
 
 import util.Environment;
 import util.SemanticError;
 
-public class BoolTypeNode implements Node {
+public class BoolNode implements Node {
+
+  private boolean val;
   
-  public BoolTypeNode () {
+  public BoolNode (boolean n) {
+    val=n;
   }
   
   public String toPrint(String s) {
-	return s+"BoolType\n";  
+    if (val) return s+"Bool:true\n";
+    else return s+"Bool:false\n";  
   }
-    
-  //non utilizzato
+  
   public Node typeCheck() {
-    return null;
-  }
+    return new BoolTypeNode();
+  }    
   
   @Override
  	public ArrayList<SemanticError> checkSemantics(Environment env) {
@@ -25,10 +28,8 @@ public class BoolTypeNode implements Node {
  	  return new ArrayList<SemanticError>();
  	}
   
-  //non utilizzato
   public String codeGeneration() {
-		return "";
-  }
-
-    
+		return "push "+(val?1:0)+"\n";
+	  }
+         
 }  

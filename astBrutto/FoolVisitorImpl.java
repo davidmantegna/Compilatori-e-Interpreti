@@ -1,8 +1,6 @@
-package ast;
+package astBrutto;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import parser.*;
 import parser.FOOLParser.BaseExpContext;
@@ -21,7 +19,6 @@ import parser.FOOLParser.TypeContext;
 import parser.FOOLParser.VarExpContext;
 import parser.FOOLParser.VarasmContext;
 import parser.FOOLParser.VardecContext;
-import util.SemanticError;
 
 public class FoolVisitorImpl extends FOOLBaseVisitor<Node> {
 	

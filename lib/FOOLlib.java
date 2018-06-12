@@ -1,6 +1,8 @@
 package lib;
 
-import ast.*;
+import astBrutto.BoolTypeNode;
+import astBrutto.IntTypeNode;
+import astBrutto.Node;
 
 public class FOOLlib {
   

@@ -1,4 +1,4 @@
-package ast;
+package astBrutto;
 public class STentry {
  
   private int nl;

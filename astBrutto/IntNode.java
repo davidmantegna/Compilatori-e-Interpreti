@@ -1,34 +1,34 @@
-package ast;
+package astBrutto;
 
 import java.util.ArrayList;
 
 import util.Environment;
 import util.SemanticError;
 
-public class PrintNode implements Node {
+public class IntNode implements Node {
 
-  private Node val;
+  private Integer val;
   
-  public PrintNode (Node v) {
-    val=v;
+  public IntNode (Integer n) {
+    val=n;
   }
   
   public String toPrint(String s) {
-    return s+"Print\n" + val.toPrint(s+"  ") ;
+    return s+"Int:" + Integer.toString(val) +"\n";  
   }
   
   public Node typeCheck() {
-    return val.typeCheck();
-  }  
+    return new IntTypeNode();
+  } 
   
   @Override
  	public ArrayList<SemanticError> checkSemantics(Environment env) {
 
- 	  return val.checkSemantics(env);
+ 	  return new ArrayList<SemanticError>();
  	}
   
   public String codeGeneration() {
-		return val.codeGeneration()+"print\n";
+	return "push "+val+"\n";
   }
-    
+
 }  

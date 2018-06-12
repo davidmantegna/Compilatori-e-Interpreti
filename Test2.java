@@ -1,27 +1,15 @@
-import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.util.ArrayList;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import parser.ExecuteVM;
 import parser.FOOLLexer;
 import parser.FOOLParser;
-import parser.SVMLexer;
-import parser.SVMParser;
 import parser.FOOLParser.DecContext;
-import parser.FOOLParser.FunContext;
 import parser.FOOLParser.FunDeclarationContext;
 import parser.FOOLParser.LetContext;
 import parser.FOOLParser.LetInExpContext;
-import parser.FOOLParser.ProgContext;
-import util.Environment;
-import util.SemanticError;
-import ast.FoolVisitorImpl;
-import ast.Node;
 
 public class Test2 {
 	static int count_var (ParseTree t){
@@ -72,7 +60,7 @@ public class Test2 {
 	        
 	        /*	        FoolVisitorImpl visitor = new FoolVisitorImpl();
 	        
-	        Node ast = visitor.visit(parser.prog()); //generazione AST 
+	        INode ast = visitor.visit(parser.prog()); //generazione AST
 
 	        Environment env = new Environment();
 	        ArrayList<SemanticError> err = ast.checkSemantics(env);
@@ -88,7 +76,7 @@ public class Test2 {
 		        System.out.println("Visualizing AST...");
 		        System.out.println(ast.toPrint(""));
 		
-		        Node type = ast.typeCheck(); //type-checking bottom-up 
+		        INode type = ast.typeCheck(); //type-checking bottom-up
 		        System.out.println(type.toPrint("Type checking ok! Type of the program is: "));
 		        
 		      
