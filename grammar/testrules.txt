@@ -69,3 +69,36 @@ Prove grammatica
     in
         4
     ;
+
+7)
+let
+    int x = 4;
+    int y = 5;
+    int funzione(bool a)
+        if(a <= b)
+            then {
+                x = 1;
+            }else{
+                x = 2;
+             }
+     ;
+
+    int funzione2()
+        let
+            int z = 4;
+        in
+            true;
+
+            if(true)
+            then {
+                x = 1;
+            }else{
+                x = 2;
+            }
+        ;
+    ;
+in
+    5;
+    x = 4;
+;
+

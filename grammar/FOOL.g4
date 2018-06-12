@@ -11,19 +11,21 @@ grammar FOOL;
  * PARSER RULES
  *------------------------------------------------------------------*/
   
-prog   : exp SEMIC                             #singleExp
-       | let ((exp SEMIC)| stms)+              #letInExp
+prog   : exp SEMIC              #singleExp
+       | let in SEMIC           #letInExp
        ;
 
-let    : LET (dec SEMIC)+ IN ;
+let    : LET (dec SEMIC)+;
 
-letnest: LET (varasm SEMIC)+ IN;
+in     : IN ((exp SEMIC)| stms)+ ;
+
+letnest: LET (varasm SEMIC)+;
 
 vardec : type ID ;
 
 varasm : vardec ASM exp ;
 
-fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (letnest)? (stms | (exp SEMIC))+;
+fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR ((letnest in SEMIC)? |((exp SEMIC)| stms )) ;
 
 dec    : varasm           #varAssignment
        | fun              #funDeclaration
