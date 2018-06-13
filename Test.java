@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;

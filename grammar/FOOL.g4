@@ -1,11 +1,12 @@
 grammar FOOL;
 
 @header {
-    import java.util.ArrayList;
+    //import java.util.ArrayList;
 }
 
 @lexer::members {
-   public ArrayList<String> errors = new ArrayList<>();
+   //public ArrayList<String> errors = new ArrayList<>();
+   public int lexicalErrors=0;
 }
 
 /*------------------------------------------------------------------
@@ -36,7 +37,7 @@ type   : INT
        | BOOL
        ;
     
-exp    : (MINUS)? left=term (operator=(PLUS | MINUS) right=exp)?
+exp    : left=term (operator=(PLUS | MINUS) right=exp)?
        ;
    
 term   : left=factor (operator=(TIMES | DIV) right=term)?
@@ -45,11 +46,11 @@ term   : left=factor (operator=(TIMES | DIV) right=term)?
 factor : left=value  (operator=(AND | OR | EQ | GEQ | LEQ | GREATER | LESS) right=value)?
        ;
 
-value  : INTEGER                                        #intVal
+value  : (MINUS)? INTEGER                                        #intVal
        | (NOT)? ( TRUE | FALSE )                        #boolVal
        | LPAR exp RPAR                                  #baseExp
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
-       | ID                                             #varExp
+       | (MINUS)? ID                                             #varExp
        | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
        ;
 
@@ -110,5 +111,5 @@ WS              : (' '|'\t'|'\n'|'\r')-> skip;
 LINECOMENTS    : '//' (~('\n'|'\r'))* -> skip;
 BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
 
-//ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN);
-ERR     : . { errors.add("Invalid char: " + getText());} -> channel(HIDDEN) ;
+ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN);
+//ERR     : . { errors.add("Invalid char: " + getText());} -> channel(HIDDEN) ;
