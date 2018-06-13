@@ -6,7 +6,7 @@ grammar FOOL;
 
 @lexer::members {
    //public ArrayList<String> errors = new ArrayList<>();
-   public int lexicalErrors=0;
+   public int lexicalErrors = 0;
 }
 
 /*------------------------------------------------------------------
