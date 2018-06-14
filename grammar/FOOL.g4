@@ -1,11 +1,11 @@
 grammar FOOL;
 
 @header {
-    //import java.util.ArrayList;
+    import java.util.ArrayList;
 }
 
 @lexer::members {
-   //public ArrayList<String> errors = new ArrayList<>();
+   public ArrayList<String> errors = new ArrayList<>();
    public int lexicalErrors = 0;
 }
 
@@ -111,5 +111,5 @@ WS              : (' '|'\t'|'\n'|'\r')-> skip;
 LINECOMENTS    : '//' (~('\n'|'\r'))* -> skip;
 BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
 
-ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN);
-//ERR     : . { errors.add("Invalid char: " + getText());} -> channel(HIDDEN) ;
+//ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN);
+ERR     : . { errors.add("Invalid char: " + getText());lexicalErrors++;} -> channel(HIDDEN) ;

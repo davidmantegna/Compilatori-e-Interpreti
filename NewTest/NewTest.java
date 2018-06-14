@@ -1,13 +1,20 @@
 package NewTest;
 
+import ast.INode;
+import exceptions.LexerException;
+import exceptions.ParserException;
+import exceptions.SemanticException;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import parserNew.FOOLLexer;
 import parserNew.FOOLParser;
+import util.FoolVisitorImpl;
+import util.Semantic.SymbolTable;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class NewTest {
     public static void main(String[] args) {
@@ -28,6 +35,9 @@ public class NewTest {
             //SIMPLISTIC BUT WRONG CHECK OF THE LEXER ERRORS
             if (lexer.lexicalErrors > 0) {
                 System.out.println("The program was not in the right format. Exiting the compilation process now");
+                throw new LexerException(lexer.errors);
+            }else {
+                System.out.println("LEXER OK");
             }
 
             System.out.println("Analisi Sintattica...\n");
@@ -35,9 +45,9 @@ public class NewTest {
             FOOLParser.ProgContext progContext = parser.prog(); //parser.prog riutilizzato
 
 
-            /*if (parser.getNumberOfSyntaxErrors() > 0){
+            if (parser.getNumberOfSyntaxErrors() > 0) {
                 throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
-            }*/
+            }
 
             ParseTree tree = progContext;
 
@@ -47,7 +57,7 @@ public class NewTest {
 
             System.out.println("Analisi Semantica...\n");
 
-            /*FOOLVisitorImpl visitor = new FOOLVisitorImpl();
+            FoolVisitorImpl visitor = new FoolVisitorImpl();
 
             INode ast = visitor.visit(progContext); //generazione AST
 
@@ -58,10 +68,10 @@ public class NewTest {
             if (err.size() > 0) {
                 throw new SemanticException(err);
             }
-            */
+
             System.out.println("--------------------------");
 
-        } catch (IOException e) {
+        } catch (IOException | ParserException | LexerException e) {
             System.out.println(e.getMessage() + "\n\n");
             System.out.println("stack" + e.getStackTrace());
         }

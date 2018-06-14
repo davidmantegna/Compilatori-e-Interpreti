@@ -1,13 +1,14 @@
-// Generated from C:/Users/massi/Documents/IntelliJProject/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
+// Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
 package parserNew;
 
-    //import java.util.ArrayList;
-
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.atn.*;
+import org.antlr.v4.runtime.atn.ATN;
+import org.antlr.v4.runtime.atn.ATNDeserializer;
+import org.antlr.v4.runtime.atn.LexerATNSimulator;
+import org.antlr.v4.runtime.atn.PredictionContextCache;
 import org.antlr.v4.runtime.dfa.DFA;
+
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class FOOLLexer extends Lexer {
@@ -85,7 +86,7 @@ public class FOOLLexer extends Lexer {
 	}
 
 
-	   //public ArrayList<String> errors = new ArrayList<>();
+	   public ArrayList<String> errors = new ArrayList<>();
 	   public int lexicalErrors = 0;
 
 
@@ -123,7 +124,7 @@ public class FOOLLexer extends Lexer {
 	private void ERR_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 0:
-			 System.out.println("Invalid char: "+ getText()); lexicalErrors++; 
+			 errors.add("Invalid char: " + getText());lexicalErrors++;
 			break;
 		}
 	}
