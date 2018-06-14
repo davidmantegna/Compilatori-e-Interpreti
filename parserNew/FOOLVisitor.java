@@ -1,7 +1,7 @@
-// Generated from C:/Users/massi/Documents/IntelliJProject/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
+// Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
 package parserNew;
 
-    //import java.util.ArrayList;
+    import java.util.ArrayList;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -52,11 +52,12 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVardec(FOOLParser.VardecContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link FOOLParser#varasm}.
+	 * Visit a parse tree produced by the {@code varAsm}
+	 * labeled alternative in {@link FOOLParser#varasm}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVarasm(FOOLParser.VarasmContext ctx);
+	T visitVarAsm(FOOLParser.VarAsmContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FOOLParser#fun}.
 	 * @param ctx the parse tree

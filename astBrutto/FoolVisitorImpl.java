@@ -24,7 +24,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<Node> {
 	
 	
 	
-	@Override
+/*	@Override
 	public Node visitLetInExp(LetInExpContext ctx) {
 		
 		//resulting node of the right type
@@ -47,7 +47,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<Node> {
 		res = new ProgLetInNode(declarations,  exp);
 		
 		return res;
-	}
+	}*/
 	
 	@Override
 	public Node visitSingleExp(SingleExpContext ctx) {
@@ -74,7 +74,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<Node> {
 		return new VarNode(ctx.vardec().ID().getText(), typeNode, expNode);
 	}
 	
-	@Override
+/*	@Override
 	public Node visitFun(FunContext ctx) {
 		
 		//initialize @res with the visits to the type and its ID
@@ -105,7 +105,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<Node> {
 		
 		return res;		
 		
-	}
+	}*/
 	
 	@Override
 	public Node visitType(TypeContext ctx) {
@@ -223,7 +223,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<Node> {
 
 	}
 	
-	@Override
+/*	@Override
 	public Node visitFunExp(FunExpContext ctx) {
 		//this corresponds to a function invocation
 		
@@ -247,6 +247,6 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<Node> {
 			res = new CallNode(ctx.ID().getText(), args);
 		
 		return res;
-	}
+	}*/
 	
 }

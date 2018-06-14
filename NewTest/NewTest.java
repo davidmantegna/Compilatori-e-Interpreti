@@ -19,6 +19,8 @@ import java.util.ArrayList;
 public class NewTest {
     public static void main(String[] args) {
 
+        // rimuovere lib->FOOLib prof, implementato in VM-> FunctionCode e Label
+
         try { //RILEVAZIONE INPUT
             System.out.println("Rilevazione Input...\n");
             String fileName = "prova.fool";
@@ -39,6 +41,8 @@ public class NewTest {
             if (lexer.lexicalErrors > 0) {
                 System.out.println("The program was not in the right format. Exiting the compilation process now");
                 throw new LexerException(lexer.errors);
+            } else {
+                System.out.println("LEXER OK");
             }
 
             System.out.println("Analisi Sintattica...\n");
@@ -50,7 +54,7 @@ public class NewTest {
                 throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
             }
 
-            ParseTree tree = progContext;
+          ParseTree tree = progContext;
 
             System.out.println("Sto per visualizzare l'AST...\n");
             //show AST in console
@@ -60,12 +64,10 @@ public class NewTest {
 
             FoolVisitorImpl visitor = new FoolVisitorImpl();
 
-            INode ast = visitor.visit(progContext); //generazione AST
+            INode ast = visitor.visit(parser.prog()); //generazione AST
 
             SymbolTable env = new SymbolTable();
-
-
-
+            System.out.println(env.getSymtable().toString());
             ArrayList<String> err = ast.checkSemantics(env);
 
 

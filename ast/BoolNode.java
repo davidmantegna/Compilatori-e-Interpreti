@@ -8,7 +8,7 @@ import util.Semantic.SymbolTable;
 
 import java.util.ArrayList;
 
-public class BoolNode implements INode{
+public class BoolNode implements INode {
 
     private boolean value;
 
@@ -23,9 +23,9 @@ public class BoolNode implements INode{
 
     @Override
     public String codeGeneration() {
-        if(value)
+        if (value)
             return "push " + 1 + "\n";
-        else{
+        else {
             return "push " + 0 + "\n";
         }
     }

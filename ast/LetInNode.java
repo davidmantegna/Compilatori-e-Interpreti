@@ -11,24 +11,27 @@ import util.VM.FunctionCode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ProgLetInNode implements INode {
+public class LetInNode implements INode {
 
     private ArrayList<INode> declarationArrayList;
     private INode expression;
 
-    public ProgLetInNode(ArrayList<INode> dec, INode e) {
-        declarationArrayList = dec;
-        expression = e;
+    public LetInNode(ArrayList<INode> declarationArrayList, INode expression) {
+        this.declarationArrayList = declarationArrayList;
+        this.expression = expression;
     }
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.println("PROG");
         ArrayList<String> res = new ArrayList<>();
 
         HashMap<String, SymbolTableEntry> hashMap = new HashMap<>();
+
         //entro in un nuovo livello di scope
         env.pushHashMap(hashMap);
         //parte Let
+
         //CheckSemantic nella lista di dichiarazioni
         if (declarationArrayList.size() > 0) {
             env.setOffset(-2);

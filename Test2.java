@@ -12,6 +12,7 @@ import parser.FOOLParser.LetContext;
 import parser.FOOLParser.LetInExpContext;
 
 public class Test2 {
+/*
 	static int count_var (ParseTree t){
 		if (t.getClass().getName().equals("parser.FOOLParser$LetContext")){
 			LetContext s = (LetContext) t ;
@@ -58,7 +59,7 @@ public class Test2 {
 	        
 	        System.out.println(count_var(t)) ;
 	        
-	        /*	        FoolVisitorImpl visitor = new FoolVisitorImpl();
+	        *//*	        FoolVisitorImpl visitor = new FoolVisitorImpl();
 	        
 	        INode ast = visitor.visit(parser.prog()); //generazione AST
 
@@ -102,9 +103,9 @@ public class Test2 {
 		        ExecuteVM vm = new ExecuteVM(parserASM.code);
 		        vm.cpu();
 	        }
-        */
+        *//*
         }
        
         
-    }
+    }*/
 }

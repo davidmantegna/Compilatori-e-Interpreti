@@ -1,20 +1,156 @@
 package util;
 
-import ast.BoolNode;
-import ast.INode;
-import ast.IntNode;
-import ast.SingleExpNode;
+import ast.*;
+import exceptions.OperatorException;
 import parserNew.FOOLBaseVisitor;
-import parserNew.FOOLParser.SingleExpContext;
-import parserNew.FOOLParser.IntValContext;
-import parserNew.FOOLParser.BoolValContext;
+import parserNew.FOOLLexer;
+import parserNew.FOOLParser;
+import parserNew.FOOLParser.*;
 
 
 public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
-    public INode visitSingleExp(SingleExpContext singleExpContext) {
+    public INode visitVarAsm(VarAsmContext ctx) {
+        return super.visitVarAsm(ctx);
+    }
+
+    @Override
+    public INode visitSingleExp(FOOLParser.SingleExpContext singleExpContext) {
+        System.out.println("visitSingleExp");
         //serve per la singola espressione print *qualcosa*
         return new SingleExpNode(visit(singleExpContext.exp()));
+    }
+
+    @Override
+    public INode visitLetInExp(LetInExpContext letInExpContext) {
+        return super.visitLetInExp(letInExpContext);
+    }
+
+    @Override
+    public INode visitLet(LetContext letContext) {
+        return super.visitLet(letContext);
+    }
+
+    @Override
+    public INode visitIn(InContext inContext) {
+        return super.visitIn(inContext);
+    }
+
+    @Override
+    public INode visitLetnest(LetnestContext letnestContext) {
+        System.out.println("visitLetNest");
+        return super.visitLetnest(letnestContext);
+    }
+
+    @Override
+    public INode visitVardec(FOOLParser.VardecContext vardecContext) {
+        return super.visitVardec(vardecContext);
+    }
+
+/*    @Override
+    public INode visitVarasm(FOOLParser.VarasmContext varasmContext) {
+        return super.visitVarasm(varasmContext);
+    }*/
+
+    @Override
+    public INode visitFun(FOOLParser.FunContext funContext) {
+        return super.visitFun(funContext);
+    }
+
+    @Override
+    public INode visitVarAssignment(FOOLParser.VarAssignmentContext varAssignmentContext) {
+        return super.visitVarAssignment(varAssignmentContext);
+    }
+
+    @Override
+    public INode visitFunDeclaration(FOOLParser.FunDeclarationContext funDeclarationContext) {
+        return super.visitFunDeclaration(funDeclarationContext);
+    }
+
+    @Override
+    public INode visitType(FOOLParser.TypeContext typeContext) {
+        //tutti i tipi gestiti da TypeNode
+        return new TypeNode(typeContext.getText());
+    }
+
+    @Override
+    public INode visitExp(ExpContext expContext) {
+
+        //check whether this is a simple or binary expression
+        //notice here the necessity of having named elements in the grammar
+        if (expContext.right == null) {
+            //it is a simple expression
+            return visit(expContext.left);
+        } else {
+            //it is a binary expression, you should visit left and right
+            if (expContext.operator.getType() == FOOLLexer.PLUS) {
+                return new ExpNode(visit(expContext.left), visit(expContext.right), expContext, "Plus");
+            } else {
+                return new ExpNode(visit(expContext.left), visit(expContext.right), expContext, "Minus");
+            }
+        }
+    }
+
+    @Override
+    public INode visitTerm(TermContext termContext) {
+        //check whether this is a simple or binary expression
+        //notice here the necessity of having named elements in the grammar
+        if (termContext.right == null) {
+            //it is a simple expression
+            return visit(termContext.left);
+        } else {
+            //it is a binary expression, you should visit left and right
+            if (termContext.operator.getType() == FOOLLexer.TIMES) {
+                return new TermNode(visit(termContext.left), visit(termContext.right), termContext, "Times");
+
+            } else {
+                return new TermNode(visit(termContext.left), visit(termContext.right), termContext, "Div");
+            }
+        }
+    }
+
+    @Override
+    public INode visitFactor(FactorContext factorContext) {
+        //check whether this is a simple or binary expression
+        //notice here the necessity of having named elements in the grammar
+        if (factorContext.right == null) {
+            //it is a simple expression
+            return visit(factorContext.left);
+        } else {
+            String operator = "";
+            switch (factorContext.operator.getType()) {
+                case FOOLLexer.AND:
+                    operator = "And";
+                    break;
+                case FOOLLexer.OR:
+                    operator = "Or";
+                    break;
+                case FOOLLexer.EQ:
+                    operator = "Eq";
+                    break;
+                case FOOLLexer.GEQ:
+                    operator = "GreaterEq";
+                    break;
+                case FOOLLexer.LEQ:
+                    operator = "LessEq";
+                    break;
+                case FOOLLexer.GREATER:
+                    operator = "Greater";
+                    break;
+                case FOOLLexer.LESS:
+                    operator = "Less";
+                    break;
+                default:
+                    try {
+                        throw new OperatorException(factorContext.operator.getText());
+                    } catch (OperatorException e) {
+                        System.out.println(e.getMessage() + "\n\n");
+                        System.out.println("stack" + e.getStackTrace());
+                    }
+                    break;
+            }
+            return new FactorNode(visit(factorContext.left), visit(factorContext.right), factorContext, operator);
+        }
     }
 
     @Override
@@ -29,5 +165,40 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitBoolVal(BoolValContext boolValContext) {
         return new BoolNode(Boolean.parseBoolean(boolValContext.getText()));
+    }
+
+    @Override
+    public INode visitBaseExp(BaseExpContext baseExpContext) {
+        return super.visitBaseExp(baseExpContext);
+    }
+
+    @Override
+    public INode visitIfExp(IfExpContext ifExpContext) {
+        return super.visitIfExp(ifExpContext);
+    }
+
+    @Override
+    public INode visitVarExp(VarExpContext varExpContext) {
+        return super.visitVarExp(varExpContext);
+    }
+
+    @Override
+    public INode visitFunExp(FunExpContext funExpContext) {
+        return super.visitFunExp(funExpContext);
+    }
+
+    @Override
+    public INode visitStms(StmsContext stmsContext) {
+        return super.visitStms(stmsContext);
+    }
+
+    @Override
+    public INode visitStmAssignment(StmAssignmentContext stmAssignmentContext) {
+        return super.visitStmAssignment(stmAssignmentContext);
+    }
+
+    @Override
+    public INode visitStmIfExp(StmIfExpContext stmIfExpContext) {
+        return super.visitStmIfExp(stmIfExpContext);
     }
 }

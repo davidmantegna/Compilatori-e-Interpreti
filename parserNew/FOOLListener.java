@@ -1,7 +1,9 @@
 // Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
 package parserNew;
 
-    import org.antlr.v4.runtime.tree.ParseTreeListener;
+    import java.util.ArrayList;
+
+import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
  * This interface defines a complete listener for a parse tree produced by
@@ -73,15 +75,17 @@ public interface FOOLListener extends ParseTreeListener {
 	 */
 	void exitVardec(FOOLParser.VardecContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link FOOLParser#varasm}.
+	 * Enter a parse tree produced by the {@code varAsm}
+	 * labeled alternative in {@link FOOLParser#varasm}.
 	 * @param ctx the parse tree
 	 */
-	void enterVarasm(FOOLParser.VarasmContext ctx);
+	void enterVarAsm(FOOLParser.VarAsmContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link FOOLParser#varasm}.
+	 * Exit a parse tree produced by the {@code varAsm}
+	 * labeled alternative in {@link FOOLParser#varasm}.
 	 * @param ctx the parse tree
 	 */
-	void exitVarasm(FOOLParser.VarasmContext ctx);
+	void exitVarAsm(FOOLParser.VarAsmContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FOOLParser#fun}.
 	 * @param ctx the parse tree

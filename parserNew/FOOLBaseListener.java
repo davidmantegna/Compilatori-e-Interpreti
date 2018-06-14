@@ -1,6 +1,9 @@
 // Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
 package parserNew;
 
+    import java.util.ArrayList;
+
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -88,13 +91,13 @@ public class FOOLBaseListener implements FOOLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarasm(FOOLParser.VarasmContext ctx) { }
+	@Override public void enterVarAsm(FOOLParser.VarAsmContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarasm(FOOLParser.VarasmContext ctx) { }
+	@Override public void exitVarAsm(FOOLParser.VarAsmContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
