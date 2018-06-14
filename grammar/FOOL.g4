@@ -25,7 +25,8 @@ letnest: LET (varasm SEMIC)+;
 
 vardec : type ID ;
 
-varasm : vardec ASM exp ;
+varasm : vardec ASM exp         #varAsm
+       ;
 
 fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR ((letnest in SEMIC)? |((exp SEMIC)| stms )) ;
 

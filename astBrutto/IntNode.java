@@ -24,7 +24,7 @@ public class IntNode implements Node {
   @Override
  	public ArrayList<SemanticError> checkSemantics(Environment env) {
 
- 	  return new ArrayList<SemanticError>();
+ 	  return new ArrayList<SemanticError>(); //non crea livelli di annidamento
  	}
   
   public String codeGeneration() {

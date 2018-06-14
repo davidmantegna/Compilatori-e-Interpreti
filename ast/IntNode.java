@@ -27,6 +27,6 @@ public class IntNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        return new ArrayList<>();
+        return new ArrayList<>(); //non crea livelli di annidamento
     }
 }

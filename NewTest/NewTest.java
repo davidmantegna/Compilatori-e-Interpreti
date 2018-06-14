@@ -26,18 +26,19 @@ public class NewTest {
 
             System.out.println("Analisi Lessicale...\n");
 
-            System.out.println("input: " + input);
+            System.out.println("input: " + input+"\n");
 
             FOOLLexer lexer = new FOOLLexer(input);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
+            tokens.fill();
 
+            System.out.println("Tokens: "+ tokens.getTokens()+"\n");
+            System.out.println("Numero Tokens: "+ tokens.getTokens().size()+"\n");
 
             //SIMPLISTIC BUT WRONG CHECK OF THE LEXER ERRORS
             if (lexer.lexicalErrors > 0) {
                 System.out.println("The program was not in the right format. Exiting the compilation process now");
                 throw new LexerException(lexer.errors);
-            }else {
-                System.out.println("LEXER OK");
             }
 
             System.out.println("Analisi Sintattica...\n");
@@ -62,6 +63,9 @@ public class NewTest {
             INode ast = visitor.visit(progContext); //generazione AST
 
             SymbolTable env = new SymbolTable();
+
+
+
             ArrayList<String> err = ast.checkSemantics(env);
 
 
@@ -71,7 +75,7 @@ public class NewTest {
 
             System.out.println("--------------------------");
 
-        } catch (IOException | ParserException | LexerException e) {
+        } catch (NullPointerException | IOException | ParserException | LexerException e) {
             System.out.println(e.getMessage() + "\n\n");
             System.out.println("stack" + e.getStackTrace());
         }
