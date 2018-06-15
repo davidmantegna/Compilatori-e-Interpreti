@@ -8,7 +8,6 @@ import util.Semantic.SymbolTable;
 import java.util.ArrayList;
 
 public class VarAsmNode implements INode{
-
     private String id;
     private IType type;
     private INode exp;
@@ -25,8 +24,13 @@ public class VarAsmNode implements INode{
     }
 
     @Override
+    public String toPrint(String indent) {
+        return null;
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
-        //aggiungere controllo per sottotipaggio quando si implementeranno le classi
+        //TODO aggiungere controllo per sottotipaggio quando si implementeranno le classi
         return type;
     }
 
@@ -37,9 +41,10 @@ public class VarAsmNode implements INode{
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("VarAsmNode: checkSemantics -> \t");
         ArrayList<String> result = new ArrayList<>();
 
-        //aggiungere controllo per instanziazione di un nuovo oggetto
+        // TODO aggiungere controllo per instanziazione di un nuovo oggetto
 
         result.addAll(exp.checkSemantics(env));
 

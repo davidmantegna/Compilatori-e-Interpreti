@@ -3,7 +3,6 @@ package ast;
 import Type.BoolType;
 import Type.IType;
 import exceptions.TypeException;
-import parserNew.FOOLParser;
 import parserNew.FOOLParser.FactorContext;
 import util.Semantic.SymbolTable;
 import util.VM.Label;
@@ -24,11 +23,18 @@ public class FactorNode implements INode {
     }
 
     @Override
+    public String toPrint(String indent) {
+        return indent + operator + "\n"
+                + leftNode.toPrint(indent + "  ")
+                + rightNode.toPrint(indent + "  ");
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         IType leftType = leftNode.typeCheck();
         IType rightType = rightNode.typeCheck();
 
-        // implementare sottotipaggio
+        // TODO implementare sottotipaggio
 
         return new BoolType();
     }
@@ -129,6 +135,7 @@ public class FactorNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("FactorNode: checkSemantics -> \t");
         //create the result
         ArrayList<String> res = new ArrayList<String>();
 

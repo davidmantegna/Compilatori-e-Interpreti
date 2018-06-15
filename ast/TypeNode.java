@@ -20,6 +20,11 @@ public class TypeNode implements INode {
     }
 
     @Override
+    public String toPrint(String indent) {
+        return indent + assignedType + "\n";
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         return type;
     }
@@ -31,7 +36,7 @@ public class TypeNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.println("TypeNode");
+        System.out.print("TypeNode: checkSemantics -> \t");
 
         ArrayList<String> result = new ArrayList<>();
         try {
@@ -43,8 +48,8 @@ public class TypeNode implements INode {
         return result;
     }
 
-    private IType verificaType(String type) {
-        switch (type) {
+    private IType verificaType(String assignedType) {
+        switch (assignedType) {
             case "int":
                 return new IntType();
             case "bool":

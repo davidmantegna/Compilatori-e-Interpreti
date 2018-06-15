@@ -91,13 +91,13 @@ public class FOOLBaseListener implements FOOLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarAsm(FOOLParser.VarAsmContext ctx) { }
+	@Override public void enterVarasm(FOOLParser.VarasmContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarAsm(FOOLParser.VarAsmContext ctx) { }
+	@Override public void exitVarasm(FOOLParser.VarasmContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

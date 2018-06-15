@@ -17,6 +17,11 @@ public class BoolNode implements INode {
     }
 
     @Override
+    public String toPrint(String indent) {
+        return indent + " Bool: " + value + "\n";
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         return new BoolType();
     }
@@ -32,6 +37,7 @@ public class BoolNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("BoolNode: checkSemantics -> \t");
         return new ArrayList<>(); //non crea livelli di scope
     }
 }

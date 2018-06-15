@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LetInNode implements INode {
+    // TODO revisionare intera classe
 
     private ArrayList<INode> declarationArrayList;
     private INode expression;
@@ -23,7 +24,7 @@ public class LetInNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.println("PROG");
+        System.out.println("LetInNode: checkSemantics -> \t");
         ArrayList<String> res = new ArrayList<>();
 
         HashMap<String, SymbolTableEntry> hashMap = new HashMap<>();
@@ -49,12 +50,16 @@ public class LetInNode implements INode {
         return res;
     }
 
-    /*
-        @Override
-        public String toPrint(String indent) {
-            return indent;
+    @Override
+    public String toPrint(String indent) {
+        String declstr = "";
+        for (INode dec : declarationArrayList) {
+            declstr += dec.toPrint(indent + "  ");
         }
-    */
+        return indent + "LetIn\n" + declstr + expression.toPrint(indent + "  ");
+    }
+
+
     @Override
     public IType typeCheck() throws TypeException {
         //parte let

@@ -75,17 +75,15 @@ public interface FOOLListener extends ParseTreeListener {
 	 */
 	void exitVardec(FOOLParser.VardecContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code varAsm}
-	 * labeled alternative in {@link FOOLParser#varasm}.
+	 * Enter a parse tree produced by {@link FOOLParser#varasm}.
 	 * @param ctx the parse tree
 	 */
-	void enterVarAsm(FOOLParser.VarAsmContext ctx);
+	void enterVarasm(FOOLParser.VarasmContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code varAsm}
-	 * labeled alternative in {@link FOOLParser#varasm}.
+	 * Exit a parse tree produced by {@link FOOLParser#varasm}.
 	 * @param ctx the parse tree
 	 */
-	void exitVarAsm(FOOLParser.VarAsmContext ctx);
+	void exitVarasm(FOOLParser.VarasmContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FOOLParser#fun}.
 	 * @param ctx the parse tree

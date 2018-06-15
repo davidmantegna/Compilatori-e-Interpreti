@@ -23,8 +23,15 @@ public class TermNode implements INode {
     }
 
     @Override
+    public String toPrint(String indent) {
+        return indent + operation + "\n"
+                + leftNode.toPrint(indent + "  ")
+                + rightNode.toPrint(indent + "  ");
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
-        // aggiungere sottotipaggio
+        // TODO aggiungere sottotipaggio
 
         return new IntType();
     }
@@ -40,7 +47,7 @@ public class TermNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-
+        System.out.print("TermNode: checkSemantics -> \t");
         //create the result
         ArrayList<String> res = new ArrayList<String>();
 

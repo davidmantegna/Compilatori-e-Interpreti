@@ -1,11 +1,16 @@
 // Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
 package parserNew;
 
-    import org.antlr.v4.runtime.atn.*;
+    import java.util.ArrayList;
+
+import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-    import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class FOOLParser extends Parser {
@@ -472,17 +477,6 @@ public class FOOLParser extends Parser {
 	}
 
 	public static class VarasmContext extends ParserRuleContext {
-		public VarasmContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_varasm; }
-	 
-		public VarasmContext() { }
-		public void copyFrom(VarasmContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	public static class VarAsmContext extends VarasmContext {
 		public VardecContext vardec() {
 			return getRuleContext(VardecContext.class,0);
 		}
@@ -490,18 +484,21 @@ public class FOOLParser extends Parser {
 		public ExpContext exp() {
 			return getRuleContext(ExpContext.class,0);
 		}
-		public VarAsmContext(VarasmContext ctx) { copyFrom(ctx); }
+		public VarasmContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_varasm; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FOOLListener ) ((FOOLListener)listener).enterVarAsm(this);
+			if ( listener instanceof FOOLListener ) ((FOOLListener)listener).enterVarasm(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FOOLListener ) ((FOOLListener)listener).exitVarAsm(this);
+			if ( listener instanceof FOOLListener ) ((FOOLListener)listener).exitVarasm(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof FOOLVisitor ) return ((FOOLVisitor<? extends T>)visitor).visitVarAsm(this);
+			if ( visitor instanceof FOOLVisitor ) return ((FOOLVisitor<? extends T>)visitor).visitVarasm(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -510,7 +507,6 @@ public class FOOLParser extends Parser {
 		VarasmContext _localctx = new VarasmContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_varasm);
 		try {
-			_localctx = new VarAsmContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(67);

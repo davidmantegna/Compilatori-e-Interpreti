@@ -89,7 +89,6 @@ public class FOOLLexer extends Lexer {
 
 
 	   public ArrayList<String> errors = new ArrayList<>();
-	   public int lexicalErrors = 0;
 
 
 	public FOOLLexer(CharStream input) {
@@ -126,7 +125,7 @@ public class FOOLLexer extends Lexer {
 	private void ERR_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 0:
-			 errors.add("Invalid char: " + getText());lexicalErrors++;
+			 errors.add("Invalid char: " + getText());
 			break;
 		}
 	}

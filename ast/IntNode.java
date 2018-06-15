@@ -16,6 +16,12 @@ public class IntNode implements INode {
     }
 
     @Override
+    public String toPrint(String indent) {
+        return indent + "Int:"
+                + Integer.toString(value) + "\n";
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         return new IntType();
     }
@@ -27,6 +33,7 @@ public class IntNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("IntNode: checkSemantics -> \t");
         return new ArrayList<>(); //non crea livelli di annidamento
     }
 }

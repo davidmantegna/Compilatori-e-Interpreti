@@ -6,7 +6,6 @@ grammar FOOL;
 
 @lexer::members {
    public ArrayList<String> errors = new ArrayList<>();
-   public int lexicalErrors = 0;
 }
 
 /*------------------------------------------------------------------
@@ -25,7 +24,7 @@ letnest: LET (varasm SEMIC)+;
 
 vardec : type ID ;
 
-varasm : vardec ASM exp         #varAsm
+varasm : vardec ASM exp
        ;
 
 fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR ((letnest in SEMIC)? |((exp SEMIC)| stms )) ;
@@ -113,4 +112,4 @@ LINECOMENTS    : '//' (~('\n'|'\r'))* -> skip;
 BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
 
 //ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN);
-ERR     : . { errors.add("Invalid char: " + getText());lexicalErrors++;} -> channel(HIDDEN) ;
+ERR     : . { errors.add("Invalid char: " + getText());} -> channel(HIDDEN) ;

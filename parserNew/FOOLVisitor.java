@@ -52,12 +52,11 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVardec(FOOLParser.VardecContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code varAsm}
-	 * labeled alternative in {@link FOOLParser#varasm}.
+	 * Visit a parse tree produced by {@link FOOLParser#varasm}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVarAsm(FOOLParser.VarAsmContext ctx);
+	T visitVarasm(FOOLParser.VarasmContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FOOLParser#fun}.
 	 * @param ctx the parse tree

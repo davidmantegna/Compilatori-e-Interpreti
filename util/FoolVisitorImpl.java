@@ -9,14 +9,11 @@ import parserNew.FOOLParser.*;
 
 
 public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
-    @Override
-    public INode visitVarAsm(VarAsmContext ctx) {
-        return super.visitVarAsm(ctx);
-    }
+
 
     @Override
-    public INode visitSingleExp(FOOLParser.SingleExpContext singleExpContext) {
-        System.out.println("visitSingleExp");
+    public INode visitSingleExp(SingleExpContext singleExpContext) {
+        System.out.print("visitSingleExp -> \t");
         //serve per la singola espressione print *qualcosa*
         return new SingleExpNode(visit(singleExpContext.exp()));
     }
@@ -38,44 +35,45 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitLetnest(LetnestContext letnestContext) {
-        System.out.println("visitLetNest");
+        System.out.print("visitLetNest -> \t");
         return super.visitLetnest(letnestContext);
     }
 
     @Override
-    public INode visitVardec(FOOLParser.VardecContext vardecContext) {
+    public INode visitVardec(VardecContext vardecContext) {
         return super.visitVardec(vardecContext);
     }
 
-/*    @Override
-    public INode visitVarasm(FOOLParser.VarasmContext varasmContext) {
+    @Override
+    public INode visitVarasm(VarasmContext varasmContext) {
+    // TODO metodo da implementare -> Davide
         return super.visitVarasm(varasmContext);
-    }*/
+    }
 
     @Override
-    public INode visitFun(FOOLParser.FunContext funContext) {
+    public INode visitFun(FunContext funContext) {
         return super.visitFun(funContext);
     }
 
     @Override
-    public INode visitVarAssignment(FOOLParser.VarAssignmentContext varAssignmentContext) {
+    public INode visitVarAssignment(VarAssignmentContext varAssignmentContext) {
         return super.visitVarAssignment(varAssignmentContext);
     }
 
     @Override
-    public INode visitFunDeclaration(FOOLParser.FunDeclarationContext funDeclarationContext) {
+    public INode visitFunDeclaration(FunDeclarationContext funDeclarationContext) {
         return super.visitFunDeclaration(funDeclarationContext);
     }
 
     @Override
-    public INode visitType(FOOLParser.TypeContext typeContext) {
+    public INode visitType(TypeContext typeContext) {
         //tutti i tipi gestiti da TypeNode
         return new TypeNode(typeContext.getText());
     }
 
     @Override
     public INode visitExp(ExpContext expContext) {
-
+        System.out.print("visitExp -> \t");
         //check whether this is a simple or binary expression
         //notice here the necessity of having named elements in the grammar
         if (expContext.right == null) {
@@ -93,6 +91,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitTerm(TermContext termContext) {
+        System.out.print("visitTerm -> \t");
         //check whether this is a simple or binary expression
         //notice here the necessity of having named elements in the grammar
         if (termContext.right == null) {
@@ -111,6 +110,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitFactor(FactorContext factorContext) {
+        System.out.print("visitFactor -> \t");
         //check whether this is a simple or binary expression
         //notice here the necessity of having named elements in the grammar
         if (factorContext.right == null) {
@@ -155,6 +155,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitIntVal(IntValContext intValContext) {
+        System.out.print("visitIntVal -> \t");
         if (intValContext.MINUS() == null) {
             return new IntNode(Integer.parseInt(intValContext.INTEGER().getText()));
         } else {//gestiamo il caso di numeri negativi
@@ -164,6 +165,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitBoolVal(BoolValContext boolValContext) {
+        System.out.print("visitBoolVal -> \t");
         return new BoolNode(Boolean.parseBoolean(boolValContext.getText()));
     }
 
