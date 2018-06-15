@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class NewTest {
     public static void main(String[] args) {
 
-        // rimuovere lib->FOOLib prof, implementato in VM-> FunctionCode e Label
+        //TODO rimuovere lib->FOOLib prof, implementato in VM-> FunctionCode e Label
 
         try { //RILEVAZIONE INPUT
             System.out.println("Rilevazione Input...\n");
