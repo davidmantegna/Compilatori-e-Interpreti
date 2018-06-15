@@ -99,6 +99,9 @@ public class NewTest {
 
 
             System.out.println("--------------------------");
+
+            //TODO codeGeneration execution
+
 /*            CharStream inputASM = CharStreams.fromFileName(asmFileName);
             SVMLexer lexerASM = new SVMLexer(inputASM);
             CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);

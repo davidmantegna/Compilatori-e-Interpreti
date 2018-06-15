@@ -3,6 +3,7 @@ package ast;
 import Type.IType;
 import exceptions.MultipleIDException;
 import exceptions.TypeException;
+import parserNew.FOOLParser.VarasmContext;
 import util.Semantic.SymbolTable;
 
 import java.util.ArrayList;
@@ -11,12 +12,13 @@ public class VarAsmNode implements INode{
     private String id;
     private IType type;
     private INode exp;
+    private VarasmContext ctx;
 
-    public VarAsmNode(String i, IType assignedType, INode e) {
-        id=i;
-        type=assignedType;
-        exp=e;
-
+    public VarAsmNode(String id, IType type, INode exp, VarasmContext ctx) {
+        this.id = id;
+        this.type = type;
+        this.exp = exp;
+        this.ctx = ctx;
     }
 
     public String getId(){

@@ -1,7 +1,9 @@
 package util;
 
+import Type.IType;
 import ast.*;
 import exceptions.OperatorException;
+import exceptions.TypeException;
 import parserNew.FOOLBaseVisitor;
 import parserNew.FOOLLexer;
 import parserNew.FOOLParser;
@@ -47,7 +49,17 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitVarasm(VarasmContext varasmContext) {
     // TODO metodo da implementare -> Davide
-        return super.visitVarasm(varasmContext);
+        //var declaration + assignment
+        IType type;
+        try {
+            type = visit(varasmContext.vardec().type()).typeCheck();
+        }catch(TypeException e){
+            return null;
+        }
+
+        INode expNode = visit(varasmContext.exp());
+
+        return new VarAsmNode(varasmContext.vardec().ID().getText(), type, expNode, varasmContext);
     }
 
     @Override
