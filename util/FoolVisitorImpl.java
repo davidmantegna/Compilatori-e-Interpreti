@@ -245,8 +245,18 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitStms(StmsContext stmsContext) {
+        System.out.print("visitStms -> \t");
 
-        return super.visitStms(stmsContext);
+        StmsNode res;
+
+        ArrayList<INode> statements = new ArrayList<INode>();
+
+        for (StmContext stm : stmsContext.stm()) {
+            statements.add(visit(stm));
+        }
+        res = new StmsNode(statements);
+
+        return res;
     }
 
     @Override
