@@ -2,6 +2,7 @@ package ast;
 
 import Type.BoolType;
 import Type.IType;
+import Type.IntType;
 import exceptions.TypeException;
 import parserNew.FOOLParser.FactorContext;
 import util.Semantic.SymbolTable;
@@ -31,10 +32,21 @@ public class FactorNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
+        System.out.println("FactorNode: typeCheck ->\t");
+
         IType leftType = leftNode.typeCheck();
         IType rightType = rightNode.typeCheck();
 
-        // TODO implementare sottotipaggio
+        if(operator.equals("And")||(operator.equals("Or"))) {
+            if (!leftType.isSubType(new BoolType()) || !rightType.isSubType(new BoolType())) {
+                throw new TypeException("Tipo incompatibile per " + operator + ". È richiesto un booleano.", factorContext);
+            }
+        }
+        else {
+            if (!leftType.isSubType(new IntType()) || !rightType.isSubType(new IntType())) {
+                throw new TypeException("Tipo incompatibile per " + operator + ". È richiesto un intero.", factorContext);
+            }
+        }
 
         return new BoolType();
     }

@@ -31,8 +31,10 @@ public class ExpNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        // TODO aggiungere sottotipaggio
-
+        System.out.println("ExpNode: typeCheck ->\t");
+        if (!leftNode.typeCheck().isSubType(new IntType()) || !rightNode.typeCheck().isSubType(new IntType())) {
+            throw new TypeException("Tipo incompatibile per " + operation + ". È richiesto un intero.", expContext);
+        }
         return new IntType();
     }
 
