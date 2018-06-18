@@ -3,7 +3,6 @@ package ast;
 import Type.IType;
 import Type.IntType;
 import exceptions.TypeException;
-import parserNew.FOOLParser;
 import parserNew.FOOLParser.ExpContext;
 import util.Semantic.SymbolTable;
 
