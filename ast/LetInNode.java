@@ -2,6 +2,7 @@ package ast;
 
 
 import Type.IType;
+import Type.VoidType;
 import exceptions.TypeException;
 import util.Semantic.SymbolTable;
 import util.Semantic.SymbolTableEntry;
@@ -12,38 +13,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LetInNode implements INode {
-    // TODO revisionare intera classe
+    // TODO gestire exp e stms
+    private INode let;
+    private INode in;
 
-    private ArrayList<INode> declarationArrayList;
-    private INode expression;
-
-    public LetInNode(ArrayList<INode> declarationArrayList, INode expression) {
-        this.declarationArrayList = declarationArrayList;
-        this.expression = expression;
+    public LetInNode(INode let, INode in) {
+        this.let = let;
+        this.in = in;
     }
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.println("LetInNode: checkSemantics -> \t");
 
-        ArrayList<String> res = new ArrayList<>();
+        ArrayList<String> res = new ArrayList<String>();
 
         HashMap<String, SymbolTableEntry> hashMap = new HashMap<>();
 
         //entro in un nuovo livello di scope
         env.pushHashMap(hashMap);
-        //parte Let
 
-        //CheckSemantic nella lista di dichiarazioni
-        if (declarationArrayList.size() > 0) {
-            env.setOffset(-2);
-            //Checksemantic nei figli
-            for (INode n : declarationArrayList)
-                res.addAll(n.checkSemantics(env));
-        }
+        //parte Let
+        res.addAll(let.checkSemantics(env));
 
         //Parte In
-        res.addAll(expression.checkSemantics(env));
+        res.addAll(in.checkSemantics(env));
 
         //lascio il vecchio scope
         env.popHashMap();
@@ -53,31 +47,26 @@ public class LetInNode implements INode {
 
     @Override
     public String toPrint(String indent) {
-        String declstr = "";
-        for (INode dec : declarationArrayList) {
-            declstr += dec.toPrint(indent + "  ");
-        }
-        return indent + "LetIn\n" + declstr + expression.toPrint(indent + "  ");
+        return indent + "LetIn:\n" +
+                let.toPrint(indent + "\t") +
+                in.toPrint(indent + "\t");
     }
 
 
     @Override
     public IType typeCheck() throws TypeException {
         //parte let
-        for (INode dec : declarationArrayList)
-            dec.typeCheck();
+        let.typeCheck();
         //parte in
-        return expression.typeCheck();
+        in.typeCheck();
+        return new VoidType();
     }
 
     @Override
     public String codeGeneration() {
-        StringBuilder declCode = new StringBuilder();
-        for (INode dec : declarationArrayList)
-            declCode.append(dec.codeGeneration());
         return "push 0\n" +
-                declCode +
-                expression.codeGeneration() + "halt\n" +
+                let.codeGeneration() +
+                in.codeGeneration() + "halt\n" +
                 FunctionCode.getFunctionsCode();
     }
 

@@ -28,36 +28,48 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         //resulting node of the right type
         LetInNode res;
 
+        //visit let context
+        INode let = visit(letInExpContext.let());
+        //visit exp | stms context
+        INode in = visit(letInExpContext.in());
+
+        res = new LetInNode(let, in);
+
+        return res;
+    }
+
+    @Override
+    public INode visitLet(LetContext letContext) {
+        System.out.print("visitLet -> \t");
+        //resulting node of the right type
+        LetNode res;
+
         //list of declarationsArrayList in @res
         ArrayList<INode> declarations = new ArrayList<INode>();
 
         //visit all nodes corresponding to declarationsArrayList inside the let context and store them in @declarationsArrayList
         //notice that the letInExpContext.let().dec() method returns a list, this is because of the use of * or + in the grammar
         //antlr detects this is a group and therefore returns a list
-        for(DecContext dc : letInExpContext.let().dec()){
-            declarations.add( visit(dc) );
+        for (DecContext dc : letContext.dec()) {
+            declarations.add(visit(dc));
         }
-
-        //visit exp context
-        // TODO da rivedere, errore expression=null
-
-        INode exp = visitIn(letInExpContext.in());
-
-        //build @res accordingly with the result of the visits to its content
-        res = new LetInNode(declarations, exp);
+        res = new LetNode(declarations);
 
         return res;
-
-    }
-
-    @Override
-    public INode visitLet(LetContext letContext) {
-        return super.visitLet(letContext);
     }
 
     @Override
     public INode visitIn(InContext inContext) {
-        return super.visitIn(inContext);
+        System.out.print("visitIn -> \t");
+        InNode res;
+
+        res = new InNode(visit(inContext.exp()), "exp");
+
+        if (res==null){
+            res = new InNode(visit(inContext.stms()), "stms");
+        }
+
+        return res;
     }
 
     @Override
@@ -78,7 +90,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         IType type;
         try {
             type = visit(varasmContext.vardec().type()).typeCheck();
-        }catch(TypeException e){
+        } catch (TypeException e) {
             return null;
         }
 

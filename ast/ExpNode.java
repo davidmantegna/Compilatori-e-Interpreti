@@ -25,14 +25,16 @@ public class ExpNode implements INode {
     @Override
     public String toPrint(String indent) {
         return indent + operation + "\n"
-                + leftNode.toPrint(indent + "  ")
-                + rightNode.toPrint(indent + "  ");
+                + leftNode.toPrint(indent + "\t")
+                + rightNode.toPrint(indent + "\t");
     }
 
     @Override
     public IType typeCheck() throws TypeException {
-        // TODO aggiungere sottotipaggio
-
+        System.out.println("ExpNode: typeCheck ->\t");
+        if (!leftNode.typeCheck().isSubType(new IntType()) || !rightNode.typeCheck().isSubType(new IntType())) {
+            throw new TypeException("Tipo incompatibile per " + operation + ". È richiesto un intero.", expContext);
+        }
         return new IntType();
     }
 

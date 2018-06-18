@@ -85,6 +85,7 @@ public class NewTest {
             System.out.println(ast.toPrint(""));
             System.out.println("--------------------------");
 
+            System.out.println("\nType Check\n");
             IType type = ast.typeCheck(); //type-checking bottom-up
             System.out.println("Type checking ok! Il tipo del programma è: " + type.toPrint() + "\n");
 

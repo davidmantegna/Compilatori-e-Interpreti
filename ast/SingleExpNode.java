@@ -16,17 +16,19 @@ public class SingleExpNode implements INode {
 
     @Override
     public String toPrint(String indent) {
+
         return indent + expression.toPrint(indent + "  ");
     }
 
     @Override
     public IType typeCheck() throws TypeException {
+        System.out.println("SingleExpNode: typeCheck ->\t");
         return expression.typeCheck();
     }
 
     @Override
     public String codeGeneration() {
-        return expression.codeGeneration();
+        return expression.codeGeneration() + "halt\n";
     }
 
     @Override

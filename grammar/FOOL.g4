@@ -18,7 +18,7 @@ prog   : exp SEMIC              #singleExp
 
 let    : LET (dec SEMIC)+;
 
-in     : IN ((exp SEMIC)| stms)+ ;
+in     : IN ((exp SEMIC)| stms);
 
 letnest: LET (varasm SEMIC)+;
 

@@ -17,7 +17,7 @@ public class IntNode implements INode {
 
     @Override
     public String toPrint(String indent) {
-        return indent + "Int:"
+        return indent + "Int: "
                 + Integer.toString(value) + "\n";
     }
 

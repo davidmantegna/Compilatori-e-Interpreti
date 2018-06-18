@@ -5,35 +5,43 @@ import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import parserNew.FOOLParser.VarasmContext;
 import util.Semantic.SymbolTable;
+import util.Semantic.SymbolTableEntry;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class VarAsmNode implements INode{
+public class VarAsmNode implements INode {
     private String id;
-    private IType type;
+    private IType assignedType;
     private INode exp;
-    private VarasmContext ctx;
+    private VarasmContext varasmContext;
 
-    public VarAsmNode(String id, IType type, INode exp, VarasmContext ctx) {
+    public VarAsmNode(String id, IType type, INode exp, VarasmContext varasmContext) {
         this.id = id;
-        this.type = type;
+        this.assignedType = type;
         this.exp = exp;
-        this.ctx = ctx;
+        this.varasmContext = varasmContext;
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
 
     @Override
     public String toPrint(String indent) {
-        return null;
+        return indent + "Var:\n"
+                + "\t\t\t" + id + " "
+                + assignedType.toPrint() + "\t"
+                + exp.toPrint(indent);
     }
 
+    //valore di ritorno non utilizzato
     @Override
     public IType typeCheck() throws TypeException {
-        //TODO aggiungere controllo per sottotipaggio quando si implementeranno le classi
-        return type;
+        if (!exp.typeCheck().isSubType(assignedType)) {
+            throw new TypeException("Valore incompatibile per la variabile " + id, varasmContext.exp());
+        }
+        return assignedType;
     }
 
     @Override
@@ -44,22 +52,22 @@ public class VarAsmNode implements INode{
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("VarAsmNode: checkSemantics -> \t");
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> res = new ArrayList<>();
 
         // TODO aggiungere controllo per instanziazione di un nuovo oggetto
 
-        result.addAll(exp.checkSemantics(env));
+        res.addAll(exp.checkSemantics(env));
 
-        try{
-            env.processDeclaration(id,type,env.getOffset());
+        try {
+            env.processDeclaration(id, assignedType, env.getOffset());
             //Perché decrementa offset nella symbolTable?!
             System.out.println("Decremento offset nella symbolTable...non so perché...");
             env.decreaseOffset();
             System.out.println("Ho decrementato offset nella symbolTable...a cazzo di cane...");
-        }catch(MultipleIDException e){
-            result.add(e.getMessage());
+        } catch (MultipleIDException e) {
+            res.add(e.getMessage());
         }
 
-        return result;
+        return res;
     }
 }
