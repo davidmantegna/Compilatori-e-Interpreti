@@ -11,19 +11,23 @@ import java.util.ArrayList;
 public class StmAsmNode implements INode {
 
     //TODO da testare
+    private  String id;
     private IType type;
     private INode exp;
     private StmAssignmentContext ctx;
 
-    public StmAsmNode(IType t, INode e, StmAssignmentContext c) {
+    public StmAsmNode(String id, IType t, INode e, StmAssignmentContext c) {
         this.type = t;
         this.exp = e;
         this.ctx = c;
+        this.id = id;
     }
 
     @Override
     public String toPrint(String indent) {
-        return indent + exp.toPrint(indent + " ");
+        return indent +
+                id +
+                exp.toPrint(indent + " ");
     }
 
     @Override

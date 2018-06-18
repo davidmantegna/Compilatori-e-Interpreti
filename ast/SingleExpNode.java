@@ -26,7 +26,7 @@ public class SingleExpNode implements INode {
 
     @Override
     public String codeGeneration() {
-        return expression.codeGeneration() + "halt\n";
+        return expression.codeGeneration();
     }
 
     @Override

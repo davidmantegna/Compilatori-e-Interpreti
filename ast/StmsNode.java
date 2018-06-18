@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class StmsNode implements INode {
 
     //TODO da testare
-
     private String id;
     private IType type;
     private INode stm;

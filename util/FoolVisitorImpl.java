@@ -40,8 +40,8 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
         //visit exp context
         // TODO da rivedere, errore expression=null
-        //INode exp = visit(letInExpContext.in().exp());
-        INode exp = visit(letInExpContext.in());
+
+        INode exp = visitIn(letInExpContext.in());
 
         //build @res accordingly with the result of the visits to its content
         res = new LetInNode(declarations, exp);
@@ -213,7 +213,12 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitIfExp(IfExpContext ifExpContext) {
-        return super.visitIfExp(ifExpContext);
+
+        INode cond = visit(ifExpContext.cond);
+        INode then = visit(ifExpContext.thenBranch);
+        INode el = visit(ifExpContext.elseBranch);
+
+        return new IfNode(cond, then, el, ifExpContext);
     }
 
     @Override
@@ -228,6 +233,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitStms(StmsContext stmsContext) {
+
         return super.visitStms(stmsContext);
     }
 
