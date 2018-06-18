@@ -6,8 +6,9 @@ import exceptions.OperatorException;
 import exceptions.TypeException;
 import parserNew.FOOLBaseVisitor;
 import parserNew.FOOLLexer;
-import parserNew.FOOLParser;
 import parserNew.FOOLParser.*;
+
+import java.util.ArrayList;
 
 
 public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
@@ -22,7 +23,31 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitLetInExp(LetInExpContext letInExpContext) {
-        return super.visitLetInExp(letInExpContext);
+        System.out.print("visitLetInExp -> \t");
+
+        //resulting node of the right type
+        LetInNode res;
+
+        //list of declarationsArrayList in @res
+        ArrayList<INode> declarations = new ArrayList<INode>();
+
+        //visit all nodes corresponding to declarationsArrayList inside the let context and store them in @declarationsArrayList
+        //notice that the letInExpContext.let().dec() method returns a list, this is because of the use of * or + in the grammar
+        //antlr detects this is a group and therefore returns a list
+        for(DecContext dc : letInExpContext.let().dec()){
+            declarations.add( visit(dc) );
+        }
+
+        //visit exp context
+        // TODO da rivedere, errore expression=null
+        //INode exp = visit(letInExpContext.in().exp());
+        INode exp = visit(letInExpContext.in());
+
+        //build @res accordingly with the result of the visits to its content
+        res = new LetInNode(declarations, exp);
+
+        return res;
+
     }
 
     @Override
@@ -48,7 +73,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitVarasm(VarasmContext varasmContext) {
-    // TODO metodo da implementare -> Davide
+        System.out.println("visitVarasm -> \t");
         //var declaration + assignment
         IType type;
         try {

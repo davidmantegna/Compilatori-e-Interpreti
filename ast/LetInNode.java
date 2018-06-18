@@ -25,6 +25,7 @@ public class LetInNode implements INode {
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.println("LetInNode: checkSemantics -> \t");
+
         ArrayList<String> res = new ArrayList<>();
 
         HashMap<String, SymbolTableEntry> hashMap = new HashMap<>();
