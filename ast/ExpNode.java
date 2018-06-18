@@ -25,8 +25,8 @@ public class ExpNode implements INode {
     @Override
     public String toPrint(String indent) {
         return indent + operation + "\n"
-                + leftNode.toPrint(indent + "  ")
-                + rightNode.toPrint(indent + "  ");
+                + leftNode.toPrint(indent + "\t")
+                + rightNode.toPrint(indent + "\t");
     }
 
     @Override

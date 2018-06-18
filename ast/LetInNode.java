@@ -2,6 +2,7 @@ package ast;
 
 
 import Type.IType;
+import Type.VoidType;
 import exceptions.TypeException;
 import util.Semantic.SymbolTable;
 import util.Semantic.SymbolTableEntry;
@@ -47,8 +48,8 @@ public class LetInNode implements INode {
     @Override
     public String toPrint(String indent) {
         return indent + "LetIn:\n" +
-                let.toPrint(indent + " ") +
-                in.toPrint(indent + " ");
+                let.toPrint(indent + "\t") +
+                in.toPrint(indent + "\t");
     }
 
 
@@ -58,8 +59,7 @@ public class LetInNode implements INode {
         let.typeCheck();
         //parte in
         in.typeCheck();
-        // TODO return new VoidType();
-        return null;
+        return new VoidType();
     }
 
     @Override

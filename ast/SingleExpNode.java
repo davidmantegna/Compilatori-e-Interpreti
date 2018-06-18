@@ -16,6 +16,7 @@ public class SingleExpNode implements INode {
 
     @Override
     public String toPrint(String indent) {
+
         return indent + expression.toPrint(indent + "  ");
     }
 

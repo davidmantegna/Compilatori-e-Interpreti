@@ -18,8 +18,9 @@ public class InNode implements INode {
 
     @Override
     public String toPrint(String indent) {
-        return indent + "In ->" + string + "\n"
-                + val.toPrint(indent + "  ");
+        return indent + "In\n"
+                +"\t\t"+ string + ":\n\t"
+                + val.toPrint(indent + "\t");
     }
 
     @Override
