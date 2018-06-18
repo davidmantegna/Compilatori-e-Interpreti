@@ -4,6 +4,7 @@ public interface IType {
     enum IDType { //tipi supportati dal linguaggio
         INT,
         BOOL,
+        VOID,
         ARROW,
         CLASS,
         OBJECT
