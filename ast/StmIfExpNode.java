@@ -66,6 +66,6 @@ public class StmIfExpNode implements INode {
         //checkSemantic sui rami then ed else
         result.addAll(stmsThen.checkSemantics(env));
         result.addAll(stmsElse.checkSemantics(env));
-        return null;
+        return result;
     }
 }
