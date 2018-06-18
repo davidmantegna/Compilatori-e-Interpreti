@@ -21,11 +21,13 @@ public class SingleExpNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
+        System.out.println("SingleExpNode: typeCheck ->\t");
         return expression.typeCheck();
     }
 
     @Override
     public String codeGeneration() {
+
         return expression.codeGeneration() + "halt\n";
     }
 
