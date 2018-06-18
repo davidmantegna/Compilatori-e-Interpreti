@@ -1,6 +1,7 @@
 package ast;
 
 import Type.IType;
+import Type.VoidType;
 import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import parserNew.FOOLParser.StmAssignmentContext;
@@ -12,12 +13,10 @@ public class StmAsmNode implements INode {
 
     //TODO da testare
     private  String id;
-    private IType type;
     private INode exp;
     private StmAssignmentContext ctx;
 
-    public StmAsmNode(String id, IType t, INode e, StmAssignmentContext c) {
-        this.type = t;
+    public StmAsmNode(String id, INode e, StmAssignmentContext c) {
         this.exp = e;
         this.ctx = c;
         this.id = id;
@@ -25,14 +24,14 @@ public class StmAsmNode implements INode {
 
     @Override
     public String toPrint(String indent) {
-        return indent +
-                id +
-                exp.toPrint(indent + " ");
+        return indent + "Var:\n"
+                + "\t\t\t" + id + " "
+                + exp.toPrint(indent);
     }
 
     @Override
-    public IType typeCheck() throws TypeException {
-        return exp.typeCheck();
+    public IType typeCheck(){
+        return new VoidType();
     }
 
     @Override

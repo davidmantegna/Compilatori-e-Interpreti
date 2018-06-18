@@ -260,12 +260,20 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     }
 
     @Override
-    public INode visitStmAssignment(StmAssignmentContext stmAssignmentContext) {
-        return super.visitStmAssignment(stmAssignmentContext);
+    public INode visitStmAssignment(StmAssignmentContext stmAsmContext) {
+
+        INode expNode = visit(stmAsmContext.exp());
+
+        return new StmAsmNode(stmAsmContext.ID().getText(), expNode, stmAsmContext);
     }
 
     @Override
     public INode visitStmIfExp(StmIfExpContext stmIfExpContext) {
-        return super.visitStmIfExp(stmIfExpContext);
+
+        INode cond = visit(stmIfExpContext.cond);
+        INode stmThen = visit(stmIfExpContext.thenBranch);
+        INode stmElse = visit(stmIfExpContext.elseBranch);
+
+        return new StmIfExpNode(cond, stmThen, stmElse , stmIfExpContext);
     }
 }
