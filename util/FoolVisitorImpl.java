@@ -110,7 +110,40 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitFun(FunContext funContext) {
+
         return super.visitFun(funContext);
+
+        //TODO implement visitFun
+       /* try {
+            // initialize @res with the visits to the type and its ID
+            ArrayList<ParameterNode> params = new ArrayList<>();
+
+            // add argument declarationsArrayList
+            // we are getting a shortcut here by constructing directly the ParameterNode
+            // this could be done differently by visiting instead the VardecContext
+            for (int i = 0; i < funContext.vardec().size(); i++) {
+                VardecContext vc = funContext.vardec().get(i);
+                params.add(new ParameterNode(vc.ID().getText(), visit(vc.type()).typeCheck(), i + 1, vc));
+            }
+
+            // add body, create a list for the nested declarationsArrayList
+            ArrayList<INode> declarations = new ArrayList<INode>();
+            // check whether there are actually nested decs
+            if (funContext.letnest() != null) {
+                // if there are visit each dec and add it to the @innerDec list
+                for (DecContext dc : funContext.letnest().dec())
+                    declarations.add(visit(dc));
+            }
+
+            // get the exp body
+            INode body = visit(funContext.exp());
+
+            return new FunNode(funContext.ID().getText(), visit(funContext.type()).typeCheck(), params, declarations, body, funContext);
+        } catch (TypeException e) {
+            return null;
+        }*/
+
+
     }
 
     @Override
