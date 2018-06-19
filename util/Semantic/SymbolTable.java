@@ -120,9 +120,10 @@ public class SymbolTable {
         ListIterator<HashMap<String, SymbolTableEntry>> li = symTable.listIterator(symTable.size());
         while (li.hasPrevious()) {
             HashMap<String, SymbolTableEntry> current = li.previous();
-/*            if (current.containsKey(id) && !(current.get(id).getType() instanceof ArrowType)) {
+            // TODO ArrowType
+            if (current.containsKey(id) /*&& !(current.get(id).getType() instanceof ArrowType)*/) {
                 return current.get(id);
-            }*/
+            }
         }
         throw new UndeclaredIDException(id);
     }

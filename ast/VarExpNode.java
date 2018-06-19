@@ -26,7 +26,11 @@ public class VarExpNode implements INode {
 
     @Override
     public String toPrint(String indent) {
-        return null;
+        String minus = " ";
+        if (isNegative) {
+            minus = " -";
+        }
+        return indent + " Id:" + minus + identificatore;
     }
 
     @Override

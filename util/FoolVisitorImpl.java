@@ -229,12 +229,13 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitBaseExp(BaseExpContext baseExpContext) {
-        return super.visitBaseExp(baseExpContext);
+        System.out.print("visitBaseExp -> \t");
+        return visit (baseExpContext.exp());
     }
 
     @Override
     public INode visitIfExp(IfExpContext ifExpContext) {
-
+        System.out.print("visitIfExp -> \t");
         INode cond = visit(ifExpContext.cond);
         INode then = visit(ifExpContext.thenBranch);
         INode el = visit(ifExpContext.elseBranch);
@@ -244,7 +245,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitVarExp(VarExpContext varExpContext) {
-
+        System.out.print("visitVarExp -> \t");
         if (varExpContext.MINUS() == null) {
             return new VarExpNode(varExpContext.ID().getText(), varExpContext, false);
         } else {

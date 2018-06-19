@@ -33,6 +33,7 @@ public class StmIfExpNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
+        System.out.print("StmIfExpNode: typeCheck -> \t");
         if(!conditionNode.typeCheck().isSubType(new BoolType()))
             throw new TypeException("Condizione non booleana", ctx);
         IType stmsThenType = stmsThen.typeCheck();

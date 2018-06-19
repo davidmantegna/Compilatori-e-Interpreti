@@ -29,6 +29,7 @@ public class StmAsmNode implements INode {
 
     @Override
     public IType typeCheck(){
+        System.out.print("StmAsmNode: typeCheck -> \t");
         return new VoidType();
     }
 
@@ -39,7 +40,6 @@ public class StmAsmNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-
         System.out.print("StmAsmNode: checkSemantics -> \t");
         ArrayList<String> res = new ArrayList<>();
 

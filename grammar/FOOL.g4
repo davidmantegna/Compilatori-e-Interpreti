@@ -14,8 +14,8 @@ grammar FOOL;
 
 //TODO test object orientation
 
-prog   : exp SEMIC                                                                      #singleExp
-       | let in SEMIC                                                                   #letInExp
+prog   : exp SEMIC                                                                         #singleExp
+       | let in                                                                            #letInExp
        | (classdec)+ ((let in)?| exp) SEMIC	                                            #classExp
        ;
 
@@ -55,7 +55,7 @@ value  : (MINUS)? INTEGER                                                       
        | LPAR exp RPAR                                                                  #baseExp
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR    #ifExp
        | (MINUS)? ID                                                                    #varExp
-       | THIS                                                                           #thisExp
+//       | THIS                                                                           #thisExp
        | funcall                                                                        #functionCall
        | (ID|THIS) DOT funcall                                                          #methodExp
        | newexp                                                                         #newFunction
