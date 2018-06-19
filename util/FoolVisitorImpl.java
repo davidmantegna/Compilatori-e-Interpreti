@@ -6,6 +6,7 @@ import exceptions.OperatorException;
 import exceptions.TypeException;
 import parserNew.FOOLBaseVisitor;
 import parserNew.FOOLLexer;
+import parserNew.FOOLParser;
 import parserNew.FOOLParser.*;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         //visit all nodes corresponding to declarationsArrayList inside the let context and store them in @declarationsArrayList
         //notice that the letInExpContext.let().dec() method returns a list, this is because of the use of * or + in the grammar
         //antlr detects this is a group and therefore returns a list
-        for (DecContext dc : letContext.dec()) {
+        for (FOOLParser.DecContext dc : letContext.dec()) {
             declarations.add(visit(dc));
         }
         res = new LetNode(declarations);
@@ -59,24 +60,31 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     }
 
     @Override
-    public INode visitIn(InContext inContext) {
-        System.out.print("visitIn -> \t");
-        InNode res;
+    public INode visitLetnest(LetnestContext letnestContext) {
+        System.out.print("visitLetNest -> \t");
+        LetnestNode res;
 
-        try {
-            res = new InNode(visit(inContext.exp()), "exp");
+        ArrayList<INode> varDeclarations = new ArrayList<INode>();
 
-        }catch (NullPointerException e){
-            res = new InNode(visit(inContext.stms()), "stms");
+        for (FOOLParser.VarasmContext vc : letnestContext.varasm()) {
+            varDeclarations.add(visit(vc));
         }
+        res = new LetnestNode(varDeclarations);
 
         return res;
     }
 
     @Override
-    public INode visitLetnest(LetnestContext letnestContext) {
-        System.out.print("visitLetNest -> \t");
-        return super.visitLetnest(letnestContext);
+    public INode visitIn(InContext inContext) {
+        System.out.print("visitIn -> \t");
+        InNode res;
+        try {
+            res = new InNode(visit(inContext.exp()), "exp");
+        } catch (NullPointerException e) {
+            res = new InNode(visit(inContext.stms()), "stms");
+        }
+
+        return res;
     }
 
     @Override
@@ -86,7 +94,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitVarasm(VarasmContext varasmContext) {
-        System.out.println("visitVarasm -> \t");
+        System.out.print("visitVarasm -> \t");
         //var declaration + assignment
         IType type;
         try {
@@ -226,7 +234,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitIfExp(IfExpContext ifExpContext) {
-        System.out.print("visitIfExp -> \t");
+
         INode cond = visit(ifExpContext.cond);
         INode then = visit(ifExpContext.thenBranch);
         INode el = visit(ifExpContext.elseBranch);
@@ -236,12 +244,12 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitVarExp(VarExpContext varExpContext) {
-        return super.visitVarExp(varExpContext);
-    }
 
-    @Override
-    public INode visitFunExp(FunExpContext funExpContext) {
-        return super.visitFunExp(funExpContext);
+        if (varExpContext.MINUS() == null) {
+            return new VarExpNode(varExpContext.ID().getText(), varExpContext, false);
+        } else {
+            return new VarExpNode(varExpContext.ID().getText(), varExpContext, true);
+        }
     }
 
     @Override
@@ -275,6 +283,6 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         INode stmThen = visit(stmIfExpContext.thenBranch);
         INode stmElse = visit(stmIfExpContext.elseBranch);
 
-        return new StmIfExpNode(cond, stmThen, stmElse , stmIfExpContext);
+        return new StmIfExpNode(cond, stmThen, stmElse, stmIfExpContext);
     }
 }

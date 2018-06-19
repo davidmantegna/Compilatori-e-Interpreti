@@ -26,9 +26,9 @@ public class StmIfExpNode implements INode {
     @Override
     public String toPrint(String indent) {
         return indent +
-                conditionNode.toPrint(indent + " ") +
-                stmsThen.toPrint(indent + " ") +
-                stmsElse.toPrint(indent + " ") ;
+                conditionNode.toPrint(indent + "\t") +
+                stmsThen.toPrint(indent + "\t") +
+                stmsElse.toPrint(indent + "\t") ;
     }
 
     @Override

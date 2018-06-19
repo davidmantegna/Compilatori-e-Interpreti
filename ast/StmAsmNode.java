@@ -2,8 +2,6 @@ package ast;
 
 import Type.IType;
 import Type.VoidType;
-import exceptions.MultipleIDException;
-import exceptions.TypeException;
 import parserNew.FOOLParser.StmAssignmentContext;
 import util.Semantic.SymbolTable;
 

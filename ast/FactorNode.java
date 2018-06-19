@@ -26,8 +26,8 @@ public class FactorNode implements INode {
     @Override
     public String toPrint(String indent) {
         return indent + operator + "\n"
-                + leftNode.toPrint(indent + "  ")
-                + rightNode.toPrint(indent + "  ");
+                + leftNode.toPrint(indent + "\t")
+                + rightNode.toPrint(indent + "\t");
     }
 
     @Override

@@ -53,7 +53,6 @@ public class ExpNode implements INode {
         ArrayList<String> res = new ArrayList<String>();
 
         //check semantics in the left and in the right exp
-
         res.addAll(leftNode.checkSemantics(env));
         res.addAll(rightNode.checkSemantics(env));
 

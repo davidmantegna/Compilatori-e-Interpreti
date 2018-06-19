@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LetInNode implements INode {
-    // TODO gestire exp e stms
     private INode let;
     private INode in;
 

@@ -5,10 +5,8 @@ import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import parserNew.FOOLParser.VarasmContext;
 import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class VarAsmNode implements INode {
     private String id;

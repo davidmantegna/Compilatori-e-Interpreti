@@ -11,32 +11,32 @@ import java.util.ArrayList;
 
 public class IfNode implements INode{
 
-    private INode cond;
-    private INode th;
-    private INode el;
+    private INode conditionNode;
+    private INode thenNode;
+    private INode elseNode;
     private IfExpContext ctx;
 
-    public IfNode(INode cnd, INode t, INode e, IfExpContext c) {
-        this.cond = cnd;
-        this.th = t;
-        this.el = e;
+    public IfNode(INode cond, INode then, INode el, IfExpContext c) {
+        this.conditionNode = cond;
+        this.thenNode = then;
+        this.elseNode = el;
         this.ctx = c;
     }
 
     @Override
     public String toPrint(String indent) {
-        return indent + "If\n" +
-        cond.toPrint(indent + " ") +
-                th.toPrint(indent + " ") +
-                el.toPrint(indent + " ") ;
+        return indent +
+                conditionNode.toPrint(indent + "\t") +
+                thenNode.toPrint(indent + "\t") +
+                elseNode.toPrint(indent + "\t") ;
     }
 
     @Override
     public IType typeCheck() throws TypeException {
-        if(!cond.typeCheck().isSubType(new BoolType()))
+        if(!conditionNode.typeCheck().isSubType(new BoolType()))
             throw new TypeException("Condizione non booleana", ctx);
-        IType thenType = th.typeCheck();
-        IType elType = el.typeCheck();
+        IType thenType = thenNode.typeCheck();
+        IType elType = elseNode.typeCheck();
         if(thenType.isSubType(elType)) return elType;
         else if(elType.isSubType(thenType)) return elType;
         else throw new TypeException("Tipi non compatibili nel then e nell'else", ctx);
@@ -46,13 +46,13 @@ public class IfNode implements INode{
     public String codeGeneration() {
         String thenBranch = Label.nuovaLabel();
         String exit = Label.nuovaLabel();
-        return cond.codeGeneration() +
+        return conditionNode.codeGeneration() +
                 "push 1\n" +
                 "beq" + thenBranch + "\n" +
-                el.codeGeneration() +
+                elseNode.codeGeneration() +
                 "b " + exit + "\n" +
                 thenBranch + ":\n" +
-                th.codeGeneration() +
+                thenNode.codeGeneration() +
                 exit + ":\n";
     }
 
@@ -61,11 +61,11 @@ public class IfNode implements INode{
         ArrayList<String> result = new ArrayList<>();
 
         //checkSemantic sulla condizione
-        result.addAll(cond.checkSemantics(env));
+        result.addAll(conditionNode.checkSemantics(env));
 
         //checkSemantic sui rami then ed else
-        result.addAll(th.checkSemantics(env));
-        result.addAll(el.checkSemantics(env));
+        result.addAll(thenNode.checkSemantics(env));
+        result.addAll(elseNode.checkSemantics(env));
 
         return result;
     }
