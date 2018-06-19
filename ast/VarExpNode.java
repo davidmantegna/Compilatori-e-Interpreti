@@ -14,23 +14,28 @@ public class VarExpNode implements INode {
     private String identificatore;
     private ParserRuleContext parserRuleContext;
     private boolean isNegative;//variabile utilizzata per gestire il meno davanti agli identificatori
+    private boolean isNot;
 
     private int nestingLevel;
     private SymbolTableEntry entry;
 
-    public VarExpNode(String identificatore, ParserRuleContext parserRuleContext, boolean isNegative) {
+    public VarExpNode(String identificatore, ParserRuleContext parserRuleContext, boolean isNegative, boolean isNot) {
         this.identificatore = identificatore;
         this.parserRuleContext = parserRuleContext;
         this.isNegative = isNegative;
+        this.isNot = isNot;
     }
 
     @Override
     public String toPrint(String indent) {
-        String minus = " ";
+        String not = " ";
+        String minus = "";
         if (isNegative) {
-            minus = " -";
+            minus = "-";
         }
-        return indent + " Id:" + minus + identificatore;
+        if(isNot)
+            not = " !";
+        return indent + " Id:" + not + minus + identificatore;
     }
 
     @Override
@@ -71,6 +76,7 @@ public class VarExpNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
+        //TODO gestire caso not(int) e ritornare eccezione e nodo relativo
         //cercare ID nella symbol table, con casi particolari per le classi
         ArrayList<String> res = new ArrayList<>();
 

@@ -246,11 +246,14 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitVarExp(VarExpContext varExpContext) {
         System.out.print("visitVarExp -> \t");
+        Boolean isNeg = true;
+        Boolean isNot = true;
         if (varExpContext.MINUS() == null) {
-            return new VarExpNode(varExpContext.ID().getText(), varExpContext, false);
+            isNeg = false;
         } else {
-            return new VarExpNode(varExpContext.ID().getText(), varExpContext, true);
+            isNot = false;
         }
+        return new VarExpNode(varExpContext.ID().getText(), varExpContext, isNeg, isNot);
     }
 
     @Override

@@ -14,9 +14,9 @@ grammar FOOL;
 
 //TODO test object orientation
 
-prog   : exp SEMIC                                                                         #singleExp
-       | let in                                                                            #letInExp
-       | (classdec)+ ((let in)?| exp) SEMIC	                                            #classExp
+prog   : exp  SEMIC                                                                          #singleExp
+       | let in                                                                         #letInExp
+       | (classdec)+ ((let in)?| exp) SEMIC	                                                #classExp
        ;
 
 let    : LET (dec SEMIC)+;
@@ -112,7 +112,7 @@ EXTENDS: 'extends' ;
 THIS   : 'this' ;
 NEW    : 'new' ;
 DOT    : '.' ;
-
+VOID   : 'void' ;
 
 
 //Numbers
