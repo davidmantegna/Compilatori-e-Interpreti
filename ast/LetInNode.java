@@ -24,7 +24,7 @@ public class LetInNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.println("LetInNode: checkSemantics -> \t");
+        System.out.print("LetInNode: checkSemantics -> \t");
 
         ArrayList<String> res = new ArrayList<String>();
 
@@ -55,6 +55,7 @@ public class LetInNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
+        System.out.print("LetInNode: typeCheck -> \t");
         //parte let
         let.typeCheck();
         //parte in

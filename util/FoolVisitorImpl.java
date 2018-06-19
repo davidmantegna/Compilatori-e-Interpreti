@@ -62,12 +62,11 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     public INode visitIn(InContext inContext) {
         System.out.print("visitIn -> \t");
         InNode res;
-
-//        res = new InNode(visit(inContext.exp()), "exp");
-
-//        if (res==null){
+        try {
+            res = new InNode(visit(inContext.exp()), "exp");
+        } catch (NullPointerException e) {
             res = new InNode(visit(inContext.stms()), "stms");
-//        }
+        }
 
         return res;
     }
@@ -85,7 +84,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitVarasm(VarasmContext varasmContext) {
-        System.out.println("visitVarasm -> \t");
+        System.out.print("visitVarasm -> \t");
         //var declaration + assignment
         IType type;
         try {
@@ -274,6 +273,6 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         INode stmThen = visit(stmIfExpContext.thenBranch);
         INode stmElse = visit(stmIfExpContext.elseBranch);
 
-        return new StmIfExpNode(cond, stmThen, stmElse , stmIfExpContext);
+        return new StmIfExpNode(cond, stmThen, stmElse, stmIfExpContext);
     }
 }

@@ -27,6 +27,7 @@ public class LetNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
+        System.out.print("LetNode: typeCheck ->\t");
         for (INode dec : declarationArrayList) {
             dec.typeCheck();
         }
@@ -43,7 +44,7 @@ public class LetNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.println("LetNode: checkSemantics -> \t");
+        System.out.print("LetNode: checkSemantics -> \t");
         ArrayList<String> res = new ArrayList<>();
 
         HashMap<String, SymbolTableEntry> hashMap = new HashMap<>();

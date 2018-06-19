@@ -25,7 +25,7 @@ public class InNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.println("InNode: typeCheck ->\t");
+        System.out.print("InNode: typeCheck ->\t");
         return val.typeCheck();
     }
 

@@ -1,5 +1,1 @@
-let
-    int x = 1;
-in
-    9;
-;
+false && true;
