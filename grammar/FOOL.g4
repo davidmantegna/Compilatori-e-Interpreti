@@ -46,26 +46,27 @@ term   : left=factor (operator=(TIMES | DIV) right=term)? ;
    
 factor : left=value  (operator=(AND | OR | EQ | GEQ | LEQ | GREATER | LESS) right=value)? ;
 
+funcall : ID (LPAR (exp (COMMA exp)* )? RPAR)? ;
+
+newexp : NEW ID (LPAR (exp (COMMA exp)* )? RPAR)?;
+
 value  : (MINUS)? INTEGER                                                               #intVal
        | (NOT)? ( TRUE | FALSE )                                                        #boolVal
        | LPAR exp RPAR                                                                  #baseExp
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR    #ifExp
        | (MINUS)? ID                                                                    #varExp
        | THIS                                                                           #thisExp
-       | funexp                                                                         #funExp
-       | (ID|THIS) DOT funexp                                                           #methodExp
-       | newexp                                                                         #newExp
+       | funcall                                                                        #functionCall
+       | (ID|THIS) DOT funcall                                                          #methodExp
+       | newexp                                                                         #newFunction
        ;
 
 stms   : ( stm )+ ;
 
+//TODO parentesi condizione IF
 stm    : ID ASM exp SEMIC                                                               #stmAssignment
        | IF cond=exp THEN CLPAR thenBranch=stms CRPAR ELSE CLPAR elseBranch=stms CRPAR  #stmIfExp
        ;
-
-funexp : ID (LPAR (exp (COMMA exp)* )? RPAR)? ;
-
-newexp : NEW ID ( LPAR (exp (COMMA exp)* )? RPAR)?;
 
 method : fun ;
 

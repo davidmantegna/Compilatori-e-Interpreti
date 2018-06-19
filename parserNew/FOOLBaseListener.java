@@ -199,6 +199,30 @@ public class FOOLBaseListener implements FOOLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFuncall(FOOLParser.FuncallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFuncall(FOOLParser.FuncallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNewexp(FOOLParser.NewexpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNewexp(FOOLParser.NewexpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIntVal(FOOLParser.IntValContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -271,13 +295,13 @@ public class FOOLBaseListener implements FOOLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunExp(FOOLParser.FunExpContext ctx) { }
+	@Override public void enterFunctionCall(FOOLParser.FunctionCallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunExp(FOOLParser.FunExpContext ctx) { }
+	@Override public void exitFunctionCall(FOOLParser.FunctionCallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -295,13 +319,13 @@ public class FOOLBaseListener implements FOOLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNewExp(FOOLParser.NewExpContext ctx) { }
+	@Override public void enterNewFunction(FOOLParser.NewFunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNewExp(FOOLParser.NewExpContext ctx) { }
+	@Override public void exitNewFunction(FOOLParser.NewFunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -338,30 +362,6 @@ public class FOOLBaseListener implements FOOLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStmIfExp(FOOLParser.StmIfExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFunexp(FOOLParser.FunexpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunexp(FOOLParser.FunexpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNewexp(FOOLParser.NewexpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNewexp(FOOLParser.NewexpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -109,6 +109,18 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFactor(FOOLParser.FactorContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link FOOLParser#funcall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncall(FOOLParser.FuncallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FOOLParser#newexp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNewexp(FOOLParser.NewexpContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code intVal}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
@@ -151,12 +163,12 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitThisExp(FOOLParser.ThisExpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code funExp}
+	 * Visit a parse tree produced by the {@code functionCall}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunExp(FOOLParser.FunExpContext ctx);
+	T visitFunctionCall(FOOLParser.FunctionCallContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code methodExp}
 	 * labeled alternative in {@link FOOLParser#value}.
@@ -165,12 +177,12 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethodExp(FOOLParser.MethodExpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code newExp}
+	 * Visit a parse tree produced by the {@code newFunction}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNewExp(FOOLParser.NewExpContext ctx);
+	T visitNewFunction(FOOLParser.NewFunctionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FOOLParser#stms}.
 	 * @param ctx the parse tree
@@ -191,18 +203,6 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStmIfExp(FOOLParser.StmIfExpContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link FOOLParser#funexp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunexp(FOOLParser.FunexpContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link FOOLParser#newexp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNewexp(FOOLParser.NewexpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FOOLParser#method}.
 	 * @param ctx the parse tree

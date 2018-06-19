@@ -171,6 +171,26 @@ public interface FOOLListener extends ParseTreeListener {
 	 */
 	void exitFactor(FOOLParser.FactorContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FOOLParser#funcall}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncall(FOOLParser.FuncallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FOOLParser#funcall}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncall(FOOLParser.FuncallContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FOOLParser#newexp}.
+	 * @param ctx the parse tree
+	 */
+	void enterNewexp(FOOLParser.NewexpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FOOLParser#newexp}.
+	 * @param ctx the parse tree
+	 */
+	void exitNewexp(FOOLParser.NewexpContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code intVal}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
@@ -243,17 +263,17 @@ public interface FOOLListener extends ParseTreeListener {
 	 */
 	void exitThisExp(FOOLParser.ThisExpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code funExp}
+	 * Enter a parse tree produced by the {@code functionCall}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunExp(FOOLParser.FunExpContext ctx);
+	void enterFunctionCall(FOOLParser.FunctionCallContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code funExp}
+	 * Exit a parse tree produced by the {@code functionCall}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunExp(FOOLParser.FunExpContext ctx);
+	void exitFunctionCall(FOOLParser.FunctionCallContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code methodExp}
 	 * labeled alternative in {@link FOOLParser#value}.
@@ -267,17 +287,17 @@ public interface FOOLListener extends ParseTreeListener {
 	 */
 	void exitMethodExp(FOOLParser.MethodExpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code newExp}
+	 * Enter a parse tree produced by the {@code newFunction}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void enterNewExp(FOOLParser.NewExpContext ctx);
+	void enterNewFunction(FOOLParser.NewFunctionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code newExp}
+	 * Exit a parse tree produced by the {@code newFunction}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void exitNewExp(FOOLParser.NewExpContext ctx);
+	void exitNewFunction(FOOLParser.NewFunctionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FOOLParser#stms}.
 	 * @param ctx the parse tree
@@ -312,26 +332,6 @@ public interface FOOLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStmIfExp(FOOLParser.StmIfExpContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link FOOLParser#funexp}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunexp(FOOLParser.FunexpContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link FOOLParser#funexp}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunexp(FOOLParser.FunexpContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link FOOLParser#newexp}.
-	 * @param ctx the parse tree
-	 */
-	void enterNewexp(FOOLParser.NewexpContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link FOOLParser#newexp}.
-	 * @param ctx the parse tree
-	 */
-	void exitNewexp(FOOLParser.NewexpContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FOOLParser#method}.
 	 * @param ctx the parse tree
