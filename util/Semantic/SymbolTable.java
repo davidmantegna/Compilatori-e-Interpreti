@@ -24,7 +24,6 @@ public class SymbolTable {
         this.symTable = new LinkedList<>();
         this.offset = 0;
         this.classEntryforThis = null;
-        System.out.println("\ncreate Symbol Table: " + this.symTable.toString() + "  off: " + this.offset + " class: " + this.classEntryforThis);
     }
 
     //Il Nesting Level è ottenibile semplicemente così

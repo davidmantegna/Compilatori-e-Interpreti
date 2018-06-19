@@ -37,7 +37,7 @@ public class BoolNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("BoolNode: checkSemantics -> \t");
+        System.out.print("BoolNode: checkSemantics -> \n");
         return new ArrayList<>(); //non crea livelli di scope
     }
 }
