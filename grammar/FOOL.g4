@@ -12,54 +12,64 @@ grammar FOOL;
  * PARSER RULES
  *------------------------------------------------------------------*/
 
-//TODO object orientation
+//TODO test object orientation
 
-prog   : exp SEMIC              #singleExp
-       | let in SEMIC           #letInExp
+prog   : exp SEMIC                                                                      #singleExp
+       | let in SEMIC                                                                   #letInExp
+       | (classdec)+ ((let in)?| exp) SEMIC	                                            #classExp
        ;
 
-let    : LET (dec SEMIC)+;
+let    : LET (dec SEMIC)+ ;
 
 in     : IN ((exp SEMIC)| stms) ;
 
-letnest: LET (varasm SEMIC)+;
+letnest: LET (varasm SEMIC)+ ;
 
 vardec : type ID ;
 
-varasm : vardec ASM exp
-       ;
+varasm : vardec ASM exp ;
 
 fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR ((letnest in SEMIC)? |((exp SEMIC)| stms )) ;
 
-dec    : varasm           #varAssignment
-       | fun              #funDeclaration
+dec    : varasm                                                                         #varAssignment
+       | fun                                                                            #funDeclaration
        ;
 
 type   : INT
        | BOOL
+       | ID
        ;
     
-exp    : left=term (operator=(PLUS | MINUS) right=exp)?
-       ;
+exp    : left=term (operator=(PLUS | MINUS) right=exp)? ;
    
-term   : left=factor (operator=(TIMES | DIV) right=term)?
-       ;
+term   : left=factor (operator=(TIMES | DIV) right=term)? ;
    
-factor : left=value  (operator=(AND | OR | EQ | GEQ | LEQ | GREATER | LESS) right=value)?
-       ;
+factor : left=value  (operator=(AND | OR | EQ | GEQ | LEQ | GREATER | LESS) right=value)? ;
 
-value  : (MINUS)? INTEGER                                        #intVal
-       | (NOT)? ( TRUE | FALSE )                        #boolVal
-       | LPAR exp RPAR                                  #baseExp
-       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
-       | (MINUS)? ID                                             #varExp
-       | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
+value  : (MINUS)? INTEGER                                                               #intVal
+       | (NOT)? ( TRUE | FALSE )                                                        #boolVal
+       | LPAR exp RPAR                                                                  #baseExp
+       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR    #ifExp
+       | (MINUS)? ID                                                                    #varExp
+       | THIS                                                                           #thisExp
+       | funexp                                                                         #funExp
+       | (ID|THIS) DOT funexp                                                           #methodExp
+       | newexp                                                                         #newExp
        ;
 
 stms   : ( stm )+ ;
-stm    : ID ASM exp SEMIC                                       #stmAssignment
-       | IF cond=exp THEN CLPAR thenBranch=stms CRPAR ELSE CLPAR elseBranch=stms CRPAR     #stmIfExp
+
+stm    : ID ASM exp SEMIC                                                               #stmAssignment
+       | IF cond=exp THEN CLPAR thenBranch=stms CRPAR ELSE CLPAR elseBranch=stms CRPAR  #stmIfExp
        ;
+
+funexp : ID (LPAR (exp (COMMA exp)* )? RPAR)? ;
+
+newexp : NEW ID ( LPAR (exp (COMMA exp)* )? RPAR)?;
+
+method : fun ;
+
+classdec  : CLASS ID (EXTENDS ID)? (LPAR (vardec (COMMA vardec)*)? RPAR)? (CLPAR ((method)+)? CRPAR)? ;
 
    
 /*------------------------------------------------------------------
@@ -97,6 +107,11 @@ VAR    : 'var' ;
 FUN    : 'fun' ;
 INT    : 'int' ;
 BOOL   : 'bool' ;
+CLASS  : 'class' ;
+EXTENDS: 'extends' ;
+THIS   : 'this' ;
+NEW    : 'new' ;
+DOT    : '.' ;
 
 
 
@@ -113,5 +128,4 @@ WS              : (' '|'\t'|'\n'|'\r')-> skip;
 LINECOMENTS    : '//' (~('\n'|'\r'))* -> skip;
 BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
 
-//ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN);
 ERR     : . { errors.add("Invalid char: " + getText());} -> channel(HIDDEN) ;

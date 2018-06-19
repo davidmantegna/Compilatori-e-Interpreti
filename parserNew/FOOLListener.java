@@ -1,4 +1,4 @@
-// Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
+// Generated from C:/Users/massi/Documents/IntelliJProject/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
 package parserNew;
 
     import java.util.ArrayList;
@@ -34,6 +34,18 @@ public interface FOOLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLetInExp(FOOLParser.LetInExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code classExp}
+	 * labeled alternative in {@link FOOLParser#prog}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassExp(FOOLParser.ClassExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code classExp}
+	 * labeled alternative in {@link FOOLParser#prog}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassExp(FOOLParser.ClassExpContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FOOLParser#let}.
 	 * @param ctx the parse tree
@@ -219,6 +231,18 @@ public interface FOOLListener extends ParseTreeListener {
 	 */
 	void exitVarExp(FOOLParser.VarExpContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code thisExp}
+	 * labeled alternative in {@link FOOLParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterThisExp(FOOLParser.ThisExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code thisExp}
+	 * labeled alternative in {@link FOOLParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitThisExp(FOOLParser.ThisExpContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code funExp}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
@@ -230,6 +254,30 @@ public interface FOOLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunExp(FOOLParser.FunExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code methodExp}
+	 * labeled alternative in {@link FOOLParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethodExp(FOOLParser.MethodExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code methodExp}
+	 * labeled alternative in {@link FOOLParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethodExp(FOOLParser.MethodExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code newExp}
+	 * labeled alternative in {@link FOOLParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterNewExp(FOOLParser.NewExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code newExp}
+	 * labeled alternative in {@link FOOLParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitNewExp(FOOLParser.NewExpContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FOOLParser#stms}.
 	 * @param ctx the parse tree
@@ -264,4 +312,44 @@ public interface FOOLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStmIfExp(FOOLParser.StmIfExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FOOLParser#funexp}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunexp(FOOLParser.FunexpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FOOLParser#funexp}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunexp(FOOLParser.FunexpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FOOLParser#newexp}.
+	 * @param ctx the parse tree
+	 */
+	void enterNewexp(FOOLParser.NewexpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FOOLParser#newexp}.
+	 * @param ctx the parse tree
+	 */
+	void exitNewexp(FOOLParser.NewexpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FOOLParser#method}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethod(FOOLParser.MethodContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FOOLParser#method}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethod(FOOLParser.MethodContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FOOLParser#classdec}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassdec(FOOLParser.ClassdecContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FOOLParser#classdec}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassdec(FOOLParser.ClassdecContext ctx);
 }
