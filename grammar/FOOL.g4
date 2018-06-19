@@ -19,11 +19,11 @@ prog   : exp SEMIC                                                              
        | (classdec)+ ((let in)?| exp) SEMIC	                                            #classExp
        ;
 
-let    : LET (dec SEMIC)+ ;
+let    : LET (dec SEMIC)+;
+
+letnest: LET (varasm SEMIC)+;
 
 in     : IN ((exp SEMIC)| stms) ;
-
-letnest: LET (varasm SEMIC)+ ;
 
 vardec : type ID ;
 
@@ -63,7 +63,6 @@ value  : (MINUS)? INTEGER                                                       
 
 stms   : ( stm )+ ;
 
-//TODO parentesi condizione IF
 stm    : ID ASM exp SEMIC                                                               #stmAssignment
        | IF cond=exp THEN CLPAR thenBranch=stms CRPAR ELSE CLPAR elseBranch=stms CRPAR  #stmIfExp
        ;

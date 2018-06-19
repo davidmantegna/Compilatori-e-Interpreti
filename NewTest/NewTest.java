@@ -66,11 +66,16 @@ public class NewTest {
             //show AST in console
             System.out.println(tree.toStringTree(parser) + "\n");
 
-            System.out.println("Analisi Semantica...\n");
 
             FoolVisitorImpl visitor = new FoolVisitorImpl();
-
             INode ast = visitor.visit(progContext); //generazione AST
+
+            System.out.println("\n--------------------------");
+            System.out.println("Visualizing AST...toPrint()\n");
+            System.out.println(ast.toPrint(""));
+            System.out.println("--------------------------");
+
+            System.out.println("Analisi Semantica...\n");
 
             SymbolTable env = new SymbolTable();
 
@@ -80,10 +85,6 @@ public class NewTest {
             if (stringArrayListErr.size() > 0) {
                 throw new SemanticException(stringArrayListErr);
             }
-
-            System.out.println("\nVisualizing AST...\n");
-            System.out.println(ast.toPrint(""));
-            System.out.println("--------------------------");
 
             System.out.println("\nType Check\n");
             IType type = ast.typeCheck(); //type-checking bottom-up
