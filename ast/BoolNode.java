@@ -38,6 +38,7 @@ public class BoolNode implements INode {
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("BoolNode: checkSemantics -> \n");
+        // new ArrayList<>() -> vuota perchè il chechSemantics è andato a buon fine. Quidi lista vuota di errori
         return new ArrayList<>(); //non crea livelli di scope
     }
 }

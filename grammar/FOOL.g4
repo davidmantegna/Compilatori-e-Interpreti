@@ -5,7 +5,7 @@ grammar FOOL;
 }
 
 @lexer::members {
-   public ArrayList<String> errors = new ArrayList<>();
+   public ArrayList<String> lexicalErrors = new ArrayList<>();
 }
 
 /*------------------------------------------------------------------
@@ -14,8 +14,8 @@ grammar FOOL;
 
 //TODO test object orientation
 
-prog   : exp SEMIC                                                                      #singleExp
-       | let in SEMIC                                                                   #letInExp
+prog   : exp SEMIC                                                                         #singleExp
+       | let in                                                                            #letInExp
        | (classdec)+ ((let in)?| exp) SEMIC	                                            #classExp
        ;
 
@@ -29,7 +29,7 @@ vardec : type ID ;
 
 varasm : vardec ASM exp ;
 
-fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR ((letnest in SEMIC)? |((exp SEMIC)| stms )) ;
+fun    : (type | VOID) ID LPAR ( vardec ( COMMA vardec)* )? RPAR ((letnest in SEMIC)? |((exp SEMIC)| stms )) ;
 
 dec    : varasm                                                                         #varAssignment
        | fun                                                                            #funDeclaration
@@ -48,14 +48,14 @@ factor : left=value  (operator=(AND | OR | EQ | GEQ | LEQ | GREATER | LESS) righ
 
 funcall : ID (LPAR (exp (COMMA exp)* )? RPAR)? ;
 
-newexp : NEW ID (LPAR (exp (COMMA exp)* )? RPAR)?;
+newexp : NEW ID LPAR (exp (COMMA exp)* )? RPAR;
 
 value  : (MINUS)? INTEGER                                                               #intVal
        | (NOT)? ( TRUE | FALSE )                                                        #boolVal
        | LPAR exp RPAR                                                                  #baseExp
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR    #ifExp
-       | (MINUS)? ID                                                                    #varExp
-       | THIS                                                                           #thisExp
+       | (MINUS | NOT)? ID                                                              #varExp
+//       | THIS                                                                           #thisExp
        | funcall                                                                        #functionCall
        | (ID|THIS) DOT funcall                                                          #methodExp
        | newexp                                                                         #newFunction
@@ -128,4 +128,4 @@ WS              : (' '|'\t'|'\n'|'\r')-> skip;
 LINECOMENTS    : '//' (~('\n'|'\r'))* -> skip;
 BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
 
-ERR     : . { errors.add("Invalid char: " + getText());} -> channel(HIDDEN) ;
+ERR     : . { lexicalErrors.add("Invalid char: " + getText());} -> channel(HIDDEN) ;

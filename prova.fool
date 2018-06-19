@@ -1,10 +1,10 @@
 let
-    int x = 1;
+    int x = 2 ;
+    int y = 3 ;
 in
-    if x < 1
+    if (x < 1)
         then{
             x = 5;
         }else{
             x = 4;
         }
-;

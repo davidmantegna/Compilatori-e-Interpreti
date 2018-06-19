@@ -1,4 +1,4 @@
-package NewTest;
+package TestNew;
 
 import Type.IType;
 import ast.INode;
@@ -44,9 +44,9 @@ public class NewTest {
             System.out.println("Numero Tokens: " + tokens.getTokens().size() + "\n");
 
             //SIMPLISTIC BUT WRONG CHECK OF THE LEXER ERRORS
-            if (lexer.errors.size() > 0) {
+            if (lexer.lexicalErrors.size() > 0) {
                 System.out.println("The program was not in the right format. Exiting the compilation process now");
-                throw new LexerException(lexer.errors);
+                throw new LexerException(lexer.lexicalErrors);
             } else {
                 System.out.println("LEXER OK");
             }

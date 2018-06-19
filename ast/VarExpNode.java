@@ -26,7 +26,11 @@ public class VarExpNode implements INode {
 
     @Override
     public String toPrint(String indent) {
-        return null;
+        String minus = " ";
+        if (isNegative) {
+            minus = " -";
+        }
+        return indent + " Id:" + minus + identificatore;
     }
 
     @Override
@@ -85,7 +89,7 @@ public class VarExpNode implements INode {
             nestingLevel = env.getNestingLevel();
 
             //serve per assegnare il supertipo dinamicamente agli oggetti
-            //vedi NewTest
+            //vedi TestNew
             // TODO Object Orientation
 //            if (entry.getType() instanceof ObjectType) {
 //                ObjectType decType = (ObjectType) entry.getType();
