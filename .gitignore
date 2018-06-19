@@ -58,6 +58,5 @@ gen/
 #iml
 Compilatori-e-interpreti.iml
 
-#parserNew Folder
+# ParserNew Folder
 parserNew/
-

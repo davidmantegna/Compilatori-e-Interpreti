@@ -60,10 +60,7 @@ public class VarAsmNode implements INode {
 
         try {
             env.processDeclaration(id, assignedType, env.getOffset());
-            //Perché decrementa offset nella symbolTable?!
-            System.out.println("Decremento offset nella symbolTable...non so perché...");
             env.decreaseOffset();
-            System.out.println("Ho decrementato offset nella symbolTable...a cazzo di cane...");
         } catch (MultipleIDException e) {
             res.add(e.getMessage());
         }
