@@ -49,7 +49,7 @@ Questo linguaggio è una estensione object-oriented del linguaggio funzionale vi
 * I campi non sono modificabili ed il loro valore viene definito quando l'oggetto è creato.
 * E' inoltre possibile dichiarare funzioni annidate. Le funzioni NON possono essere passate come parametri.
 
-### Type Checker
+### type Checker
 
 Il compilatore deve comprendere un type-checker che controlli il corretto uso dei tipi. Si deve considerare una nozione di subtyping fra classi e tipi di funzioni. 
 

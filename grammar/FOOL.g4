@@ -14,22 +14,22 @@ grammar FOOL;
 
 //TODO test object orientation
 
-prog   : exp  SEMIC                                                                          #singleExp
-       | let in                                                                         #letInExp
-       | (classdec)+ ((let in)?| exp) SEMIC	                                                #classExp
+prog   : exp  SEMIC                                                                           #singleExp
+       | let ((exp SEMIC)| stms)                                                              #letInExp
+       | (classdec)+ SEMIC (let)? ((exp SEMIC)| stms)	                                       #classExp
        ;
 
-let    : LET (dec SEMIC)+;
+classdec : CLASS ID (EXTENDS ID)? (LPAR (vardec (COMMA vardec)*)? RPAR)? (CLPAR ((method SEMIC)+)? CRPAR)? ;
 
-letnest: LET (varasm SEMIC)+;
+let    : LET (dec SEMIC)+ IN;
 
-in     : IN ((exp SEMIC)| stms) ;
+letnest: LET (varasm SEMIC)+ IN;
 
 vardec : type ID ;
 
 varasm : vardec ASM exp ;
 
-fun    : (type | VOID) ID LPAR ( vardec ( COMMA vardec)* )? RPAR ((letnest in SEMIC)? |((exp SEMIC)| stms )) ;
+fun    : (type | VOID) ID LPAR ( vardec ( COMMA vardec)* )? RPAR (letnest)? ((exp)| stms ) ;
 
 dec    : varasm                                                                         #varAssignment
        | fun                                                                            #funDeclaration
@@ -55,9 +55,9 @@ value  : (MINUS)? INTEGER                                                       
        | LPAR exp RPAR                                                                  #baseExp
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR    #ifExp
        | (MINUS | NOT)? ID                                                              #varExp
-//       | THIS                                                                           #thisExp
+//       | THIS                                                                         #thisExp
        | funcall                                                                        #functionCall
-       | (ID|THIS) DOT funcall                                                          #methodExp
+       | (ID | THIS) DOT funcall                                                        #methodExp
        | newexp                                                                         #newFunction
        ;
 
@@ -69,7 +69,6 @@ stm    : ID ASM exp SEMIC                                                       
 
 method : fun ;
 
-classdec  : CLASS ID (EXTENDS ID)? (LPAR (vardec (COMMA vardec)*)? RPAR)? (CLPAR ((method)+)? CRPAR)? ;
 
    
 /*------------------------------------------------------------------

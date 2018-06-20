@@ -1,6 +1,6 @@
 package util.Semantic;
 
-import Type.IType;
+import type.IType;
 
 public class SymbolTableEntry {
 
@@ -35,10 +35,21 @@ public class SymbolTableEntry {
         return offset;
     }
 
-    public boolean getInsideClass() {return insideClass;}
+    public boolean getInsideClass() {
+        return insideClass;
+    }
 
     public int getNestinglevel() {
         return nestingLevel;
     }
 
+    @Override
+    public String toString() {
+        return "SymbolTableEntry " +
+                "nestingLevel= " + nestingLevel +
+                ", type= " + type +
+                ", offset= " + offset +
+                ", insideClass= " + insideClass +
+                "}";
+    }
 }
