@@ -25,14 +25,6 @@ public class VarAsmNode implements INode {
         return id;
     }
 
-    @Override
-    public String toPrint(String indent) {
-        return indent + "Var:\n"
-                + "\t" + id + " "
-                + assignedType.toPrint() + "\t"
-                + exp.toPrint(indent);
-    }
-
     //valore di ritorno non utilizzato
     @Override
     public IType typeCheck() throws TypeException {

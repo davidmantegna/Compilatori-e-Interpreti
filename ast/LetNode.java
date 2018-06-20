@@ -17,15 +17,6 @@ public class LetNode implements INode {
     }
 
     @Override
-    public String toPrint(String indent) {
-        String declstr = "";
-        for (INode dec : declarationArrayList) {
-            declstr += dec.toPrint(indent + "\t");
-        }
-        return indent + "Let\n" + declstr;
-    }
-
-    @Override
     public IType typeCheck() throws TypeException {
         System.out.print("LetNode: typeCheck ->\t");
         for (INode dec : declarationArrayList) {

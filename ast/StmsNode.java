@@ -17,15 +17,6 @@ public class StmsNode implements INode {
     }
 
     @Override
-    public String toPrint(String indent) {
-        String stmsStr = "";
-        for (INode stm: stmsArrayList)
-            stmsStr += stm.toPrint(indent + "\t");
-
-        return indent + "Stms\n" + stmsStr;
-    }
-
-    @Override
     public IType typeCheck() throws TypeException {
         System.out.print("StmsNode: typeCheck -> \t");
         for (INode stm: stmsArrayList)

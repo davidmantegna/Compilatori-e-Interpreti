@@ -24,13 +24,6 @@ public class FactorNode implements INode {
     }
 
     @Override
-    public String toPrint(String indent) {
-        return indent + operator + "\n"
-                + leftNode.toPrint(indent + "\t")
-                + rightNode.toPrint(indent + "\t");
-    }
-
-    @Override
     public IType typeCheck() throws TypeException {
         System.out.println("FactorNode: typeCheck ->\t");
 

@@ -16,12 +16,6 @@ public class IntNode implements INode {
     }
 
     @Override
-    public String toPrint(String indent) {
-        return indent + "Int: "
-                + Integer.toString(value) + "\n";
-    }
-
-    @Override
     public IType typeCheck() throws TypeException {
         return new IntType();
     }

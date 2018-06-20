@@ -22,13 +22,6 @@ public class TermNode implements INode {
     }
 
     @Override
-    public String toPrint(String indent) {
-        return indent + operation + "\n"
-                + leftNode.toPrint(indent + "\t")
-                + rightNode.toPrint(indent + "\t");
-    }
-
-    @Override
     public IType typeCheck() throws TypeException {
         System.out.println("TermNode: typeCheck ->\t");
         if (!(leftNode.typeCheck().isSubType(new IntType()) && rightNode.typeCheck().isSubType(new IntType()))) {

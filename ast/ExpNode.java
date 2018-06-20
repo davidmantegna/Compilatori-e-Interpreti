@@ -22,13 +22,6 @@ public class ExpNode implements INode {
     }
 
     @Override
-    public String toPrint(String indent) {
-        return indent + operation + "\n"
-                + leftNode.toPrint(indent + "\t")
-                + rightNode.toPrint(indent + "\t");
-    }
-
-    @Override
     public IType typeCheck() throws TypeException {
         System.out.print("ExpNode: typeCheck ->\t");
         if (!leftNode.typeCheck().isSubType(new IntType()) || !rightNode.typeCheck().isSubType(new IntType())) {

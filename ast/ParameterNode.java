@@ -43,13 +43,6 @@ public class ParameterNode implements INode{
     }
 
     @Override
-    public String toPrint(String indent) {
-        return indent + "Par:\n"
-                + "\t" + ID + " "
-                + type.toPrint();
-    }
-
-    @Override
     public IType typeCheck() throws TypeException {
         return null;
     }

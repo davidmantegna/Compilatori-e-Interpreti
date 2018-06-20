@@ -44,13 +44,6 @@ public class LetInNode implements INode {
         return res;
     }
 
-    @Override
-    public String toPrint(String indent) {
-        return indent + "LetIn:\n" +
-                let.toPrint(indent + "\t") +
-                in.toPrint(indent + "\t");
-    }
-
 
     @Override
     public IType typeCheck() throws TypeException {

@@ -24,14 +24,6 @@ public class StmIfExpNode implements INode {
     }
 
     @Override
-    public String toPrint(String indent) {
-        return indent +
-                conditionNode.toPrint(indent + "\t") +
-                stmsThen.toPrint(indent + "\t") +
-                stmsElse.toPrint(indent + "\t") ;
-    }
-
-    @Override
     public IType typeCheck() throws TypeException {
         System.out.print("StmIfExpNode: typeCheck -> \t");
         if(!conditionNode.typeCheck().isSubType(new BoolType()))

@@ -24,14 +24,6 @@ public class IfNode implements INode{
     }
 
     @Override
-    public String toPrint(String indent) {
-        return indent +
-                conditionNode.toPrint(indent + "\t") +
-                thenNode.toPrint(indent + "\t") +
-                elseNode.toPrint(indent + "\t") ;
-    }
-
-    @Override
     public IType typeCheck() throws TypeException {
         if(!conditionNode.typeCheck().isSubType(new BoolType()))
             throw new TypeException("Condizione non booleana", ctx);

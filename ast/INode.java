@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 public interface INode {
 
-    String toPrint(String indent);
-
     //fa il type checking e ritorna:
     //  per una espressione, il suo tipo (oggetto BoolTypeNode o IntTypeNode)
     //  per una dichiarazione, "null"

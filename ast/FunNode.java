@@ -44,23 +44,6 @@ public class FunNode implements INode {
     }
 
     @Override
-    public String toPrint(String indent) {
-        String parlstr="";
-        for (INode par:parameterNodeArrayList)
-            parlstr+=par.toPrint(indent+"  ");
-        String declstr="";
-        if (declarationsArrayList!=null)
-            for (INode dec:declarationsArrayList)
-                declstr+=dec.toPrint(indent+"  ");
-        return indent+"Fun:" + ID +"\n"
-                +returnType.toPrint() +"  "
-                +parlstr
-                +declstr
-                +body.toPrint(indent+"  ") ;
-    }
-
-
-    @Override
     public IType typeCheck() throws TypeException {
         //typecheck di ogni parametro
         ArrayList<IType> paramsType = new ArrayList<>();

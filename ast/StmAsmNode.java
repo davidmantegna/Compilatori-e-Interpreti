@@ -21,13 +21,6 @@ public class StmAsmNode implements INode {
     }
 
     @Override
-    public String toPrint(String indent) {
-        return indent + "Var:\n"
-                + "\t\t\t" + id + " "
-                + exp.toPrint(indent);
-    }
-
-    @Override
     public IType typeCheck(){
         System.out.print("StmAsmNode: typeCheck -> \t");
         return new VoidType();

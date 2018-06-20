@@ -22,11 +22,6 @@ public class TypeNode implements INode {
     }
 
     @Override
-    public String toPrint(String indent) {
-        return indent + assignedType + "\n";
-    }
-
-    @Override
     public IType typeCheck() throws TypeException {
         return type;
     }

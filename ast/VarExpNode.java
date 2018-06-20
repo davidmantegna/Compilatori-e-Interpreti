@@ -27,18 +27,6 @@ public class VarExpNode implements INode {
     }
 
     @Override
-    public String toPrint(String indent) {
-        String not = " ";
-        String minus = "";
-        if (isNegative) {
-            minus = "-";
-        }
-        if(isNot)
-            not = " !";
-        return indent + " Id:" + not + minus + identificatore;
-    }
-
-    @Override
     public IType typeCheck() throws TypeException {
         // TODO Object Orientation
 //        if (entry.getType() instanceof ArrowType) {

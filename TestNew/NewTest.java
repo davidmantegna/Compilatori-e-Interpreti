@@ -71,8 +71,8 @@ public class NewTest {
             INode ast = visitor.visit(progContext); //generazione AST
 
             System.out.println("\n--------------------------");
-            System.out.println("Visualizing AST...toPrint()\n");
-            System.out.println(ast.toPrint(""));
+            System.out.println("Visualizing AST...\n");
+            //TODO Graphical interface
             System.out.println("--------------------------");
 
             System.out.println("Analisi Semantica...\n");
