@@ -40,12 +40,7 @@ public class LetNode implements INode {
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("LetNode: checkSemantics -> \n\t" + env.toString() + "\n");
         ArrayList<String> res = new ArrayList<>();
-
-        HashMap<String, SymbolTableEntry> hashMap = new HashMap<>();
-
-        //entro in un nuovo livello di scope
-        env.pushHashMap(hashMap);
-
+        
         //CheckSemantic nella lista di dichiarazioni
         if (declarationArrayList.size() > 0) {
             env.setOffset(-2);

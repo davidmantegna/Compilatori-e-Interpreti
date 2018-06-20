@@ -116,7 +116,7 @@ public class SymbolTable {
         }
         throw new UndeclaredIDException(id);
     }
-
+ // verifico se id (identificatore) utilizzato nell in è stato precedentemente dichiarato
     //uguale a processUse ma ignora le entry di tipo funzione
     public SymbolTableEntry processUseIgnoreArrow(String id) throws UndeclaredIDException {
         ListIterator<HashMap<String, SymbolTableEntry>> li = symTable.listIterator(symTable.size());

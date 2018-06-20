@@ -47,7 +47,7 @@ public class LetInNode implements INode {
         //parte Let
         res.addAll(let.checkSemantics(env));
 
-        //Parte In
+        //Parte stmexp
         res.addAll(stmExp.checkSemantics(env));
 
         //lascio il vecchio scope

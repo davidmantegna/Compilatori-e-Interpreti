@@ -1,4 +1,6 @@
 let
     int x=0;
+    int y=0;
+    bool f=true;
 in
     x;
