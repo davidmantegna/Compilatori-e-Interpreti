@@ -1,6 +1,13 @@
 let
-    int x=0;
-    int y=0;
-    bool f=true;
+    int x = 2 ;
+    int y=3;
+    int f()
+        let
+           int x=2;
+        in
+           x = 3;
+;
+
 in
-    x;
+    2;
+;

@@ -103,7 +103,56 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitFun(FunContext funContext) {
         System.out.print("visitFun -> \t");
-        return super.visitFun(funContext);
+
+        INode body;
+
+        try {
+
+            ArrayList<ParameterNode> params = new ArrayList<>();
+
+            // add argument declarationsArrayList
+            // we are getting a shortcut here by constructing directly the ParameterNode
+            // this could be done differently by visiting instead the VardecContext
+            for (int i = 0; i < funContext.vardec().size(); i++) {
+                VardecContext vardecContext = funContext.vardec().get(i);
+                params.add(new ParameterNode(vardecContext.ID().getText(), visit(vardecContext.type()).typeCheck(), i + 1, vardecContext));
+            }
+
+            // add body, create a list for the nested declarationsArrayList
+            ArrayList<INode> declarations = new ArrayList<>();
+            // check whether there are actually nested decs
+
+            //TODO controllare tipo void
+            System.out.println("\ncontrollo");
+            if (funContext.exp() != null) {
+                System.out.println("exp");
+                body = visit(funContext.exp());
+
+            } else {
+
+                if (funContext.stms() != null) {
+                    System.out.println("stms");
+                    body = visit(funContext.stms());
+                } else {
+
+                    System.out.println("letnest");
+                    // if there are visit each varasm and add it to the @innerDec list
+                    for (VarasmContext varasms : funContext.letnest().varasm()) {
+                        declarations.add(visit(varasms));
+                    }
+
+                    //visit letnest context
+                    body = visit(funContext.letnest());
+
+                }
+            }
+
+            return new FunNode(funContext.ID().getText(), visit(funContext.type()).typeCheck(), params, declarations, body, funContext);
+
+        } catch (TypeException e) {
+            return null;
+        }
+
     }
 
     @Override
