@@ -74,7 +74,7 @@ public class SymbolTable {
     // definito e viene lanciata l'eccezione MultipleIDException
     public SymbolTable processDeclaration(String id, IType type, int offset) throws MultipleIDException {
         SymbolTableEntry nuovaEntry = new SymbolTableEntry(getNestingLevel(), type, offset);
-        System.out.print("\t\t\033[32;1;2mprocessDeclaration: \033[0m" + nuovaEntry.toString() + "\n");
+        System.out.print("\t\t\033[31;1mprocessDeclaration: \033[0m" + nuovaEntry.toString() + "\n");
         checkProcessDeclaration(nuovaEntry, id, type);
         return this;
     }
@@ -83,7 +83,7 @@ public class SymbolTable {
 
     public SymbolTable processDeclarationforClass(String id, IType type, int offset, boolean inside) throws MultipleIDException {
         SymbolTableEntry nuovaEntry = new SymbolTableEntry(getNestingLevel(), type, offset, inside);
-        System.out.print("\t\tprocessDeclarationforClass: " + nuovaEntry.toString() + "\n");
+        System.out.print("\t\t\033[31;1mprocessDeclarationforClass: \033[0m" + nuovaEntry.toString() + "\n");
         checkProcessDeclaration(nuovaEntry, id, type);
         return this;
     }
@@ -150,7 +150,7 @@ public class SymbolTable {
 
     @Override
     public String toString() {
-        return "SymbolTable{ " +
+        return "\033[32;1;2mSymbolTable\033[0m{ " +
                 "symTable= " + symTable +
                 ", offset= " + offset +
                 ", classEntryforThis= " + classEntryforThis +

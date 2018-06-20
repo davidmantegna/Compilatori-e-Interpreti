@@ -1,5 +1,8 @@
-// Generated from FOOL.g4 by ANTLR 4.6
+// Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
 package parser;
+
+    import java.util.ArrayList;
+
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -25,11 +28,30 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLetInExp(FOOLParser.LetInExpContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code classExp}
+	 * labeled alternative in {@link FOOLParser#prog}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClassExp(FOOLParser.ClassExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FOOLParser#classdec}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClassdec(FOOLParser.ClassdecContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link FOOLParser#let}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLet(FOOLParser.LetContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FOOLParser#letnest}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLetnest(FOOLParser.LetnestContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FOOLParser#vardec}.
 	 * @param ctx the parse tree
@@ -87,6 +109,18 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFactor(FOOLParser.FactorContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link FOOLParser#funcall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncall(FOOLParser.FuncallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FOOLParser#newexp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNewexp(FOOLParser.NewexpContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code intVal}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
@@ -122,10 +156,50 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVarExp(FOOLParser.VarExpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code funExp}
+	 * Visit a parse tree produced by the {@code functionCall}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunExp(FOOLParser.FunExpContext ctx);
+	T visitFunctionCall(FOOLParser.FunctionCallContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code methodExp}
+	 * labeled alternative in {@link FOOLParser#value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethodExp(FOOLParser.MethodExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code newFunction}
+	 * labeled alternative in {@link FOOLParser#value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNewFunction(FOOLParser.NewFunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FOOLParser#stms}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStms(FOOLParser.StmsContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code stmAssignment}
+	 * labeled alternative in {@link FOOLParser#stm}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmAssignment(FOOLParser.StmAssignmentContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code stmIfExp}
+	 * labeled alternative in {@link FOOLParser#stm}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStmIfExp(FOOLParser.StmIfExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FOOLParser#method}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethod(FOOLParser.MethodContext ctx);
 }
