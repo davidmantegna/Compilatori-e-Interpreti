@@ -7,6 +7,7 @@ import exceptions.TypeException;
 import nodes.*;
 import parser.FOOLBaseVisitor;
 import parser.FOOLLexer;
+import type.VoidType;
 
 import java.util.ArrayList;
 
@@ -122,7 +123,6 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
             ArrayList<INode> declarations = new ArrayList<>();
             // check whether there are actually nested decs
 
-            //TODO controllare tipo void
             System.out.println("\ncontrollo");
 
 
@@ -144,8 +144,15 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
                 body = visit(funContext.stms());
             }
 
+            IType returnType;
 
-            return new FunNode(funContext.ID().getText(), visit(funContext.type()).typeCheck(), params, declarations, body, funContext);
+            try {
+                returnType = visit(funContext.type()).typeCheck();
+            }catch (NullPointerException e){
+                returnType = new VoidType();
+            }
+
+            return new FunNode(funContext.ID().getText(), returnType, params, declarations, body, funContext);
 
         } catch (TypeException e) {
             return null;
@@ -258,7 +265,20 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitFuncall(FuncallContext funcallContext) {
         System.out.print("visitFuncall -> \t");
-        return super.visitFuncall(funcallContext);
+
+        INode res;
+        String functionId;
+        //get the invocation argumentsArrayList
+        ArrayList<INode> args = new ArrayList<INode>();
+
+        for (ExpContext exp : funcallContext.exp())
+            args.add(visit(exp));
+
+        functionId = funcallContext.ID().getText();
+
+        res = new FunCallNode(functionId, args, funcallContext);
+
+        return res;
     }
 
     @Override

@@ -47,7 +47,7 @@ public class SymbolTableEntry {
     public String toString() {
         return "SymbolTableEntry " +
                 "nestingLevel= " + nestingLevel +
-                ", type= " + type +
+                ", type= " + type.toPrint() +
                 ", offset= " + offset +
                 ", insideClass= " + insideClass +
                 "}";
