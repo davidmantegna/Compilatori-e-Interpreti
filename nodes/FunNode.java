@@ -16,15 +16,15 @@ import java.util.HashMap;
 public class FunNode implements INode {
 
     //protected perché vi possono accedere le sottoclassi, ovvero MethodNode
-    protected String ID;
+    protected String idFunzione;
     protected IType returnType;
-    protected ArrayList<ParameterNode> parameterNodeArrayList = new ArrayList<>();
+    protected ArrayList<ParameterNode> parameterNodeArrayList;
     protected ArrayList<INode> declarationsArrayList;
     protected INode body;
     private ParserRuleContext parserRuleContext;
 
     public FunNode(String id, IType returnType, ArrayList<ParameterNode> parameterNodeArrayList, ArrayList<INode> declarationsArrayList, INode body, ParserRuleContext parserRuleContext) {
-        this.ID = id;
+        this.idFunzione = id;
         this.returnType = returnType;
         this.parameterNodeArrayList = parameterNodeArrayList;
         this.declarationsArrayList = declarationsArrayList;
@@ -33,7 +33,7 @@ public class FunNode implements INode {
     }
 
     public String getID() {
-        return ID;
+        return idFunzione;
     }
 
     public ArrayList<ParameterNode> getParameterNodeArrayList() {
@@ -65,8 +65,8 @@ public class FunNode implements INode {
         //controllo che il corpo ritorni il tipo dichiarato dalla funzione
         IType bodyType = body.typeCheck();
         if (!bodyType.isSubType(returnType)) {
-            throw new TypeException("Tipo incompatibile ritornato dalla funzione " + ID + " ritornato '" + bodyType + "', deve ritornare '" + returnType + "'", parserRuleContext);
-        }
+            throw new TypeException("Il tipo restituito dal corpo della funzione '" + idFunzione + "' è '" + body.typeCheck().toPrint() + "'. Il tipo richiesto è '" + returnType.toPrint() + "'", parserRuleContext);
+      }
 
         return new FunType(paramsType, returnType);
     }
@@ -127,10 +127,10 @@ public class FunNode implements INode {
                 ObjectType objectType = (ObjectType) returnType;
                 res.addAll(objectType.updateClassType(env));
             }*/
-            env.processDeclaration(ID, new FunType(parameterTypeArrayList, returnType), env.getOffset());
+            env.processDeclaration(idFunzione, new FunType(parameterTypeArrayList, returnType), env.getOffset());
             env.decreaseOffset();
         } catch (MultipleIDException e) {
-            res.add("La funzione " + ID + " è già stata dichiarata");
+            res.add("La funzione " + idFunzione + " è già stata dichiarata");
         }
 
         //entro in un nuovo livello di scope

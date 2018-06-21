@@ -59,6 +59,7 @@ value  : (MINUS)? INTEGER                                                       
        | funcall                                                                        #funExp
        | (ID | THIS) DOT funcall                                                        #methodExp
        | newexp                                                                         #newFunction
+       | NULL                                                                           #nullExp
        ;
 
 stms   : ( stm )+ ;
@@ -112,6 +113,7 @@ THIS   : 'this' ;
 NEW    : 'new' ;
 DOT    : '.' ;
 VOID   : 'void' ;
+NULL   : 'null' ;
 
 
 //Numbers

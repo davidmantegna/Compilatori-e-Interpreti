@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 public class ParameterNode implements INode {
 
-    private String ID;
+    private String idParameter;
     private IType type;
     private int offset;
     private boolean insideClass;
     private VardecContext vardecContext;
 
     public ParameterNode(String ID, IType type, int offset, VardecContext vardecContext) {
-        this.ID = ID;
+        this.idParameter = ID;
         this.type = type;
         this.offset = offset;
         this.insideClass = false;
@@ -35,7 +35,7 @@ public class ParameterNode implements INode {
 */
 
     public String getId(){
-        return ID;
+        return idParameter;
     }
 
     public IType getType(){
@@ -57,7 +57,7 @@ public class ParameterNode implements INode {
         System.out.print("ParameterNode: checkSemantics -> \n\t" + env.toString() + "\n");
         ArrayList<String> res = new ArrayList<>();
         try {
-            env.processParameterDeclaration(ID, type, offset, insideClass);
+            env.processParameterDeclaration(idParameter, type, offset, insideClass);
         } catch (MultipleIDException e) {
             res.add(e.getMessage());
         }

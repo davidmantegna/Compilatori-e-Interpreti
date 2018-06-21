@@ -323,9 +323,9 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     }
 
     @Override
-    public INode visitFunctionCall(FunctionCallContext functionCallContext) {
-        System.out.print("visitFunctionCall -> \t");
-        return super.visitFunctionCall(functionCallContext);
+    public INode visitFunExp(FunExpContext funExpContext) {
+        System.out.print("visitFunExp -> \t");
+        return super.visitFunExp(funExpContext);
     }
 
     @Override

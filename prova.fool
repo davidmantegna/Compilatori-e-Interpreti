@@ -1,5 +1,6 @@
 let
-    bool x = true;
-
+    int x = 0;
+    int ciao(int a, bool c)
+        x = a;;
 in
-    -x;
+    9;
