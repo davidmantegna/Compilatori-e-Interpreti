@@ -34,6 +34,13 @@ cmake-build-release/
 # IntelliJ
 out/
 
+#Parser Folder
+
+*.asm
+/parser/*.tokens
+/parser/*.java
+
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
@@ -58,5 +65,3 @@ gen/
 #iml
 Compilatori-e-interpreti.iml
 
-# Parser Folder
-parser/
