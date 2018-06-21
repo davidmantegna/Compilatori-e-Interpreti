@@ -3,7 +3,7 @@ package nodes;
 import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import org.antlr.v4.runtime.ParserRuleContext;
-import type.ArrowType;
+import type.FunType;
 import type.IType;
 import util.Semantic.SymbolTable;
 import util.Semantic.SymbolTableEntry;
@@ -68,7 +68,7 @@ public class FunNode implements INode {
             throw new TypeException("Tipo incompatibile ritornato dalla funzione " + ID + " ritornato '" + bodyType + "', deve ritornare '" + returnType + "'", parserRuleContext);
         }
 
-        return new ArrowType(paramsType, returnType);
+        return new FunType(paramsType, returnType);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class FunNode implements INode {
                 ObjectType objectType = (ObjectType) returnType;
                 res.addAll(objectType.updateClassType(env));
             }*/
-            env.processDeclaration(ID, new ArrowType(parameterTypeArrayList, returnType), env.getOffset());
+            env.processDeclaration(ID, new FunType(parameterTypeArrayList, returnType), env.getOffset());
             env.decreaseOffset();
         } catch (MultipleIDException e) {
             res.add("La funzione " + ID + " è già stata dichiarata");

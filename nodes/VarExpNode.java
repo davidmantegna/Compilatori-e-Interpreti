@@ -1,9 +1,12 @@
 package nodes;
 
+import type.BoolType;
+import type.FunType;
 import type.IType;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import org.antlr.v4.runtime.ParserRuleContext;
+import type.IntType;
 import util.Semantic.SymbolTable;
 import util.Semantic.SymbolTableEntry;
 
@@ -29,9 +32,21 @@ public class VarExpNode implements INode {
     @Override
     public IType typeCheck() throws TypeException {
         // TODO Object Orientation
-//        if (entry.getType() instanceof ArrowType) {
-//            throw new TypeException("Utilizzo errato di identificativo di funzione", parserRuleContext);
-//        }
+        if(isNot){
+            if (!entry.getType().isSubType(new BoolType())) {
+                throw new TypeException("Tipo incompatibile per l'operatore NOT. È richiesto un booleano.", parserRuleContext);
+            }
+        }
+        if(isNegative){
+            if (!entry.getType().isSubType(new IntType())) {
+                throw new TypeException("Tipo incompatibile per l'operatore MINUS. È richiesto un intero", parserRuleContext);
+            }
+        }
+
+
+        if (entry.getType() instanceof FunType) {
+            throw new TypeException("Utilizzo errato di identificativo di funzione", parserRuleContext);
+        }
         return entry.getType();
     }
 
@@ -72,7 +87,7 @@ public class VarExpNode implements INode {
         try {
             //è utilizzato per poter definire un oggetto con lo stesso nome di un metodo
             //all'interno di una classe
-            entry = env.processUseIgnoreArrow(identificatore);
+            entry = env.processUseIgnoreFun(identificatore);
             //getInsideClass è true quando si è dentro ad una classe
             if (entry.getInsideClass()) {
                 // TODO Object Orientation
@@ -90,7 +105,6 @@ public class VarExpNode implements INode {
 //                ObjectType decType = (ObjectType) entry.getType();
 //                res.addAll(decType.updateClassType(env));
 //            }
-
 
 
         } catch (UndeclaredIDException e) {

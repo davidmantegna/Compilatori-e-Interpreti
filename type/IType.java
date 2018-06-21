@@ -5,7 +5,7 @@ public interface IType {
         INT,
         BOOL,
         VOID,
-        ARROW,
+        FUN,
         CLASS,
         OBJECT
     }

@@ -311,11 +311,14 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         System.out.print("visitVarExp -> \t");
         Boolean isNeg = true;
         Boolean isNot = true;
+
         if (varExpContext.MINUS() == null) {
             isNeg = false;
-        } else {
+        }
+        if (varExpContext.NOT() == null) {
             isNot = false;
         }
+
         return new VarExpNode(varExpContext.ID().getText(), varExpContext, isNeg, isNot);
     }
 

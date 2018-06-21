@@ -47,15 +47,9 @@ public class VarAsmNode implements INode {
         // TODO aggiungere controllo per instanziazione di un nuovo oggetto
 
         // al momento gestisco così il tipo ID
-//        try {
-//            if (assignedType == null) {
-//                res.add("Tipo non compatibile con quelli definiti dalla Grammatica\n");
-//                throw new TypeException("Tipo non compatibile con quelli definiti dalla Grammatica", varasmContext.vardec());
-//            }
-//        } catch (TypeException e) {
-//            System.out.println("VarAsmNode: " + e.getMessage());
-//        }
-
+        if (assignedType == null) {
+            res.add("Tipo non compatibile con quelli definiti dalla Grammatica. Il Tipo di '" + id + "' non é valido\n");
+        }
 
         res.addAll(exp.checkSemantics(env));
 

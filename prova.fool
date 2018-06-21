@@ -1,6 +1,5 @@
 let
-    ciao x = 0;
-    int y = false;
-    bool f = true;
+    bool x = true;
+
 in
-    y = false;
+    -x;

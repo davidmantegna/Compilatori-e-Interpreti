@@ -2,14 +2,14 @@ package type;
 
 import java.util.ArrayList;
 
-public class ArrowType implements IType {
+public class FunType implements IType {
 
     //TODO implement arrowType
 
     private ArrayList<IType> parametersTypeArrayList;
     private IType returnType;
 
-    public ArrowType(ArrayList<IType> parametersTypeArrayList, IType returnType) {
+    public FunType(ArrayList<IType> parametersTypeArrayList, IType returnType) {
         this.parametersTypeArrayList = parametersTypeArrayList;
         this.returnType = returnType;
     }
@@ -24,7 +24,7 @@ public class ArrowType implements IType {
 
     @Override
     public IDType getID() {
-        return IDType.ARROW;
+        return IDType.FUN;
     }
 
     @Override

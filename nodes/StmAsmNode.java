@@ -2,10 +2,7 @@ package nodes;
 
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
-import parser.FOOLParser;
-import parser.FOOLParser.StmContext;
 import type.IType;
-import type.VoidType;
 import parser.FOOLParser.StmAssignmentContext;
 import util.Semantic.SymbolTable;
 import util.Semantic.SymbolTableEntry;
@@ -47,7 +44,7 @@ public class StmAsmNode implements INode {
 
         // TODO testare ulteriormente
         try {
-            entry = env.processUseIgnoreArrow(id);
+            entry = env.processUseIgnoreFun(id);
             nestingLevel = env.getNestingLevel();
         } catch (UndeclaredIDException e) {
             res.add(id + ": identificativo non definito\n");

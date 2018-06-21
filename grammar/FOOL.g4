@@ -37,7 +37,7 @@ dec    : varasm                                                                 
 
 type   : INT
        | BOOL
-//       | ID
+       | ID
        ;
     
 exp    : left=term (operator=(PLUS | MINUS) right=exp)? ;
@@ -55,8 +55,8 @@ value  : (MINUS)? INTEGER                                                       
        | LPAR exp RPAR                                                                  #baseExp
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR    #ifExp
        | (MINUS | NOT)? ID                                                              #varExp
-//       | THIS                                                                         #thisExp
-       | funcall                                                                        #functionCall
+//     | THIS                                                                           #thisExp
+       | funcall                                                                        #funExp
        | (ID | THIS) DOT funcall                                                        #methodExp
        | newexp                                                                         #newFunction
        ;
