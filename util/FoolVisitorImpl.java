@@ -169,7 +169,8 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     public INode visitType(TypeContext typeContext) {
         System.out.print("visitType -> \t");
         //tutti i tipi gestiti da TypeNode
-        return new TypeNode(typeContext.getText());
+        INode type = new TypeNode(typeContext.getText());
+        return type;
     }
 
     @Override

@@ -1,15 +1,6 @@
 let
-    int x = 2 ;
-    int y=3;
-    void f(bool a)
-        let
-           bool x = true;
-        in
-           y = false;
-           ;
-
-
+    ciao x = 0;
+    int y = false;
+    bool f = true;
 in
-   x;
-   y;
-;
+    y = false;

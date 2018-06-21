@@ -1,6 +1,7 @@
 package util.Semantic;
 
 
+import type.ArrowType;
 import type.IType;
 import exceptions.MultipleIDException;
 import exceptions.UndeclaredIDException;
@@ -123,14 +124,14 @@ public class SymbolTable {
         }
         throw new UndeclaredIDException(id);
     }
- // verifico se id (identificatore) utilizzato nell in è stato precedentemente dichiarato
+
+    // verifico se id (identificatore) utilizzato nell in è stato precedentemente dichiarato
     //uguale a processUse ma ignora le entry di tipo funzione
     public SymbolTableEntry processUseIgnoreArrow(String id) throws UndeclaredIDException {
         ListIterator<HashMap<String, SymbolTableEntry>> li = symTable.listIterator(symTable.size());
         while (li.hasPrevious()) {
             HashMap<String, SymbolTableEntry> current = li.previous();
-            // TODO ArrowType
-            if (current.containsKey(id) /*&& !(current.get(id).getType() instanceof ArrowType)*/) {
+            if (current.containsKey(id) && !(current.get(id).getType() instanceof ArrowType)) {
                 return current.get(id);
             }
         }

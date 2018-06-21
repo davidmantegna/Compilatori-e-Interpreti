@@ -9,7 +9,6 @@ import util.Semantic.SymbolTable;
 import java.util.ArrayList;
 
 public class VarAsmNode implements INode {
-
     private String id;
     private IType assignedType;
     private INode exp;
@@ -47,6 +46,17 @@ public class VarAsmNode implements INode {
 
         // TODO aggiungere controllo per instanziazione di un nuovo oggetto
 
+        // al momento gestisco così il tipo ID
+//        try {
+//            if (assignedType == null) {
+//                res.add("Tipo non compatibile con quelli definiti dalla Grammatica\n");
+//                throw new TypeException("Tipo non compatibile con quelli definiti dalla Grammatica", varasmContext.vardec());
+//            }
+//        } catch (TypeException e) {
+//            System.out.println("VarAsmNode: " + e.getMessage());
+//        }
+
+
         res.addAll(exp.checkSemantics(env));
 
         try {
@@ -56,6 +66,7 @@ public class VarAsmNode implements INode {
         } catch (MultipleIDException e) {
             res.add(e.getMessage());
         }
+
 
         return res;
     }

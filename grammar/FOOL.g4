@@ -37,7 +37,7 @@ dec    : varasm                                                                 
 
 type   : INT
        | BOOL
-       | ID
+//       | ID
        ;
     
 exp    : left=term (operator=(PLUS | MINUS) right=exp)? ;
@@ -46,7 +46,7 @@ term   : left=factor (operator=(TIMES | DIV) right=term)? ;
    
 factor : left=value  (operator=(AND | OR | EQ | GEQ | LEQ | GREATER | LESS) right=value)? ;
 
-funcall : ID (LPAR (exp (COMMA exp)* )? RPAR)? ;
+funcall: ID (LPAR (exp (COMMA exp)* )? RPAR)? ;
 
 newexp : NEW ID LPAR (exp (COMMA exp)* )? RPAR;
 

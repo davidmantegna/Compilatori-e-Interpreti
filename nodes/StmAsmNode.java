@@ -1,29 +1,38 @@
 package nodes;
 
+import exceptions.TypeException;
+import exceptions.UndeclaredIDException;
+import parser.FOOLParser;
+import parser.FOOLParser.StmContext;
 import type.IType;
 import type.VoidType;
 import parser.FOOLParser.StmAssignmentContext;
 import util.Semantic.SymbolTable;
+import util.Semantic.SymbolTableEntry;
 
 import java.util.ArrayList;
 
 public class StmAsmNode implements INode {
 
     //TODO da testare
-    private  String id;
+    private String id;
     private INode exp;
-    private StmAssignmentContext ctx;
+    private StmAssignmentContext stmAssignmentContext;
+
+    private int nestingLevel;
+    private SymbolTableEntry entry;
 
     public StmAsmNode(String id, INode e, StmAssignmentContext c) {
         this.exp = e;
-        this.ctx = c;
+        this.stmAssignmentContext = c;
         this.id = id;
     }
 
     @Override
-    public IType typeCheck(){
+    public IType typeCheck() {
         System.out.print("StmAsmNode: typeCheck -> \t");
-        return new VoidType();
+        // return new VoidType();
+        return entry.getType();
     }
 
     @Override
@@ -36,8 +45,26 @@ public class StmAsmNode implements INode {
         System.out.print("StmAsmNode: checkSemantics -> \n\t" + env.toString() + "\n");
         ArrayList<String> res = new ArrayList<>();
 
+        // TODO testare ulteriormente
+        try {
+            entry = env.processUseIgnoreArrow(id);
+            nestingLevel = env.getNestingLevel();
+        } catch (UndeclaredIDException e) {
+            res.add(id + ": identificativo non definito\n");
+        }
+
         res.addAll(exp.checkSemantics(env));
+
+        try {
+            if (!exp.typeCheck().isSubType(entry.getType())) {
+                res.add("Valore incompatibile per la variabile " + id + "\n");
+                throw new TypeException("Valore incompatibile per la variabile " + id + ". Tipo atteso: " + entry.getType().toPrint(), stmAssignmentContext.exp());
+            }
+        } catch (TypeException e) {
+            System.out.println(e.getMessage());
+        }
 
         return res;
     }
+
 }
