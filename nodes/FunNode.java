@@ -1,5 +1,6 @@
 package nodes;
 
+import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import type.ArrowType;
@@ -31,7 +32,6 @@ public class FunNode implements INode {
         this.parserRuleContext = parserRuleContext;
     }
 
-
     public String getID() {
         return ID;
     }
@@ -47,6 +47,8 @@ public class FunNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
+        System.out.print("FunNode: typeCheck ->\t");
+
         //typecheck di ogni parametro
         ArrayList<IType> paramsType = new ArrayList<>();
         for (ParameterNode param : parameterNodeArrayList) {
@@ -110,6 +112,7 @@ public class FunNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("FunNode: checkSemantics -> \n\t" + env.toString() + "\n");
         ArrayList<String> res = new ArrayList<>();
 
         ArrayList<IType> parameterTypeArrayList = new ArrayList<>();
@@ -118,17 +121,17 @@ public class FunNode implements INode {
             parameterTypeArrayList.add(parameterNode.getType());
         }
 
-        /*try {   //TODO try catch object type
+        try {   //TODO try catch object type
             // Se restituisco un'istanza di una classe, aggiorno le informazioni
-            if ( returnType instanceof ObjectType) {
+            /*if ( returnType instanceof ObjectType) {
                 ObjectType objectType = (ObjectType) returnType;
                 res.addAll(objectType.updateClassType(env));
-            }
+            }*/
             env.processDeclaration(ID, new ArrowType(parameterTypeArrayList, returnType), env.getOffset());
             env.decreaseOffset();
         } catch (MultipleIDException e) {
             res.add("La funzione " + ID + " è già stata dichiarata");
-        }*/
+        }
 
         //entro in un nuovo livello di scope
         HashMap<String, SymbolTableEntry> hm = new HashMap<>();

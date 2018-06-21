@@ -9,7 +9,7 @@ import util.Semantic.SymbolTable;
 import java.util.ArrayList;
 
 public class VarAsmNode implements INode {
-    private INode vardec;
+
     private String id;
     private IType assignedType;
     private INode exp;
@@ -18,12 +18,6 @@ public class VarAsmNode implements INode {
     public VarAsmNode(String id, IType type, INode exp, VarasmContext varasmContext) {
         this.id = id;
         this.assignedType = type;
-        this.exp = exp;
-        this.varasmContext = varasmContext;
-    }
-
-    public VarAsmNode(INode vardec, INode exp, VarasmContext varasmContext) {
-        this.vardec = vardec;
         this.exp = exp;
         this.varasmContext = varasmContext;
     }

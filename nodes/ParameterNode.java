@@ -57,7 +57,7 @@ public class ParameterNode implements INode {
         System.out.print("ParameterNode: checkSemantics -> \n\t" + env.toString() + "\n");
         ArrayList<String> res = new ArrayList<>();
         try {
-            env.processDeclarationforClass(ID, type, offset, insideClass);
+            env.processParameterDeclaration(ID, type, offset, insideClass);
         } catch (MultipleIDException e) {
             res.add(e.getMessage());
         }

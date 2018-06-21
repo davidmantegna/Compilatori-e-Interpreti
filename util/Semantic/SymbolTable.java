@@ -88,6 +88,13 @@ public class SymbolTable {
         return this;
     }
 
+    public SymbolTable processParameterDeclaration(String id, IType type, int offset, boolean inside) throws MultipleIDException{
+        SymbolTableEntry nuovaEntry = new SymbolTableEntry(getNestingLevel(), type, offset, inside);
+        System.out.print("\t\t\033[31;1mprocessDeclarationforParameter: \033[0m" + nuovaEntry.toString() + "\n");
+        checkProcessDeclaration(nuovaEntry, id, type);
+        return this;
+    }
+
 
     //aggiorna l'attributo type della SymbolTableEntry con chiave IDType
     //è utilizzato per aggiornare il supertipo delle classi (dopo tutte le classdec)

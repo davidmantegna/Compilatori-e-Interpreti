@@ -1,13 +1,15 @@
 let
     int x = 2 ;
     int y=3;
-    int f()
+    void f(bool a)
         let
-           int x=2;
+           bool x = true;
         in
-           x = 3;
-;
+           y = false;
+           ;
+
 
 in
-    2;
+   x;
+   y;
 ;

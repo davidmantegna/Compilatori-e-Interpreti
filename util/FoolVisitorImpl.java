@@ -124,28 +124,26 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
             //TODO controllare tipo void
             System.out.println("\ncontrollo");
+
+
+            if (funContext.letnest() != null) {
+                System.out.println("letnest");
+                // if there are visit each varasm and add it to the @innerDec list
+                for (VarasmContext varasms : funContext.letnest().varasm()) {
+                    declarations.add(visit(varasms));
+                }
+
+            }
             if (funContext.exp() != null) {
                 System.out.println("exp");
                 body = visit(funContext.exp());
 
             } else {
 
-                if (funContext.stms() != null) {
-                    System.out.println("stms");
-                    body = visit(funContext.stms());
-                } else {
-
-                    System.out.println("letnest");
-                    // if there are visit each varasm and add it to the @innerDec list
-                    for (VarasmContext varasms : funContext.letnest().varasm()) {
-                        declarations.add(visit(varasms));
-                    }
-
-                    //visit letnest context
-                    body = visit(funContext.letnest());
-
-                }
+                System.out.println("stms");
+                body = visit(funContext.stms());
             }
+
 
             return new FunNode(funContext.ID().getText(), visit(funContext.type()).typeCheck(), params, declarations, body, funContext);
 
@@ -357,7 +355,9 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitStmAssignment(StmAssignmentContext stmAsmContext) {
         System.out.print("visitStmAssignment -> \t");
+
         INode expNode = visit(stmAsmContext.exp());
+
 
         return new StmAsmNode(stmAsmContext.ID().getText(), expNode, stmAsmContext);
     }
