@@ -123,11 +123,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
             ArrayList<INode> declarations = new ArrayList<>();
             // check whether there are actually nested decs
 
-            System.out.println("\ncontrollo");
-
-
             if (funContext.letnest() != null) {
-                System.out.println("letnest");
                 // if there are visit each varasm and add it to the @innerDec list
                 for (VarasmContext varasms : funContext.letnest().varasm()) {
                     declarations.add(visit(varasms));
@@ -135,20 +131,15 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
             }
             if (funContext.exp() != null) {
-                System.out.println("exp");
                 body = visit(funContext.exp());
-
             } else {
-
-                System.out.println("stms");
                 body = visit(funContext.stms());
             }
 
             IType returnType;
-
             try {
                 returnType = visit(funContext.type()).typeCheck();
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 returnType = new VoidType();
             }
 
@@ -400,5 +391,11 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     public INode visitMethod(MethodContext methodContext) {
         System.out.print("visitMethod -> \t");
         return super.visitMethod(methodContext);
+    }
+
+    @Override
+    public INode visitNullExp(NullExpContext nullExpContext) {
+        System.out.print("visitNullExp -> \t");
+        return new NullNode();
     }
 }

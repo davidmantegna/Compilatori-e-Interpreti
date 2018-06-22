@@ -1,6 +1,1 @@
-let
-    int x = 0;
-    int ciao(int a, bool c)
-        x = a;;
-in
-    9;
+null + null;

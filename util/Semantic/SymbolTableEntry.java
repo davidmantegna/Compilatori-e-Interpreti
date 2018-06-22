@@ -45,7 +45,7 @@ public class SymbolTableEntry {
 
     @Override
     public String toString() {
-        return "SymbolTableEntry " +
+        return "SymbolTableEntry {" +
                 "nestingLevel= " + nestingLevel +
                 ", type= " + type.toPrint() +
                 ", offset= " + offset +
