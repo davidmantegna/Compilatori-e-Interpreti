@@ -1,1 +1,17 @@
-null + null;
+let
+    int k = 10;
+    int x = 20;
+    void foo(bool k)
+     let
+        int k = 5;
+     in
+        if(true)
+        then{
+            x=5;
+        }else{
+            k=false;
+        }
+    ;
+in
+    5
+;

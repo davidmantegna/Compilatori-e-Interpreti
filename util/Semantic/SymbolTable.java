@@ -89,7 +89,7 @@ public class SymbolTable {
     }
 
     // aggiungo nella hashmap più esterna i parametri della funzione
-    public SymbolTable processParameterDeclaration(String id, IType type, int offset, boolean inside) throws MultipleIDException{
+    public SymbolTable processParameterDeclaration(String id, IType type, int offset, boolean inside) throws MultipleIDException {
         SymbolTableEntry nuovaEntry = new SymbolTableEntry(getNestingLevel(), type, offset, inside);
         System.out.print("\t\t\033[31;1mprocessDeclarationforParameter: \033[0m" + nuovaEntry.toString() + "\n");
         checkProcessDeclaration(nuovaEntry, id, type);
@@ -147,7 +147,8 @@ public class SymbolTable {
             classEntryforThis = nuovaEntry;
         }*/
         if (vecchiaEntry != null) {
-            throw new MultipleIDException(id);
+            // ci entro solo se voglio ridefinire un identificativo nello stesso scope
+            throw new MultipleIDException(id, vecchiaEntry.getType().toPrint());
         }
     }
 
