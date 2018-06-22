@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class ClassType implements IType {
 
-    private String classID = "";
+    private String classID;
     private ClassType superClassType = null;
 
     private ArrayList<Field> fields = new ArrayList<>();

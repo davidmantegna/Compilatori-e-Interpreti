@@ -1,13 +1,8 @@
 class Numero {
-
         int plus(int x, int y) x + y;
-
 };
 
 let
-
     Numero num = new Numero();
-
 in
-
     9;

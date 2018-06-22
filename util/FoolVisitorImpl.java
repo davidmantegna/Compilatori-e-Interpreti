@@ -86,7 +86,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
             if (classExpContext.let() != null) {
                 let = visit(classExpContext.let());
             }
-            
+
             INode expStm;
             try {
                 expStm = visit(classExpContext.exp());
@@ -456,6 +456,31 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitMethod(MethodContext methodContext) {
         System.out.print("visitMethod -> \t");
-        return super.visitMethod(methodContext);
+        try {
+            FunContext funContext = methodContext.fun();
+
+            ArrayList<ParameterNode> parameterNodeArrayList = new ArrayList<>();
+
+            //gestisco i parametri
+            for (int i = 0; i < funContext.vardec().size(); i++) {
+                VardecContext vardecContext = funContext.vardec().get(i);
+                parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(), visit(vardecContext.type()).typeCheck(), i + 1, vardecContext));
+            }
+
+            // arraylist per le dichiarazioni annidate
+            ArrayList<INode> nestedDeclarations = new ArrayList<>();
+            // controlla dichiarazioni annidate
+            if (funContext.letnest() != null) {
+                for (VarasmContext vc : funContext.letnest().varasm())
+                    nestedDeclarations.add(visit(vc));
+            }
+
+            // visita il corpo della funzione e lo ritorna
+            INode body = visit(funContext.exp());
+            return new MethodNode(funContext.ID().getText(), visit(funContext.type()).typeCheck(), parameterNodeArrayList, nestedDeclarations, body, funContext);
+
+        } catch (TypeException e) {
+            return null;
+        }
     }
 }

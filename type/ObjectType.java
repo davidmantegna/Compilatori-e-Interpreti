@@ -38,14 +38,14 @@ public class ObjectType implements IType {
     }
 
     @Override
-    public boolean isSubType(IType t) {
-
-        //TODO isSubType
-        return false;
+    public boolean isSubType(IType type) {
+        if (type instanceof ObjectType) {
+            ObjectType it2 = (ObjectType) type;
+            return classType.isSubType(it2.getClassType());
+        } else {
+            return false;
+        }
     }
-
-    //TODO update ClassType
-
 
     @Override
     public String toPrint() {

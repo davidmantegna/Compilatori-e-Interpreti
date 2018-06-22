@@ -81,7 +81,7 @@ public class ClassNode implements INode {
                 }
             }
 
-            //prende i campi passati in input e li inserisce in methodArrayList per la STentry e in
+            //prende i campi passati in input e li inserisce in methodArrayList per la SymbolTableEntry e in
             //methodHashMap per accedervi velocemente
             methodArrayList.add(new Method(methodNode.getID(), new FunType(parameterTypeArrayList, methodNode.getReturnType())));
             methodHashMap.put(methodNode.getID(), new FunType(parameterTypeArrayList, methodNode.getReturnType()));
@@ -90,15 +90,14 @@ public class ClassNode implements INode {
         // TODO Superclasse
         ClassType superclassType;
 
-        //controllo se la classe ha una superclasse per aggiornare correttamente
-        //la Symbol Table
+        //controllo se la classe ha una superclasse per aggiornare correttamente la SymbolTable
         try {
             superclassType = (ClassType) env.processUse(idSuperClass).getType();
         } catch (UndeclaredIDException e) {
             superclassType = null;
         }
 
-        // all'ID dichiarato si setta il tipo classe nella STentry
+        // all'ID dichiarato si setta il tipo classe nella SymbolTableEntry
         try {
             classType = new ClassType(idClass, superclassType, fieldArrayList, methodArrayList);
             env.setDeclarationType(idClass, classType, 0);
@@ -107,7 +106,6 @@ public class ClassNode implements INode {
         }
 
         HashMap<String, SymbolTableEntry> hashMap = new HashMap<>();
-
         env.pushHashMap(hashMap);
 
         for (ParameterNode parameterNode : fieldDeclarationArraylist) {
@@ -138,7 +136,7 @@ public class ClassNode implements INode {
             try {
                 //controllo che la classe che estende sia una classe
                 if (!(env.getTypeOf(idSuperClass) instanceof ClassType))
-                    res.add("L'ID della superclasse " + idSuperClass + " non è riferito a un tipo di classe\n");
+                    res.add("L'ID usato come superclasse, " + idSuperClass + ", non è riferito a un tipo di classe\n");
             } catch (UndeclaredIDException exp) {
                 res.add("La superclasse " + idSuperClass + " non è definita\n");
             }
@@ -162,7 +160,7 @@ public class ClassNode implements INode {
                     res.add("La sottoclasse non ha i parametri della superclasse\n");
                 }
             } catch (UndeclaredIDException e) {
-                res.add("La superclasse " + idSuperClass + " non è definita " + e.getMessage() + "\n");
+                res.add("La superclasse " + idSuperClass + " non è definita " + e.getMessage()+"\n");
             }
 
             try {
@@ -183,7 +181,7 @@ public class ClassNode implements INode {
                     }
                 }
             } catch (UndeclaredIDException e) {
-                res.add("La superclasse " + idSuperClass + " non è definita " + e.getMessage() + "\n");
+                res.add("La superclasse " + idSuperClass + " non è definita " + e.getMessage());
             }
         }
 
@@ -193,18 +191,21 @@ public class ClassNode implements INode {
     @Override
     public IType typeCheck() throws TypeException {
         System.out.print("ClassNode: typeCheck ->\t");
-        for (ParameterNode parameterNode : fieldDeclarationArraylist){
+        //typecheck di ogni parametro
+        for (ParameterNode parameterNode : fieldDeclarationArraylist) {
             parameterNode.typeCheck();
         }
-
+        // typecheck di otni metodo
         for (MethodNode methodNode : methodDeclarationArraylist) {
             methodNode.typeCheck();
         }
 
-        return classType;    }
+        return classType;
+    }
 
     @Override
     public String codeGeneration() {
+        // TODO codeGeneration ClassNode
         return null;
     }
 }
