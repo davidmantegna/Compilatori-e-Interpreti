@@ -164,38 +164,38 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitFun(FunContext funContext) {
         System.out.print("visitFun -> \t");
-
-        INode body;
-
         try {
 
-            ArrayList<ParameterNode> params = new ArrayList<>();
+            ArrayList<ParameterNode> parameterNodeArrayList = new ArrayList<>();
 
             // add argument declarationsArrayList
             // we are getting a shortcut here by constructing directly the ParameterNode
             // this could be done differently by visiting instead the VardecContext
             for (int i = 0; i < funContext.vardec().size(); i++) {
                 VardecContext vardecContext = funContext.vardec().get(i);
-                params.add(new ParameterNode(vardecContext.ID().getText(), visit(vardecContext.type()).typeCheck(), i + 1, vardecContext));
+                parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(), visit(vardecContext.type()).typeCheck(), i + 1, vardecContext));
             }
 
             // add body, create a list for the nested declarationsArrayList
-            ArrayList<INode> declarations = new ArrayList<>();
+            ArrayList<INode> nestedDeclarations = new ArrayList<>();
             // check whether there are actually nested decs
 
             if (funContext.letnest() != null) {
                 // if there are visit each varasm and add it to the @innerDec list
                 for (VarasmContext varasms : funContext.letnest().varasm()) {
-                    declarations.add(visit(varasms));
+                    nestedDeclarations.add(visit(varasms));
                 }
 
             }
+            // visita il corpo della funzione e lo ritorna
+            INode body;
             if (funContext.exp() != null) {
                 body = visit(funContext.exp());
             } else {
                 body = visit(funContext.stms());
             }
 
+            // controllo per impostare eventualmente il tipo di ritorno a void
             IType returnType;
             try {
                 returnType = visit(funContext.type()).typeCheck();
@@ -203,7 +203,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
                 returnType = new VoidType();
             }
 
-            return new FunNode(funContext.ID().getText(), returnType, params, declarations, body, funContext);
+            return new FunNode(funContext.ID().getText(), returnType, parameterNodeArrayList, nestedDeclarations, body, funContext);
 
         } catch (TypeException e) {
             return null;
@@ -335,7 +335,22 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitNewexp(NewexpContext newexpContext) {
         System.out.print("visitNewexp -> \t");
-        return super.visitNewexp(newexpContext);
+        NewNode res;
+        String idClass;
+
+        //argomenti per il costruttore della classe
+        ArrayList<INode> arguments = new ArrayList<>();
+
+        //ID della classe che si vuole istanziare
+        idClass = newexpContext.ID().getText();
+
+        for (ExpContext exp : newexpContext.exp()) {
+            arguments.add(visit(exp));
+        }
+
+        res = new NewNode(idClass, arguments, newexpContext);
+
+        return res;
     }
 
     @Override
@@ -406,9 +421,9 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     }
 
     @Override
-    public INode visitNewMethod(NewMethodContext ctx) {
+    public INode visitNewMethod(NewMethodContext newMethodContext) {
         System.out.print("visitNewMethod -> \t");
-        return super.visitNewMethod(ctx);
+        return super.visitNewMethod(newMethodContext);
     }
 
     @Override
@@ -471,13 +486,27 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
             ArrayList<INode> nestedDeclarations = new ArrayList<>();
             // controlla dichiarazioni annidate
             if (funContext.letnest() != null) {
-                for (VarasmContext vc : funContext.letnest().varasm())
-                    nestedDeclarations.add(visit(vc));
+                for (VarasmContext varasms : funContext.letnest().varasm())
+                    nestedDeclarations.add(visit(varasms));
             }
 
             // visita il corpo della funzione e lo ritorna
-            INode body = visit(funContext.exp());
-            return new MethodNode(funContext.ID().getText(), visit(funContext.type()).typeCheck(), parameterNodeArrayList, nestedDeclarations, body, funContext);
+            INode body;
+            if (funContext.exp() != null) {
+                body = visit(funContext.exp());
+            } else {
+                body = visit(funContext.stms());
+            }
+
+            // controllo per impostare eventualmente il tipo di ritorno a void
+            IType returnType;
+            try {
+                returnType = visit(funContext.type()).typeCheck();
+            } catch (NullPointerException e) {
+                returnType = new VoidType();
+            }
+
+            return new MethodNode(funContext.ID().getText(), returnType, parameterNodeArrayList, nestedDeclarations, body, funContext);
 
         } catch (TypeException e) {
             return null;

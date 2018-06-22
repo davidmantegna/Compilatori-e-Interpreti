@@ -34,6 +34,10 @@ public class ClassType implements IType {
         return superClassType;
     }
 
+    public String getSuperClassID(){
+        return getSuperClassType().getClassID();
+    }
+
     public ArrayList<Field> getFields() {
         return fields;
     }
@@ -46,14 +50,46 @@ public class ClassType implements IType {
 
     @Override
     public boolean isSubType(IType t) {
+        //A è sottotipo di B, A.isSubTypeOf(B)
 
-        //TODO isSubType
+        // Controllo se altro tipo è classe
+        if (t instanceof ClassType) {
+            ClassType ct2 = (ClassType) t;
+            // E' stessa classe
+            if (this.getClassID().equals(ct2.getClassID())) {
+                return true;
+            }
+            // Vado avanti solo se la classe corrente ha un supertipo
+            if (superClassType != null) {
+                ClassType tmp = superClassType;
+                if (superClassType.isSubType(t)){
+                    return true;
+                }
+                else if(ct2.getSuperClassType() != null){
+                    if (superClassType.getClassID().equals(ct2.getSuperClassID())) {
+                        return true;
+                    }
+                }
+                while (tmp.getSuperClassType() != null){
+                    tmp = tmp.getSuperClassType();
+                    if (tmp.getClassID().equals(ct2.getClassID())){
+                        return true;
+                    }
+                    while (ct2.getSuperClassType() != null){
+                        ct2 = ct2.getSuperClassType();
+                        if (tmp.getClassID().equals(ct2.getClassID())){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 
     @Override
     public String toPrint() {
-        return null;
+        return "Object: " + classID;
     }
 
     //TODO getOffsetOfMethod, methodsHashMapFromSuperClass, getTypeOfMethod

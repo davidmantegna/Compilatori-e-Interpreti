@@ -1,5 +1,6 @@
 class Numero {
-        int plus(int x, int y) x + y;
+        int plus(int x, int y)
+            x + y;
 };
 
 let

@@ -1,8 +1,6 @@
 package nodes;
 
-import type.BoolType;
-import type.IType;
-import type.IntType;
+import type.*;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import util.Semantic.SymbolTable;
@@ -52,8 +50,7 @@ public class TypeNode implements INode {
             case "bool":
                 return new BoolType();
             default:
-                // this.type = new ObjectType(new ClassType(assignedType));
-                return null;
+                return new ObjectType(new ClassType(assignedType));
         }
     }
 }

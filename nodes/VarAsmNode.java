@@ -4,6 +4,7 @@ import type.IType;
 import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import parser.FOOLParser.VarasmContext;
+import type.ObjectType;
 import util.Semantic.SymbolTable;
 
 import java.util.ArrayList;
@@ -33,8 +34,10 @@ public class VarAsmNode implements INode {
         // TODO aggiungere controllo per instanziazione di un nuovo oggetto
 
         // al momento gestisco così il tipo ID
-        if (assignedType == null) {
-            res.add("Tipo non compatibile con quelli definiti dalla Grammatica. Il Tipo di '" + id + "' non é valido\n");
+        //Se sto instanziando un nuovo oggetto, aggiorno le informazioni
+        if (assignedType instanceof ObjectType) {
+            ObjectType decType = (ObjectType) assignedType;
+            res.addAll(decType.updateClassType(env));
         }
 
         res.addAll(exp.checkSemantics(env));
@@ -54,6 +57,7 @@ public class VarAsmNode implements INode {
     //valore di ritorno non utilizzato
     @Override
     public IType typeCheck() throws TypeException {
+        System.out.print("VarAsmNode: typeCheck -> \n");
         if (!exp.typeCheck().isSubType(assignedType)) {
             throw new TypeException("Valore incompatibile per la variabile " + id, varasmContext.exp());
         }

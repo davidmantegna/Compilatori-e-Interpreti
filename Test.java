@@ -90,13 +90,14 @@ public class Test {
             System.out.println("\n\ntype checking ok! Il tipo del programma è: " + type.toPrint() + "\n\n");
 
             // CODE GENERATION
-            String code = ast.codeGeneration();
+            System.out.println("CODEGEN DA FARE");
+/*            String code = ast.codeGeneration();
             String asmFileName = fileName + ".asm";
             BufferedWriter out = new BufferedWriter(new FileWriter(asmFileName));
             out.write(code);
             out.close();
             System.out.println("Code generated! Assembling and running generated code.");
-            System.out.println("Codice SVM Generato: #" + code.split("\n").length + " righe. Output: " + asmFileName);
+            System.out.println("Codice SVM Generato: #" + code.split("\n").length + " righe. Output: " + asmFileName);*/
 
 
             System.out.println("--------------------------");
