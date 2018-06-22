@@ -1,6 +1,13 @@
+class Numero {
+
+        int plus(int x, int y) x + y;
+
+};
+
 let
-    int k = 10;
+
+    Numero num = new Numero();
+
 in
-    k = f(1,5);
-    k = g(1,5);
-;
+
+    9;

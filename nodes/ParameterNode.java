@@ -24,15 +24,14 @@ public class ParameterNode implements INode {
         this.vardecContext = vardecContext;
     }
 
-/*  //TODO parameterNode for class constructor
+
     public ParameterNode(String ID, IType type, int offset, boolean insideClass, VardecContext vardecContext) {
-        this.ID = ID;
+        this.idParameter = ID;
         this.type = type;
         this.offset = offset;
         this.insideClass = insideClass;
         this.vardecContext = vardecContext;
     }
-*/
 
     public String getId(){
         return idParameter;

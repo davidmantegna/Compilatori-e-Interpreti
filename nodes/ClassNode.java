@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class ClassNode implements INode {
 
     private String idClass;
-    private String idExtendedClass;
+    private String idSuperClass;
     private ArrayList<ParameterNode> fieldDeclarationArraylist;
     private ArrayList<MethodNode> methodDeclarationArraylist;
 
@@ -25,9 +25,9 @@ public class ClassNode implements INode {
     private HashMap<String, FunType> methodHashMap = new HashMap<>();
     private ClassType classType;
 
-    public ClassNode(String idClass, String idExtendedClass, ArrayList<ParameterNode> fieldDeclarationArraylist, ArrayList<MethodNode> methodDeclarationArraylist) {
+    public ClassNode(String idClass, String idSuperClass, ArrayList<ParameterNode> fieldDeclarationArraylist, ArrayList<MethodNode> methodDeclarationArraylist) {
         this.idClass = idClass;
-        this.idExtendedClass = idExtendedClass;
+        this.idSuperClass = idSuperClass;
         this.fieldDeclarationArraylist = fieldDeclarationArraylist;
         this.methodDeclarationArraylist = methodDeclarationArraylist;
     }
@@ -36,8 +36,8 @@ public class ClassNode implements INode {
         return idClass;
     }
 
-    public String getIdExtendedClass() {
-        return idExtendedClass;
+    public String getIdSuperClass() {
+        return idSuperClass;
     }
 
     public ArrayList<ParameterNode> getFieldDeclarationArraylist() {
@@ -73,7 +73,7 @@ public class ClassNode implements INode {
                         ClassType paramClassType = (ClassType) env.processUse(declaredClass).getType();
                         parameterTypeArrayList.add(new ObjectType(paramClassType));
                     } catch (UndeclaredIDException e) {
-                        res.add("La classe '" + declaredClass + " non è stata definita");
+                        res.add("La classe '" + declaredClass + " non è stata definita\n");
                     }
                 } else {
                     // se i parametri sono "base", non oggetti
@@ -93,7 +93,7 @@ public class ClassNode implements INode {
         //controllo se la classe ha una superclasse per aggiornare correttamente
         //la Symbol Table
         try {
-            superclassType = (ClassType) env.processUse(idExtendedClass).getType();
+            superclassType = (ClassType) env.processUse(idSuperClass).getType();
         } catch (UndeclaredIDException e) {
             superclassType = null;
         }
@@ -117,7 +117,7 @@ public class ClassNode implements INode {
                 ClassType subClassAsParam = ((ObjectType) parameterNode.getType()).getClassType();
 
                 if (subClassAsParam.isSubType(this.classType))
-                    res.add("Non si può usare una sottoclasse nel costruttore della superclasse");
+                    res.add("Non si può usare una sottoclasse nel costruttore della superclasse\n");
             }
             res.addAll(parameterNode.checkSemantics(env));
         }
@@ -134,17 +134,17 @@ public class ClassNode implements INode {
         env.popHashMap();
 
         //controllo costruttore con superclasse
-        if (!idExtendedClass.isEmpty()) {
+        if (!idSuperClass.isEmpty()) {
             try {
                 //controllo che la classe che estende sia una classe
-                if (!(env.getTypeOf(idExtendedClass) instanceof ClassType))
-                    res.add("L'ID della superclasse " + idExtendedClass + " non è riferito a un tipo di classe");
+                if (!(env.getTypeOf(idSuperClass) instanceof ClassType))
+                    res.add("L'ID della superclasse " + idSuperClass + " non è riferito a un tipo di classe\n");
             } catch (UndeclaredIDException exp) {
-                res.add("La superclasse " + idExtendedClass + " non è definita");
+                res.add("La superclasse " + idSuperClass + " non è definita\n");
             }
 
             try {
-                ClassType superClassType = (ClassType) env.processUse(idExtendedClass).getType();
+                ClassType superClassType = (ClassType) env.processUse(idSuperClass).getType();
 
                 // controllo che il numero di attributi del costruttore sia uguale a quello della superclasse
                 if (fieldDeclarationArraylist.size() >= superClassType.getFields().size()) {
@@ -155,21 +155,21 @@ public class ClassNode implements INode {
                         //controllo che tipo e nome degli attributi siano uguali
                         if (!superClassField.getFieldID().equals(currentParameterNode.getId())
                                 || !currentParameterNode.getType().isSubType(superClassField.getFieldType())) {
-                            res.add("Il campo '" + currentParameterNode.getId() + "' della classe '" + idClass + "' fa override della superclasse con tipo differente");
+                            res.add("Il campo '" + currentParameterNode.getId() + "' della classe '" + idClass + "' fa override della superclasse con tipo differente\n");
                         }
                     }
                 } else {
-                    res.add("La sottoclasse non ha i parametri della superclasse");
+                    res.add("La sottoclasse non ha i parametri della superclasse\n");
                 }
             } catch (UndeclaredIDException e) {
-                res.add("La superclasse " + idExtendedClass + " non è definita " + e.getMessage());
+                res.add("La superclasse " + idSuperClass + " non è definita " + e.getMessage() + "\n");
             }
 
             try {
                 //controllo ovveride se possibile
 
                 //prendo entry e tipo della superclasse
-                SymbolTableEntry superClassEntry = env.processUse(idExtendedClass);
+                SymbolTableEntry superClassEntry = env.processUse(idSuperClass);
                 ClassType superClassType = (ClassType) superClassEntry.getType();
 
                 //se si trovano due metodi con lo stesso nome controllo che uno sia sottotipo dell'altro
@@ -178,12 +178,12 @@ public class ClassNode implements INode {
                 for (String method : methodHashMap.keySet()) {
                     if (superClassMethodsHashMap.containsKey(method)) {
                         if (!methodHashMap.get(method).isSubType(superClassMethodsHashMap.get(method))) {
-                            res.add("Override incompatibile del metodo '" + method + "' della classe '" + idClass + "'");
+                            res.add("Override incompatibile del metodo '" + method + "' della classe '" + idClass + "'\n");
                         }
                     }
                 }
             } catch (UndeclaredIDException e) {
-                res.add("La superclasse " + idExtendedClass + " non è definita " + e.getMessage());
+                res.add("La superclasse " + idSuperClass + " non è definita " + e.getMessage() + "\n");
             }
         }
 
@@ -193,8 +193,15 @@ public class ClassNode implements INode {
     @Override
     public IType typeCheck() throws TypeException {
         System.out.print("ClassNode: typeCheck ->\t");
-        return null;
-    }
+        for (ParameterNode parameterNode : fieldDeclarationArraylist){
+            parameterNode.typeCheck();
+        }
+
+        for (MethodNode methodNode : methodDeclarationArraylist) {
+            methodNode.typeCheck();
+        }
+
+        return classType;    }
 
     @Override
     public String codeGeneration() {

@@ -11,6 +11,8 @@ import type.VoidType;
 
 import java.util.ArrayList;
 
+import static parser.FOOLParser.*;
+
 public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
@@ -42,12 +44,70 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitClassExp(ClassExpContext classExpContext) {
         System.out.print("visitClassExp -> \t");
-        return super.visitClassExp(classExpContext);
+
+        ClassDecNode res;
+
+        try {
+            // creo 3 ArrayList con tutte le classi, i parametri e i metodi
+            ArrayList<ClassNode> classDeclarations = new ArrayList<>();
+            // per ogni dichiarazione di classe
+            for (ClassdecContext classdecContext : classExpContext.classdec()) {
+                ArrayList<ParameterNode> parameterNodeArrayList = new ArrayList<>();
+
+                // per ogni parametro
+                for (int i = 0; i < classdecContext.vardec().size(); i++) {
+                    VardecContext vardecContext = classdecContext.vardec().get(i);
+                    parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(),
+                            visit(vardecContext.type()).typeCheck(), i + 1, true, vardecContext));
+                }
+                ArrayList<MethodNode> methodNodeArrayList = new ArrayList<>();
+
+                // per ogni metodo
+                for (MethodContext metContext : classdecContext.method()) {
+                    MethodNode method = (MethodNode) visit(metContext);
+                    method.setIdClass(classdecContext.ID(0).getText());
+                    methodNodeArrayList.add(method);
+                }
+
+                ClassNode classNode;
+                // se è null significa che la classe non estende nulla
+                if (classdecContext.ID(1) == null) {
+                    classNode = new ClassNode(classdecContext.ID(0).getText(), "", parameterNodeArrayList,
+                            methodNodeArrayList);
+                } else { // altrimenti ha una superclasse
+                    classNode = new ClassNode(classdecContext.ID(0).getText(), classdecContext.ID().get(1).getText(),
+                            parameterNodeArrayList, methodNodeArrayList);
+                }
+                classDeclarations.add(classNode);
+            }
+
+            INode let = null;
+            // nel caso in cui la dichiarazione di classi non sia seguita da una SingleExp
+            if (classExpContext.let() != null) {
+                let = visit(classExpContext.let());
+            }
+            
+            INode expStm;
+            try {
+                expStm = visit(classExpContext.exp());
+            } catch (NullPointerException e) {
+                expStm = visit(classExpContext.stms());
+            }
+            res = new ClassDecNode(classDeclarations, new LetInNode(let, expStm));
+
+        } catch (TypeException e) {
+
+            return null;
+
+        }
+
+        return res;
     }
 
     @Override
     public INode visitClassdec(ClassdecContext classdecContext) {
         System.out.print("visitClassdec -> \t");
+
         return super.visitClassdec(classdecContext);
     }
 
