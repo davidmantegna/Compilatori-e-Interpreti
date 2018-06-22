@@ -17,6 +17,13 @@ public class BoolNode implements INode {
     }
 
     @Override
+    public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("BoolNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        // new ArrayList<>() -> vuota perchè il chechSemantics è andato a buon fine. Quidi lista vuota di errori
+        return new ArrayList<>(); //non crea livelli di scope
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         return new BoolType();
     }
@@ -28,12 +35,5 @@ public class BoolNode implements INode {
         else {
             return "push " + 0 + "\n";
         }
-    }
-
-    @Override
-    public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("BoolNode: checkSemantics -> \n\t" + env.toString() + "\n");
-        // new ArrayList<>() -> vuota perchè il chechSemantics è andato a buon fine. Quidi lista vuota di errori
-        return new ArrayList<>(); //non crea livelli di scope
     }
 }

@@ -15,6 +15,12 @@ public class SingleExpNode implements INode {
     }
 
     @Override
+    public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("SingleExpNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        return expression.checkSemantics(env);
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         System.out.println("SingleExpNode: typeCheck ->\t");
         return expression.typeCheck();
@@ -23,11 +29,5 @@ public class SingleExpNode implements INode {
     @Override
     public String codeGeneration() {
         return expression.codeGeneration() + "halt\n";
-    }
-
-    @Override
-    public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("SingleExpNode: checkSemantics -> \n\t" + env.toString() + "\n");
-        return expression.checkSemantics(env);
     }
 }

@@ -24,6 +24,20 @@ public class FactorNode implements INode {
     }
 
     @Override
+    public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("FactorNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        //create the result
+        ArrayList<String> res = new ArrayList<String>();
+
+        //check semantics in the left and in the right exp
+
+        res.addAll(leftNode.checkSemantics(env));
+        res.addAll(rightNode.checkSemantics(env));
+
+        return res;
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         System.out.println("FactorNode: typeCheck ->\t");
 
@@ -136,19 +150,5 @@ public class FactorNode implements INode {
                 break;
         }
         return codeGen;
-    }
-
-    @Override
-    public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FactorNode: checkSemantics -> \n\t" + env.toString() + "\n");
-        //create the result
-        ArrayList<String> res = new ArrayList<String>();
-
-        //check semantics in the left and in the right exp
-
-        res.addAll(leftNode.checkSemantics(env));
-        res.addAll(rightNode.checkSemantics(env));
-
-        return res;
     }
 }

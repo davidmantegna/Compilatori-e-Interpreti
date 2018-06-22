@@ -25,20 +25,6 @@ public class VarAsmNode implements INode {
         return id;
     }
 
-    //valore di ritorno non utilizzato
-    @Override
-    public IType typeCheck() throws TypeException {
-        if (!exp.typeCheck().isSubType(assignedType)) {
-            throw new TypeException("Valore incompatibile per la variabile " + id, varasmContext.exp());
-        }
-        return assignedType;
-    }
-
-    @Override
-    public String codeGeneration() {
-        return exp.codeGeneration();
-    }
-
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("VarAsmNode: checkSemantics -> \n\t" + env.toString() + "\n");
@@ -63,5 +49,19 @@ public class VarAsmNode implements INode {
 
 
         return res;
+    }
+
+    //valore di ritorno non utilizzato
+    @Override
+    public IType typeCheck() throws TypeException {
+        if (!exp.typeCheck().isSubType(assignedType)) {
+            throw new TypeException("Valore incompatibile per la variabile " + id, varasmContext.exp());
+        }
+        return assignedType;
+    }
+
+    @Override
+    public String codeGeneration() {
+        return exp.codeGeneration();
     }
 }

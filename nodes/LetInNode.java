@@ -19,23 +19,6 @@ public class LetInNode implements INode {
         this.stmExp = stmExp;
     }
 
-
-    @Override
-    public IType typeCheck() throws TypeException {
-        //parte let
-        let.typeCheck();
-        //parte in
-        return stmExp.typeCheck();
-    }
-
-    @Override
-    public String codeGeneration() {
-        return "push 0\n" +
-                let.codeGeneration() +
-                stmExp.codeGeneration() + "halt\n" +
-                FunctionCode.getFunctionsCode();
-    }
-
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("LetInNode: checkSemantics -> \n\t" + env.toString() + "\n");
@@ -54,5 +37,21 @@ public class LetInNode implements INode {
         env.popHashMap();
 
         return res;
+    }
+
+    @Override
+    public IType typeCheck() throws TypeException {
+        //parte let
+        let.typeCheck();
+        //parte in
+        return stmExp.typeCheck();
+    }
+
+    @Override
+    public String codeGeneration() {
+        return "push 0\n" +
+                let.codeGeneration() +
+                stmExp.codeGeneration() + "halt\n" +
+                FunctionCode.getFunctionsCode();
     }
 }

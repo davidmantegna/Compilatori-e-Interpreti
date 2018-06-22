@@ -17,6 +17,12 @@ public class NotNode implements INode {
     }
 
     @Override
+    public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("NotNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        return new ArrayList<>();
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         System.out.print("NotNode: typeCheck ->\t");
         return new BoolType();
@@ -34,11 +40,5 @@ public class NotNode implements INode {
                 label + ":\n" +
                 "push 0\n" +
                 exit + ":\n";
-    }
-
-    @Override
-    public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("NotNode: checkSemantics -> \n\t" + env.toString() + "\n");
-        return new ArrayList<>();
     }
 }

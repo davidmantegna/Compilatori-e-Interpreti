@@ -22,6 +22,19 @@ public class TermNode implements INode {
     }
 
     @Override
+    public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("TermNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        //create the result
+        ArrayList<String> res = new ArrayList<String>();
+
+        //check semantics in the left and in the right exp
+        res.addAll(leftNode.checkSemantics(env));
+        res.addAll(rightNode.checkSemantics(env));
+
+        return res;
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         System.out.println("TermNode: typeCheck ->\t");
         if (!(leftNode.typeCheck().isSubType(new IntType()) && rightNode.typeCheck().isSubType(new IntType()))) {
@@ -37,18 +50,5 @@ public class TermNode implements INode {
         } else {
             return leftNode.codeGeneration() + rightNode.codeGeneration() + "div\n";
         }
-    }
-
-    @Override
-    public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("TermNode: checkSemantics -> \n\t" + env.toString() + "\n");
-        //create the result
-        ArrayList<String> res = new ArrayList<String>();
-
-        //check semantics in the left and in the right exp
-        res.addAll(leftNode.checkSemantics(env));
-        res.addAll(rightNode.checkSemantics(env));
-
-        return res;
     }
 }

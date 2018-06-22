@@ -4,6 +4,7 @@ import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import type.IType;
 import parser.FOOLParser.StmAssignmentContext;
+import type.VoidType;
 import util.Semantic.SymbolTable;
 import util.Semantic.SymbolTableEntry;
 
@@ -18,23 +19,12 @@ public class StmAsmNode implements INode {
 
     private int nestingLevel;
     private SymbolTableEntry entry;
+    private IType idType;
 
     public StmAsmNode(String id, INode e, StmAssignmentContext c) {
         this.exp = e;
         this.stmAssignmentContext = c;
         this.id = id;
-    }
-
-    @Override
-    public IType typeCheck() {
-        System.out.print("StmAsmNode: typeCheck -> \t");
-        // return new VoidType();
-        return entry.getType();
-    }
-
-    @Override
-    public String codeGeneration() {
-        return exp.codeGeneration() + "\n";
     }
 
     @Override
@@ -44,6 +34,7 @@ public class StmAsmNode implements INode {
 
         // TODO testare ulteriormente
         try {
+            idType = env.getTypeOf(id);
             entry = env.processUseIgnoreFun(id);
             nestingLevel = env.getNestingLevel();
         } catch (UndeclaredIDException e) {
@@ -52,16 +43,29 @@ public class StmAsmNode implements INode {
 
         res.addAll(exp.checkSemantics(env));
 
-        try {
+ /*       try {
             if (!exp.typeCheck().isSubType(entry.getType())) {
                 res.add("Valore incompatibile per la variabile " + id + "\n");
                 throw new TypeException("Valore incompatibile per la variabile " + id + ". Tipo atteso: " + entry.getType().toPrint(), stmAssignmentContext.exp());
             }
         } catch (TypeException e) {
             System.out.println(e.getMessage());
-        }
+        }*/
 
         return res;
     }
 
+    @Override
+    public IType typeCheck() throws TypeException {
+        System.out.print("StmAsmNode: typeCheck -> \t");
+        if (!exp.typeCheck().isSubType(idType)) {
+            throw new TypeException("Valore incompatibile per la variabile " + id, stmAssignmentContext.exp());
+        }
+        return new VoidType();
+    }
+
+    @Override
+    public String codeGeneration() {
+        return exp.codeGeneration() + "\n";
+    }
 }

@@ -152,11 +152,6 @@ public class SymbolTable {
         }
     }
 
-
-    public void printSymbolTable(String call) {
-        System.out.println("Linked list content: " + call + " : " + symTable);
-    }
-
     @Override
     public String toString() {
         return "\033[32;1;2mSymbolTable\033[0m{ " +

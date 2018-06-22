@@ -25,6 +25,26 @@ public class FunCallNode implements INode {
     }
 
     @Override
+    public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("FunCallNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        ArrayList<String> res = new ArrayList<>();
+
+        try {
+
+            entry = env.processUse(id);
+            calledNestingLevel = env.getNestingLevel();
+
+            for(INode argument : argumentsArrayList)
+                res.addAll(argument.checkSemantics(env));
+
+        }catch (UndeclaredIDException e){
+            res.add(id + ": identificativo non definito\n");
+        }
+
+        return res;
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         System.out.print("FunCallNode: typeCheck ->\t");
 
@@ -48,28 +68,6 @@ public class FunCallNode implements INode {
             }
 
         return funType.getReturnType();
-    }
-
-    @Override
-    public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FunCallNode: checkSemantics -> \n\t" + env.toString() + "\n");
-        ArrayList<String> res = new ArrayList<>();
-
-        try {
-
-            entry = env.processUse(id);
-            calledNestingLevel = env.getNestingLevel();
-
-            for(INode argument : argumentsArrayList)
-                res.addAll(argument.checkSemantics(env));
-
-        }catch (UndeclaredIDException e){
-
-            res.add(id + ": identificativo non definito\n");
-
-        }
-
-        return res;
     }
 
     @Override

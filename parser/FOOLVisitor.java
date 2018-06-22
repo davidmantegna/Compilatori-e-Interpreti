@@ -1,4 +1,4 @@
-// Generated from C:/Users/massi/Documents/IntelliJProject/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
+// Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
 package parser;
 
     import java.util.ArrayList;
@@ -170,12 +170,12 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethodExp(FOOLParser.MethodExpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code newFunction}
+	 * Visit a parse tree produced by the {@code newMethod}
 	 * labeled alternative in {@link FOOLParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNewFunction(FOOLParser.NewFunctionContext ctx);
+	T visitNewMethod(FOOLParser.NewMethodContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code nullExp}
 	 * labeled alternative in {@link FOOLParser#value}.

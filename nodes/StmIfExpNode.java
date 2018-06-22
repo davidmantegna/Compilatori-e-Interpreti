@@ -24,6 +24,19 @@ public class StmIfExpNode implements INode {
     }
 
     @Override
+    public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("StmIfExpNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        ArrayList<String> result = new ArrayList<>();
+        //checkSemantic sulla condizione
+        result.addAll(conditionNode.checkSemantics(env));
+
+        //checkSemantic sui rami then ed else
+        result.addAll(stmsThen.checkSemantics(env));
+        result.addAll(stmsElse.checkSemantics(env));
+        return result;
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         System.out.print("StmIfExpNode: typeCheck -> \t");
         if(!conditionNode.typeCheck().isSubType(new BoolType()))
@@ -47,18 +60,5 @@ public class StmIfExpNode implements INode {
                 thenBranch + ":\n" +
                 stmsElse.codeGeneration() +
                 exit + ":\n";
-    }
-
-    @Override
-    public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("StmIfExpNode: checkSemantics -> \n\t" + env.toString() + "\n");
-        ArrayList<String> result = new ArrayList<>();
-        //checkSemantic sulla condizione
-        result.addAll(conditionNode.checkSemantics(env));
-
-        //checkSemantic sui rami then ed else
-        result.addAll(stmsThen.checkSemantics(env));
-        result.addAll(stmsElse.checkSemantics(env));
-        return result;
     }
 }

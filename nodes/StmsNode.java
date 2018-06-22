@@ -17,6 +17,19 @@ public class StmsNode implements INode {
     }
 
     @Override
+    public ArrayList<String> checkSemantics(SymbolTable env){
+        System.out.print("StmsNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        ArrayList<String> res = new ArrayList<>();
+
+        for (INode stm : stmsArrayList)
+            res.addAll(stm.checkSemantics(env));
+
+
+        return res;
+
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         System.out.print("StmsNode: typeCheck -> \t");
         for (INode stm: stmsArrayList)
@@ -30,18 +43,5 @@ public class StmsNode implements INode {
         for (INode stm : stmsArrayList)
             stmsCode.append(stm.codeGeneration());
         return stmsCode.toString();
-    }
-
-    @Override
-    public ArrayList<String> checkSemantics(SymbolTable env){
-        System.out.print("StmsNode: checkSemantics -> \n\t" + env.toString() + "\n");
-        ArrayList<String> res = new ArrayList<>();
-
-        for (INode stm : stmsArrayList)
-            res.addAll(stm.checkSemantics(env));
-
-
-        return res;
-
     }
 }

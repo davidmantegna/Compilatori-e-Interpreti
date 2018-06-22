@@ -24,6 +24,21 @@ public class IfNode implements INode {
     }
 
     @Override
+    public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("IfNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        ArrayList<String> result = new ArrayList<>();
+
+        //checkSemantic sulla condizione
+        result.addAll(conditionNode.checkSemantics(env));
+
+        //checkSemantic sui rami then ed else
+        result.addAll(thenNode.checkSemantics(env));
+        result.addAll(elseNode.checkSemantics(env));
+
+        return result;
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         if(!conditionNode.typeCheck().isSubType(new BoolType()))
             throw new TypeException("Condizione non booleana", ctx);
@@ -46,20 +61,5 @@ public class IfNode implements INode {
                 thenBranch + ":\n" +
                 thenNode.codeGeneration() +
                 exit + ":\n";
-    }
-
-    @Override
-    public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("IfNode: checkSemantics -> \n\t" + env.toString() + "\n");
-        ArrayList<String> result = new ArrayList<>();
-
-        //checkSemantic sulla condizione
-        result.addAll(conditionNode.checkSemantics(env));
-
-        //checkSemantic sui rami then ed else
-        result.addAll(thenNode.checkSemantics(env));
-        result.addAll(elseNode.checkSemantics(env));
-
-        return result;
     }
 }

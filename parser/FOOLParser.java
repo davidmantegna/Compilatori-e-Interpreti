@@ -1,4 +1,4 @@
-// Generated from C:/Users/massi/Documents/IntelliJProject/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
+// Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
 package parser;
 
     import java.util.ArrayList;
@@ -1594,22 +1594,22 @@ public class FOOLParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class NewFunctionContext extends ValueContext {
+	public static class NewMethodContext extends ValueContext {
 		public NewexpContext newexp() {
 			return getRuleContext(NewexpContext.class,0);
 		}
-		public NewFunctionContext(ValueContext ctx) { copyFrom(ctx); }
+		public NewMethodContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FOOLListener ) ((FOOLListener)listener).enterNewFunction(this);
+			if ( listener instanceof FOOLListener ) ((FOOLListener)listener).enterNewMethod(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FOOLListener ) ((FOOLListener)listener).exitNewFunction(this);
+			if ( listener instanceof FOOLListener ) ((FOOLListener)listener).exitNewMethod(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof FOOLVisitor ) return ((FOOLVisitor<? extends T>)visitor).visitNewFunction(this);
+			if ( visitor instanceof FOOLVisitor ) return ((FOOLVisitor<? extends T>)visitor).visitNewMethod(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1759,7 +1759,7 @@ public class FOOLParser extends Parser {
 				}
 				break;
 			case 8:
-				_localctx = new NewFunctionContext(_localctx);
+				_localctx = new NewMethodContext(_localctx);
 				enterOuterAlt(_localctx, 8);
 				{
 				setState(229);

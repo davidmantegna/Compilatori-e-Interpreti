@@ -20,6 +20,22 @@ public class LetNode implements INode {
     }
 
     @Override
+    public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("LetNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        ArrayList<String> res = new ArrayList<>();
+
+        //CheckSemantic nella lista di dichiarazioni
+        if (declarationArrayList.size() > 0) {
+            env.setOffset(-2);
+            //Checksemantic nei figli
+            for (INode n : declarationArrayList)
+                res.addAll(n.checkSemantics(env));
+        }
+
+        return res;
+    }
+
+    @Override
     public IType typeCheck() throws TypeException {
         System.out.print("LetNode: typeCheck ->\t");
         for (INode dec : declarationArrayList) {
@@ -34,21 +50,5 @@ public class LetNode implements INode {
         for (INode dec : declarationArrayList)
             declCode.append(dec.codeGeneration());
         return declCode.toString();
-    }
-
-    @Override
-    public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("LetNode: checkSemantics -> \n\t" + env.toString() + "\n");
-        ArrayList<String> res = new ArrayList<>();
-        
-        //CheckSemantic nella lista di dichiarazioni
-        if (declarationArrayList.size() > 0) {
-            env.setOffset(-2);
-            //Checksemantic nei figli
-            for (INode n : declarationArrayList)
-                res.addAll(n.checkSemantics(env));
-        }
-
-        return res;
     }
 }

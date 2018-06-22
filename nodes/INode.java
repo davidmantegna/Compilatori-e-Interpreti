@@ -9,12 +9,9 @@ import java.util.ArrayList;
 
 public interface INode {
 
-    //fa il type checking e ritorna:
-    //  per una espressione, il suo tipo (oggetto BoolTypeNode o IntTypeNode)
-    //  per una dichiarazione, "null"
+    ArrayList<String> checkSemantics(SymbolTable env);
+
     IType typeCheck() throws TypeException;
 
     String codeGeneration();
-
-    ArrayList<String> checkSemantics(SymbolTable env);
 }

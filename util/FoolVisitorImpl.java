@@ -346,9 +346,15 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     }
 
     @Override
-    public INode visitNewFunction(NewFunctionContext newFunctionContext) {
-        System.out.print("visitNewFunction -> \t");
-        return super.visitNewFunction(newFunctionContext);
+    public INode visitNewMethod(NewMethodContext ctx) {
+        System.out.print("visitNewMethod -> \t");
+        return super.visitNewMethod(ctx);
+    }
+
+    @Override
+    public INode visitNullExp(NullExpContext nullExpContext) {
+        System.out.print("visitNullExp -> \t");
+        return new NullNode();
     }
 
     @Override
@@ -391,11 +397,5 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     public INode visitMethod(MethodContext methodContext) {
         System.out.print("visitMethod -> \t");
         return super.visitMethod(methodContext);
-    }
-
-    @Override
-    public INode visitNullExp(NullExpContext nullExpContext) {
-        System.out.print("visitNullExp -> \t");
-        return new NullNode();
     }
 }

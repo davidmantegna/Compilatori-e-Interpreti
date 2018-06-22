@@ -43,16 +43,6 @@ public class ParameterNode implements INode {
     }
 
     @Override
-    public IType typeCheck() throws TypeException {
-        return null;
-    }
-
-    @Override
-    public String codeGeneration() {
-        return "";
-    }
-
-    @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("ParameterNode: checkSemantics -> \n\t" + env.toString() + "\n");
         ArrayList<String> res = new ArrayList<>();
@@ -62,5 +52,15 @@ public class ParameterNode implements INode {
             res.add(e.getMessage());
         }
         return res;
+    }
+
+    @Override
+    public IType typeCheck() throws TypeException {
+        return null;
+    }
+
+    @Override
+    public String codeGeneration() {
+        return "";
     }
 }

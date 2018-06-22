@@ -22,16 +22,6 @@ public class TypeNode implements INode {
     }
 
     @Override
-    public IType typeCheck() throws TypeException {
-        return type;
-    }
-
-    @Override
-    public String codeGeneration() {
-        return " - TypeCOde - ";
-    }
-
-    @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("TypeNode: checkSemantics -> \n\t" + env.toString() + "\n");
 
@@ -43,6 +33,16 @@ public class TypeNode implements INode {
             result.add("La classe '" + assignedType + "' non esiste");
         }
         return result;
+    }
+
+    @Override
+    public IType typeCheck() throws TypeException {
+        return type;
+    }
+
+    @Override
+    public String codeGeneration() {
+        return " - TypeCOde - ";
     }
 
     private IType verificaType(String assignedType) {

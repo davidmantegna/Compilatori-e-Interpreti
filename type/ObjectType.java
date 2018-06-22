@@ -1,5 +1,10 @@
 package type;
 
+import exceptions.UndeclaredIDException;
+import util.Semantic.SymbolTable;
+
+import java.util.ArrayList;
+
 public class ObjectType implements IType {
 
     private ClassType classType;
@@ -10,6 +15,21 @@ public class ObjectType implements IType {
 
     public ClassType getClassType() {
         return classType;
+    }
+
+    // This is used to update the classType filling superType when needed
+    public ArrayList<String> updateClassType(SymbolTable env) {
+        ArrayList<String> res = new ArrayList<>();
+        try {
+            try {
+                this.classType = (ClassType) env.getTypeOf(classType.getClassID());
+            } catch (UndeclaredIDException e) {
+                throw new UndeclaredIDException(classType.getClassID());
+            }
+        } catch (UndeclaredIDException e) {
+            res.add(new String(e.getMessage()));
+        }
+        return res;
     }
 
     @Override
@@ -29,6 +49,6 @@ public class ObjectType implements IType {
 
     @Override
     public String toPrint() {
-        return null;
+        return "Object: " + classType.getClassID();
     }
 }
