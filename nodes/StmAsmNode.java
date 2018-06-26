@@ -27,6 +27,10 @@ public class StmAsmNode implements INode {
         this.id = id;
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("StmAsmNode: checkSemantics -> \n\t" + env.toString() + "\n");

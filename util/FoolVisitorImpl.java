@@ -11,8 +11,6 @@ import type.VoidType;
 
 import java.util.ArrayList;
 
-import static parser.FOOLParser.*;
-
 public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
@@ -212,18 +210,6 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     }
 
     @Override
-    public INode visitVarAssignment(VarAssignmentContext varAssignmentContext) {
-        System.out.print("visitVarAssignment -> \t");
-        return super.visitVarAssignment(varAssignmentContext);
-    }
-
-    @Override
-    public INode visitFunDeclaration(FunDeclarationContext funDeclarationContext) {
-        System.out.print("visitFunDeclaration -> \t");
-        return super.visitFunDeclaration(funDeclarationContext);
-    }
-
-    @Override
     public INode visitType(TypeContext typeContext) {
         System.out.print("visitType -> \t");
         //tutti i tipi gestiti da TypeNode
@@ -334,7 +320,6 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitNewexp(NewexpContext newexpContext) {
-        System.out.print("visitNewexp -> \t");
         NewNode res;
         String idClass;
 

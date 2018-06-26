@@ -12,14 +12,14 @@ grammar FOOL;
  * PARSER RULES
  *------------------------------------------------------------------*/
 
-//TODO test object orientation
+//TODO i campi sono modificabili
 
 prog   : exp  SEMIC                                                                           #singleExp
        | let ((exp SEMIC)| stms)                                                              #letInExp
        | (classdec)+ SEMIC (let)? ((exp SEMIC)| stms)	                                        #classExp
        ;
 
-classdec : CLASS ID (EXTENDS ID)? (LPAR (vardec (COMMA vardec)*)? RPAR)? (CLPAR ((method SEMIC)+)? CRPAR)? ;
+classdec : CLASS ID (EXTENDS ID)? LPAR (vardec (COMMA vardec)*)? RPAR CLPAR (method SEMIC)* CRPAR ;
 
 let    : LET (dec SEMIC)+ IN;
 
@@ -31,8 +31,8 @@ varasm : vardec ASM exp ;
 
 fun    : (type | VOID) ID LPAR ( vardec ( COMMA vardec)* )? RPAR (letnest)? ((exp)| stms ) ;
 
-dec    : varasm                                                                         #varAssignment
-       | fun                                                                            #funDeclaration
+dec    : varasm
+       | fun
        ;
 
 type   : INT
@@ -55,7 +55,6 @@ value  : (MINUS)? INTEGER                                                       
        | LPAR exp RPAR                                                                  #baseExp
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR    #ifExp
        | (MINUS | NOT)? ID                                                              #varExp
-//     | THIS                                                                           #thisExp
        | funcall                                                                        #funExp
        | (ID | THIS) DOT funcall                                                        #methodExp
        | newexp                                                                         #newMethod
