@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class StmsNode implements INode {
 
-    //TODO da testare
+
     private ArrayList<INode> stmsArrayList;
 
     public StmsNode(ArrayList<INode> stmsArrayList) {

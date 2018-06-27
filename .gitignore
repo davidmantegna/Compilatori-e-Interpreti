@@ -36,9 +36,9 @@ out/
 
 #Parser Folder
 
-*.asm
 parser/*.tokens
 parser/*.java
+*.asm
 
 
 # mpeltonen/sbt-idea plugin

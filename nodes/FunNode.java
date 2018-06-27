@@ -5,6 +5,7 @@ import exceptions.TypeException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import type.FunType;
 import type.IType;
+import type.ObjectType;
 import util.Semantic.SymbolTable;
 import util.Semantic.SymbolTableEntry;
 import util.VM.FunctionCode;
@@ -55,12 +56,12 @@ public class FunNode implements INode {
             parameterTypeArrayList.add(parameterNode.getType());
         }
 
-        try {   //TODO try catch object type
+        try {
             // Se restituisco un'istanza di una classe, aggiorno le informazioni
-            /*if ( returnType instanceof ObjectType) {
+            if ( returnType instanceof ObjectType) {
                 ObjectType objectType = (ObjectType) returnType;
                 res.addAll(objectType.updateClassType(env));
-            }*/
+            }
             env.processDeclaration(idFunzione, new FunType(parameterTypeArrayList, returnType), env.getOffset());
             env.decreaseOffset();
         } catch (MultipleIDException e) {

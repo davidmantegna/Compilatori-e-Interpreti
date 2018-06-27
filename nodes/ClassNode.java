@@ -87,7 +87,7 @@ public class ClassNode implements INode {
             methodHashMap.put(methodNode.getID(), new FunType(parameterTypeArrayList, methodNode.getReturnType()));
         }
 
-        // TODO Superclasse
+        // TODO  Test superclasse
         ClassType superclassType;
 
         //controllo se la classe ha una superclasse per aggiornare correttamente la SymbolTable

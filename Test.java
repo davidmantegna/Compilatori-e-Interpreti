@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class Test {
     public static void main(String[] args) {
 
-        //TODO rimuovere lib->FOOLib prof, implementato in VM-> FunctionCode e Label
+        //TODO implementare ExecuteVM
 
         try { //RILEVAZIONE INPUT
             System.out.println("Rilevazione Input...\n");
@@ -52,7 +52,6 @@ public class Test {
             System.out.println("Analisi Sintattica...\n");
             FOOLParser parser = new FOOLParser(tokens);
             ProgContext progContext = parser.prog(); //parser.prog riutilizzato
-
 
             if (parser.getNumberOfSyntaxErrors() > 0) {
                 throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");

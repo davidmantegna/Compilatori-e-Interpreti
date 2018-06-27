@@ -92,7 +92,6 @@ public class ClassType implements IType {
         return "Object: " + classID;
     }
 
-    //TODO getOffsetOfMethod, methodsHashMapFromSuperClass, getTypeOfMethod
     //funzioni ausiliarie utilizzate nella checksemantics
     //ritorna un'HashMap di tutti i metodi di questa classe, con nome ed offset
     public HashMap<String, FunType> getMethodsMap() {

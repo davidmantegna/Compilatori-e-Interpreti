@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class TypeNode implements INode {
 
-    //TODO add ID for object orientation
 
     private String assignedType;
     private IType type;
@@ -40,7 +39,7 @@ public class TypeNode implements INode {
 
     @Override
     public String codeGeneration() {
-        return " - TypeCOde - ";
+        return " - TypeCode - ";
     }
 
     private IType verificaType(String assignedType) {

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class FunType implements IType {
 
-    //TODO implement arrowType
-
     private ArrayList<IType> parametersTypeArrayList;
     private IType returnType;
 
