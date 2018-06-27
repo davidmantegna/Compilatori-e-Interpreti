@@ -58,9 +58,11 @@ public class VarAsmNode implements INode {
     @Override
     public IType typeCheck() throws TypeException {
         System.out.print("VarAsmNode: typeCheck -> \n");
-        if (!exp.typeCheck().isSubType(assignedType)) {
-            throw new TypeException("Valore incompatibile per la variabile " + id, varasmContext.exp());
-        }
+
+            if ( !exp.typeCheck().isSubType(assignedType) &&
+                    (!(assignedType.getID().toString() == "OBJECT") && (exp.getClass().getName() == "nodes.NullNode")) ) {
+                throw new TypeException("Valore incompatibile per la variabile " + id, varasmContext.exp());
+            }
         return assignedType;
     }
 

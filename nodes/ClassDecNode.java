@@ -53,7 +53,7 @@ public class ClassDecNode implements INode {
 
                 //controllo se la classe è già stata definita
                 ClassType classType = new ClassType(classNode.getIdClass(), new ClassType(classNode.getIdSuperClass()), fieldArrayList, methodArrayList);
-                env.processDeclaration(classNode.getIdClass(), classType, 0);
+                env.processDeclaration(classNode.getIdClass(), classType, 0);//TODO processDeclarationforClass?
             } catch (MultipleIDException e) {
                 res.add("La classe '" + classNode.getIdClass() + "' è dichiarata più volte\n");
             }

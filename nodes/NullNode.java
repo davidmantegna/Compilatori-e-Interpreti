@@ -1,7 +1,9 @@
 package nodes;
 
 import exceptions.TypeException;
+import type.ClassType;
 import type.IType;
+import type.ObjectType;
 import type.VoidType;
 import util.Semantic.SymbolTable;
 
