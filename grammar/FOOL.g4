@@ -56,7 +56,7 @@ value  : (MINUS)? INTEGER                                                       
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR    #ifExp
        | (MINUS | NOT)? ID                                                              #varExp
        | funcall                                                                        #funExp
-       | (ID | THIS) DOT funcall                                                        #methodExp
+       | ID DOT funcall                                                                 #methodExp
        | newexp                                                                         #newMethod
        | NULL                                                                           #nullExp
        ;
