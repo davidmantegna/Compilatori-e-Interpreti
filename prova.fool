@@ -1,0 +1,8 @@
+class Numero(int a){
+    int ciao()
+        1;
+};
+let
+    Numero num = new Numero(1);
+in
+    num.ciao();

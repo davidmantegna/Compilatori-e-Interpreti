@@ -402,7 +402,21 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitMethodExp(MethodExpContext methodExpContext) {
         System.out.print("visitMethodExp -> \t");
-        return super.visitMethodExp(methodExpContext);
+        ArrayList<INode> arguments = new ArrayList<>();
+
+        //gestione argomenti dati come input al metodo
+        for (ExpContext exp : methodExpContext.funcall().exp()) {
+            arguments.add(visit(exp));
+        }
+
+        String methodID = methodExpContext.funcall().ID().getText();
+        String objectID;
+
+        //faccio riferimento alla classa tramite l'identificatore
+        objectID = methodExpContext.ID().getText();
+
+
+        return new MethodCallNode(objectID, methodID, arguments, methodExpContext);
     }
 
     @Override

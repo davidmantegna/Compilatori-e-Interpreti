@@ -12,16 +12,36 @@ import java.util.ArrayList;
 
 public class FunCallNode implements INode {
 
-    protected String id;
-    protected ArrayList<INode> argumentsArrayList;
-    protected SymbolTableEntry entry = null;
-    protected int calledNestingLevel;
+    private String id;
+    private ArrayList<INode> argumentsArrayList;
+    private SymbolTableEntry entry = null;
+    private int calledNestingLevel;
     private FuncallContext funcallContext;
 
     public FunCallNode(String id, ArrayList<INode> argumentsArrayList, FuncallContext funcallContext) {
         this.id = id;
         this.argumentsArrayList = argumentsArrayList;
         this.funcallContext = funcallContext;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public ArrayList<INode> getArgumentsArrayList() {
+        return argumentsArrayList;
+    }
+
+    public SymbolTableEntry getEntry() {
+        return entry;
+    }
+
+    public int getCalledNestingLevel() {
+        return calledNestingLevel;
+    }
+
+    public FuncallContext getFuncallContext() {
+        return funcallContext;
     }
 
     @Override

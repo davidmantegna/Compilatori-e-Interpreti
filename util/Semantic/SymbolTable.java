@@ -1,6 +1,7 @@
 package util.Semantic;
 
 
+import type.ClassType;
 import type.FunType;
 import type.IType;
 import exceptions.MultipleIDException;
@@ -18,13 +19,9 @@ public class SymbolTable {
     //offset della entry rispetto all'area di memoria in cui è definita
     private int offset;
 
-    //variabile che memorizza la entry dell'ultima classe, in modo tale da potervi accedere con this
-    private SymbolTableEntry classEntryforThis;
-
     public SymbolTable() {
         this.symTable = new LinkedList<>();
         this.offset = 0;
-        this.classEntryforThis = null;
     }
 
     //Il Nesting Level è ottenibile semplicemente così
@@ -50,10 +47,6 @@ public class SymbolTable {
 
     public LinkedList<HashMap<String, SymbolTableEntry>> getSymtable() {
         return symTable;
-    }
-
-    public SymbolTableEntry getClassEntryforThis() {
-        return classEntryforThis;
     }
 
     public IType getTypeOf(String id) throws UndeclaredIDException {
@@ -102,9 +95,6 @@ public class SymbolTable {
     public SymbolTable setDeclarationType(String id, IType newtype, int offset) throws UndeclaredIDException {
         SymbolTableEntry nuovaEntry = new SymbolTableEntry(getNestingLevel(), newtype, offset);
         SymbolTableEntry vecchiaEntry = symTable.get(getNestingLevel()).replace(id, nuovaEntry);
-/*        if (newtype instanceof ClassType) {
-            classEntryforThis = nuovaEntry;
-        }*/
         if (vecchiaEntry == null) {
             throw new UndeclaredIDException(id);
         }
@@ -143,9 +133,6 @@ public class SymbolTable {
         SymbolTableEntry vecchiaEntry = symTable
                 .get(this.symTable.size() - 1)
                 .put(id, nuovaEntry);
-        /*if (type instanceof ClassType) {
-            classEntryforThis = nuovaEntry;
-        }*/
         if (vecchiaEntry != null) {
             // ci entro solo se voglio ridefinire un identificativo nello stesso scope
             throw new MultipleIDException(id, vecchiaEntry.getType().toPrint());
@@ -157,7 +144,6 @@ public class SymbolTable {
         return "\033[32;1;2mSymbolTable\033[0m{ " +
                 "symTable= " + symTable +
                 ", offset= " + offset +
-                ", classEntryforThis= " + classEntryforThis +
                 " }";
     }
 }

@@ -55,14 +55,6 @@ public class MethodNode extends FunNode {
         HashMap<String, SymbolTableEntry> hm = new HashMap<>();
         env.pushHashMap(hm);
 
-        // cerco la entry in cui è stata dichiarata la classe
-        try {
-            SymbolTableEntry classEntry = env.processUse(idClass);
-            env.processDeclaration("this", new ObjectType((ClassType) classEntry.getType()), 0);
-        } catch (MultipleIDException | UndeclaredIDException e) {
-            System.out.println("MethodNode: exception-> " + e.getMessage());
-        }
-
         // checkSemantics di tutti i parametri
         for (ParameterNode parameter:parameterNodeArrayList){
             res.addAll(parameter.checkSemantics(env));
