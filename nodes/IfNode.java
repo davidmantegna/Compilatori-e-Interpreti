@@ -23,6 +23,14 @@ public class IfNode implements INode {
         this.ctx = c;
     }
 
+    public INode getThenNode() {
+        return thenNode;
+    }
+
+    public INode getElseNode() {
+        return elseNode;
+    }
+
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("IfNode: checkSemantics -> \n\t" + env.toString() + "\n");

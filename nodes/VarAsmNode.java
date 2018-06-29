@@ -65,8 +65,11 @@ public class VarAsmNode implements INode {
     public IType typeCheck() throws TypeException {
         System.out.print("VarAsmNode: typeCheck -> \n");
 
-        if (assignedType instanceof ObjectType && exp.getClass().getName().equals("nodes.NullNode")) {
-            return assignedType;
+        if (assignedType instanceof ObjectType && (exp.getClass().getName().equals("nodes.NullNode") || exp.getClass().getName().equals("nodes.IfNode"))) {
+            IfNode ifNode = (IfNode) exp;
+            if (ifNode.getThenNode().getClass().getName().equals("nodes.NullNode") && ifNode.getElseNode().getClass().getName().equals("nodes.NullNode")) {
+                return assignedType;
+            }
         }
 
         if (!exp.typeCheck().isSubType(assignedType)) {

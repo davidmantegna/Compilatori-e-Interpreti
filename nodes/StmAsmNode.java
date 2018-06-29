@@ -45,15 +45,6 @@ public class StmAsmNode implements INode {
 
         res.addAll(exp.checkSemantics(env));
 
-        try {
-            if (!exp.typeCheck().isSubType(entry.getType())) {
-                res.add("Valore incompatibile per la variabile " + id + "\n");
-                throw new TypeException("Valore incompatibile per la variabile " + id + ". Tipo atteso: " + entry.getType().toPrint(), stmAssignmentContext.exp());
-            }
-        } catch (TypeException e) {
-            System.out.println(e.getMessage());
-        }
-
         return res;
     }
 

@@ -1,9 +1,8 @@
-class Numero(int a){
-    int ciao(int c)
-        a + c;
-}
-class X(){};
+class A (){};
+class B extends A (){};
+class C extends B (){};
+
 let
-    Numero num = new X();
+    A prova = if true then {new B()} else {new C()};
 in
-    9;
+    0;

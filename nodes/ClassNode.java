@@ -143,7 +143,7 @@ public class ClassNode implements INode {
 
             try {
                 ClassType superClassType = (ClassType) env.processUse(idSuperClass).getType();
-
+                // TODO da gestire campi classe -> campi superclasse
                 // controllo che il numero di attributi del costruttore sia uguale a quello della superclasse
                 if (fieldDeclarationArraylist.size() >= superClassType.getFields().size()) {
 
@@ -165,7 +165,7 @@ public class ClassNode implements INode {
 
             try {
                 //controllo ovveride se possibile
-
+                // TODO verificare override campi, override metodi
                 //prendo entry e tipo della superclasse
                 SymbolTableEntry superClassEntry = env.processUse(idSuperClass);
                 ClassType superClassType = (ClassType) superClassEntry.getType();
