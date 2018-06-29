@@ -36,16 +36,16 @@ public class MethodCallNode extends FunCallNode {
         nestinglevel = env.getNestingLevel();
 
         //prendo l'offset e il tipo di oggetto e metodo e poi effettuo vari controlli
-
         try {
-            ClassType classType = null;
-            // vengono calcolati gli offset dalla dispatch table per avere
-            // accesso all'oggetto del metodo
+            ClassType classType;
+            // vengono calcolati gli offset dalla dispatch table per avere accesso all'oggetto del metodo
 
             //prendo la STentry dell'oggetto dalla Symbol Table
-
             SymbolTableEntry objectSTentry = env.processUse(classID);
             IType objectType = objectSTentry.getType();
+            if (!objectSTentry.isInstanziato()) {
+                res.add("L'oggetto: " + classID + " non è stato inizializzato\n");
+            }
             objectOffset = objectSTentry.getOffset();
             objectNestingLevel = objectSTentry.getNestinglevel();
 
@@ -53,13 +53,9 @@ public class MethodCallNode extends FunCallNode {
             if (objectType instanceof ObjectType) {
                 classType = ((ObjectType) objectType).getClassType();
             } else {
-                res.add("Il metodo " + methodID + " è invocato da un tipo che non è un oggetto");
+                res.add("Il metodo " + methodID + " è invocato da un tipo che non è un oggetto\n");
                 return res;
             }
-
-
-            // se il metodo è invocato con this allora significa che la classe a cui il metodo
-            // appartiene è nell'ultima entry inserita nella SymbolTable
 
             SymbolTableEntry classEntry;
             classEntry = env.processUse(classType.getClassID());
@@ -71,14 +67,14 @@ public class MethodCallNode extends FunCallNode {
 
             // controllo che il metodo sia dichiarato all'interno della classe
             if (methodType == null) {
-                res.add("L'oggetto " + classID + " non ha il metodo " + methodID);
+                res.add("L'oggetto " + classID + " non ha il metodo " + methodID + "\n");
             }
 
             FunType funType = (FunType) methodType;
             ArrayList<IType> funTypeArrayList = funType.getParametersTypeArrayList();
             //controllo che il metodo abbia il numero di parametri uguale a quello degli argomenti
             if (!(funTypeArrayList.size() == getArgumentsArrayList().size())) {
-                res.add("Numero errato di parametri nell'invocazione di " + getId());
+                res.add("Numero errato di parametri nell'invocazione del metodo: " + getId() + "\n");
             }
 
             //CheckSemantic per ogni argomento

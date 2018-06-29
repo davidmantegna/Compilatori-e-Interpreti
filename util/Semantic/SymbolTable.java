@@ -73,22 +73,12 @@ public class SymbolTable {
         return this;
     }
 
-    //come processDeclaration ma utilizzata specificatamente per le classi
-    public SymbolTable processDeclarationforClass(String id, IType type, int offset, boolean inside) throws MultipleIDException {
-        SymbolTableEntry nuovaEntry = new SymbolTableEntry(getNestingLevel(), type, offset, inside);
-        System.out.print("\t\t\033[31;1mprocessDeclarationforClass: \033[0m" + nuovaEntry.toString() + "\n");
+    public SymbolTable processDeclarationClass(String id, IType type, int offset, boolean istanziato) throws MultipleIDException {
+        SymbolTableEntry nuovaEntry = new SymbolTableEntry(getNestingLevel(), type, offset, istanziato);
+        System.out.print("\t\t\033[31;1mprocessDeclarationClass: \033[0m" + nuovaEntry.toString() + "\n");
         checkProcessDeclaration(nuovaEntry, id, type);
         return this;
     }
-
-    // aggiungo nella hashmap più esterna i parametri della funzione
-    public SymbolTable processParameterDeclaration(String id, IType type, int offset, boolean inside) throws MultipleIDException {
-        SymbolTableEntry nuovaEntry = new SymbolTableEntry(getNestingLevel(), type, offset, inside);
-        System.out.print("\t\t\033[31;1mprocessDeclarationforParameter: \033[0m" + nuovaEntry.toString() + "\n");
-        checkProcessDeclaration(nuovaEntry, id, type);
-        return this;
-    }
-
 
     //aggiorna l'attributo type della SymbolTableEntry con chiave IDType
     //è utilizzato per aggiornare il supertipo delle classi (dopo tutte le classdec)

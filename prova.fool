@@ -1,8 +1,9 @@
 class Numero(int a){
-    int ciao()
-        1;
-};
+    int ciao(int c)
+        a + c;
+}
+class X(){};
 let
-    Numero num = new Numero(1);
+    Numero num = new X();
 in
-    num.ciao();
+    9;

@@ -56,7 +56,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
                 for (int i = 0; i < classdecContext.vardec().size(); i++) {
                     VardecContext vardecContext = classdecContext.vardec().get(i);
                     parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(),
-                            visit(vardecContext.type()).typeCheck(), i + 1, true, vardecContext));
+                            visit(vardecContext.type()).typeCheck(), i + 1, vardecContext));
                 }
                 ArrayList<MethodNode> methodNodeArrayList = new ArrayList<>();
 
@@ -155,8 +155,13 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         }
 
         INode expNode = visit(varasmContext.exp());
-
-        return new VarAsmNode(varasmContext.vardec().ID().getText(), type, expNode, varasmContext);
+        boolean istanziato;
+        if (expNode.getClass().getName().equals("nodes.NullNode")) {
+            istanziato = false;
+        } else {
+            istanziato = true;
+        }
+        return new VarAsmNode(varasmContext.vardec().ID().getText(), type, expNode, varasmContext, istanziato);
     }
 
     @Override

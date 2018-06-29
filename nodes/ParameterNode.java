@@ -13,31 +13,20 @@ public class ParameterNode implements INode {
     private String idParameter;
     private IType type;
     private int offset;
-    private boolean insideClass;
     private VardecContext vardecContext;
 
     public ParameterNode(String ID, IType type, int offset, VardecContext vardecContext) {
         this.idParameter = ID;
         this.type = type;
         this.offset = offset;
-        this.insideClass = false;
         this.vardecContext = vardecContext;
     }
 
-
-    public ParameterNode(String ID, IType type, int offset, boolean insideClass, VardecContext vardecContext) {
-        this.idParameter = ID;
-        this.type = type;
-        this.offset = offset;
-        this.insideClass = insideClass;
-        this.vardecContext = vardecContext;
-    }
-
-    public String getId(){
+    public String getId() {
         return idParameter;
     }
 
-    public IType getType(){
+    public IType getType() {
         return type;
     }
 
@@ -46,7 +35,7 @@ public class ParameterNode implements INode {
         System.out.print("ParameterNode: checkSemantics -> \n\t" + env.toString() + "\n");
         ArrayList<String> res = new ArrayList<>();
         try {
-            env.processParameterDeclaration(idParameter, type, offset, insideClass);
+            env.processDeclaration(idParameter, type, offset);
         } catch (MultipleIDException e) {
             res.add(e.getMessage());
         }

@@ -7,7 +7,7 @@ public class SymbolTableEntry {
     private int nestingLevel; //nestinglevel
     private IType type;
     private int offset;
-    private boolean insideClass;
+    private boolean instanziato;
 
     public SymbolTableEntry(int n, int os) {
         nestingLevel = n;
@@ -20,11 +20,11 @@ public class SymbolTableEntry {
         offset = os;
     }
 
-    public SymbolTableEntry(int n, IType t, int os, boolean b) {
-        nestingLevel = n;
-        type = t;
-        offset = os;
-        insideClass = b;
+    public SymbolTableEntry(int nestingLevel, IType type, int offset, boolean instanziato) {
+        this.nestingLevel = nestingLevel;
+        this.type = type;
+        this.offset = offset;
+        this.instanziato = instanziato;
     }
 
     public IType getType() {
@@ -35,12 +35,12 @@ public class SymbolTableEntry {
         return offset;
     }
 
-    public boolean getInsideClass() {
-        return insideClass;
-    }
-
     public int getNestinglevel() {
         return nestingLevel;
+    }
+
+    public boolean isInstanziato() {
+        return instanziato;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class SymbolTableEntry {
                 "nestingLevel= " + nestingLevel +
                 ", type= " + type.toPrint() +
                 ", offset= " + offset +
-                ", insideClass= " + insideClass +
+                ", istanziato= " + instanziato +
                 "}";
     }
 }

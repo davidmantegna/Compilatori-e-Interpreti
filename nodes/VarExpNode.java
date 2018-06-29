@@ -41,15 +41,6 @@ public class VarExpNode implements INode {
             //è utilizzato per poter definire un oggetto con lo stesso nome di un metodo
             //all'interno di una classe
             entry = env.processUseIgnoreFun(identificatore);
-            //getInsideClass è true quando si è dentro ad una classe
-            if (entry.getInsideClass()) {
-
-                //utilizzato per conoscere il nestingLevel e offset di this
-                //TODO da rivedere
-                /*SymbolTableEntry thisPointer = env.processUse("this");
-                thisNestingLevel = thisPointer.getNestinglevel();
-                thisOffset = thisPointer.getOffset();*/
-            }
             nestingLevel = env.getNestingLevel();
 
             //serve per assegnare il supertipo dinamicamente agli oggetti
@@ -70,12 +61,12 @@ public class VarExpNode implements INode {
     @Override
     public IType typeCheck() throws TypeException {
         // TODO Object Orientation
-        if(isNot){
+        if (isNot) {
             if (!entry.getType().isSubType(new BoolType())) {
                 throw new TypeException("Tipo incompatibile per l'operatore NOT. È richiesto un booleano.", parserRuleContext);
             }
         }
-        if(isNegative){
+        if (isNegative) {
             if (!entry.getType().isSubType(new IntType())) {
                 throw new TypeException("Tipo incompatibile per l'operatore MINUS. È richiesto un intero", parserRuleContext);
             }
@@ -92,26 +83,21 @@ public class VarExpNode implements INode {
     public String codeGeneration() {
         StringBuilder getActivationRecord = new StringBuilder();
 
-        if (entry.getInsideClass()) {
-            // TODO Object Orientation codeGeneration
-            return "OO";
+        //for e getActivationRecord per gestire le funzioni annidate
+        for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++)
+            getActivationRecord.append("lw\n");
+        if (isNegative) {
+            return "push " + entry.getOffset() + "\n" + //metto offset sullo stack
+                    "lfp\n" + getActivationRecord + //risalgo la catena statica
+                    "add\n" +
+                    "lw\n" + //carico sullo stack il valore all'indirizzo ottenuto
+                    "push -1\n" +
+                    "mult\n";
         } else {
-            //for e getActivationRecord per gestire le funzioni annidate
-            for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++)
-                getActivationRecord.append("lw\n");
-            if (isNegative) {
-                return "push " + entry.getOffset() + "\n" + //metto offset sullo stack
-                        "lfp\n" + getActivationRecord + //risalgo la catena statica
-                        "add\n" +
-                        "lw\n" + //carico sullo stack il valore all'indirizzo ottenuto
-                        "push -1\n" +
-                        "mult\n";
-            } else {
-                return "push " + entry.getOffset() + "\n" + //metto offset sullo stack
-                        "lfp\n" + getActivationRecord + //risalgo la catena statica
-                        "add\n" +
-                        "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
-            }
+            return "push " + entry.getOffset() + "\n" + //metto offset sullo stack
+                    "lfp\n" + getActivationRecord + //risalgo la catena statica
+                    "add\n" +
+                    "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
         }
     }
 }

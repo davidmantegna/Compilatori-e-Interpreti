@@ -27,15 +27,13 @@ public class ClassDecNode implements INode {
     public ArrayList<String> checkSemantics(SymbolTable env) {
         ArrayList<String> res = new ArrayList<>();
 
-        //crea nuovo livello di scope
+        // crea un nuovo livello di scope
         HashMap<String, SymbolTableEntry> hm = new HashMap<>();
         env.pushHashMap(hm);
 
         for (ClassNode classNode : classDeclarationsArrayList) {
             try {
-
-                //defisco la classe con tutti i suoi campi e metodi
-
+                // definisco la classe con tutti i suoi campi e metodi
                 ArrayList<Field> fieldArrayList = new ArrayList<>();
                 ArrayList<Method> methodArrayList = new ArrayList<>();
 
@@ -53,7 +51,7 @@ public class ClassDecNode implements INode {
 
                 //controllo se la classe è già stata definita
                 ClassType classType = new ClassType(classNode.getIdClass(), new ClassType(classNode.getIdSuperClass()), fieldArrayList, methodArrayList);
-                env.processDeclaration(classNode.getIdClass(), classType, 0);//TODO processDeclarationforClass?
+                env.processDeclaration(classNode.getIdClass(), classType, 0);
             } catch (MultipleIDException e) {
                 res.add("La classe '" + classNode.getIdClass() + "' è dichiarata più volte\n");
             }
