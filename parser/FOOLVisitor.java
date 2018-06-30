@@ -71,19 +71,11 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFun(FOOLParser.FunContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code varAssignment}
-	 * labeled alternative in {@link FOOLParser#dec}.
+	 * Visit a parse tree produced by {@link FOOLParser#dec}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVarAssignment(FOOLParser.VarAssignmentContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code funDeclaration}
-	 * labeled alternative in {@link FOOLParser#dec}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunDeclaration(FOOLParser.FunDeclarationContext ctx);
+	T visitDec(FOOLParser.DecContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FOOLParser#type}.
 	 * @param ctx the parse tree

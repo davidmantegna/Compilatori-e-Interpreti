@@ -54,10 +54,16 @@ public class FunCallNode implements INode {
             entry = env.processUse(id);
             calledNestingLevel = env.getNestingLevel();
 
-            for(INode argument : argumentsArrayList)
-                res.addAll(argument.checkSemantics(env));
-
-        }catch (UndeclaredIDException e){
+            int index = 1;
+            for (INode argument : argumentsArrayList) {
+                if (argument.getClass().getName().equals("nodes.FunCallNode")) {
+                    res.add("La funzione: " + id + " ha una funzione come parametro " + index);
+                } else {
+                    res.addAll(argument.checkSemantics(env));
+                }
+                index++;
+            }
+        } catch (UndeclaredIDException e) {
             res.add(id + ": identificativo non definito\n");
         }
 
@@ -70,7 +76,7 @@ public class FunCallNode implements INode {
 
         FunType funType;
 
-        if(entry.getType().getID().equals(IType.IDType.FUN)) {
+        if (entry.getType().getID().equals(IType.IDType.FUN)) {
             funType = (FunType) entry.getType();
         } else {
             throw new TypeException("Invocazione di una non funzione " + id, funcallContext);
