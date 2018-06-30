@@ -1,4 +1,6 @@
 let
+    bool b = false;
+    int x = 5;
     int fatt(int n)
         if (n <= 1) then{
             1               //caso base
@@ -11,4 +13,4 @@ let
         x = fatt(x);
     ;
 in
-    calcolare(fatt(2));
+    calcolare(fatt(x));

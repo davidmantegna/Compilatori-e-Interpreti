@@ -57,7 +57,7 @@ public class FunCallNode implements INode {
             int index = 1;
             for (INode argument : argumentsArrayList) {
                 if (argument.getClass().getName().equals("nodes.FunCallNode")) {
-                    res.add("La funzione: " + id + " ha una funzione come parametro " + index);
+                    res.add("La funzione '" + id + "' ha una funzione come " + index+ "° parametro\n");
                 } else {
                     res.addAll(argument.checkSemantics(env));
                 }
