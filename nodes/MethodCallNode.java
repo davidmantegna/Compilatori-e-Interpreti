@@ -2,6 +2,7 @@ package nodes;
 
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
+import exceptions.UndeclaredMethodIDException;
 import parser.FOOLParser;
 import type.ClassType;
 import type.FunType;
@@ -81,7 +82,7 @@ public class MethodCallNode extends FunCallNode {
             for (INode node : getArgumentsArrayList())
                 res.addAll(node.checkSemantics(env));
 
-        } catch (UndeclaredIDException e) {
+        } catch (UndeclaredIDException| UndeclaredMethodIDException e) {
             res.add(e.getMessage());
         }
 

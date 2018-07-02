@@ -48,6 +48,10 @@ public class ClassNode implements INode {
         return methodDeclarationArraylist;
     }
 
+    public ClassType getClassType() {
+        return classType;
+    }
+
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("ClassNode: checkSemantics -> \n\t" + env.toString() + "\n");
@@ -56,11 +60,29 @@ public class ClassNode implements INode {
         ArrayList<Field> fieldArrayList = new ArrayList<>();
         ArrayList<Method> methodArrayList = new ArrayList<>();
 
+
+        // TODO  Test superclasse
+        ClassType superclassType;
+
+        //controllo se la classe ha una superclasse per aggiornare correttamente la SymbolTable
+        try {
+            superclassType = (ClassType) env.processUse(idSuperClass).getType();
+        } catch (UndeclaredIDException e) {
+            superclassType = null;
+        }
+
+        // Eredito i Campi dell'eventuale SuperClasse
+        if (superclassType != null) {
+            fieldArrayList.addAll(superclassType.getFields());
+        }
+
+        // inserisco i parametri della classe attuale
         for (ParameterNode parameterNode : fieldDeclarationArraylist) {
             fieldArrayList.add(new Field(parameterNode.getId(), parameterNode.getType()));
             fieldHashMap.put(parameterNode.getId(), parameterNode.getType());
         }
 
+        // inserisco i metodi della classe attuale
         for (MethodNode methodNode : methodDeclarationArraylist) {
             ArrayList<IType> parameterTypeArrayList = new ArrayList<>();
             for (ParameterNode parameterNode : methodNode.getParameterNodeArrayList()) {
@@ -87,20 +109,11 @@ public class ClassNode implements INode {
             methodHashMap.put(methodNode.getID(), new FunType(parameterTypeArrayList, methodNode.getReturnType()));
         }
 
-        // TODO  Test superclasse
-        ClassType superclassType;
-
-        //controllo se la classe ha una superclasse per aggiornare correttamente la SymbolTable
-        try {
-            superclassType = (ClassType) env.processUse(idSuperClass).getType();
-        } catch (UndeclaredIDException e) {
-            superclassType = null;
-        }
 
         // all'ID dichiarato si setta il tipo classe nella SymbolTableEntry
         try {
             classType = new ClassType(idClass, superclassType, fieldArrayList, methodArrayList);
-            env.setDeclarationType(idClass, classType, 0);
+            env.setDeclarationType(idClass, classType, 0); // TODO punto in cui viene dichiarato il tipo
         } catch (UndeclaredIDException e) {
             res.add(e.getMessage());
         }
@@ -110,10 +123,20 @@ public class ClassNode implements INode {
 
         for (ParameterNode parameterNode : fieldDeclarationArraylist) {
             if (parameterNode.getType() instanceof ObjectType) {
-                //sottoclassi non possono essere parametri di superclassi
-
                 ClassType subClassAsParam = ((ObjectType) parameterNode.getType()).getClassType();
 
+                //Ricavo la superclasse del parametro nel costruttore
+                ClassType paramClass = ((ObjectType) parameterNode.getType()).getClassType();
+                String TypeParamClass = paramClass.getClassID();
+                ClassType superParams = null;
+                try {
+                    superParams = (ClassType) env.processUse(TypeParamClass).getType();
+                } catch (UndeclaredIDException e) {
+                    e.printStackTrace();
+                }
+                paramClass.setSuperClassType(superParams.getSuperClassType());
+
+                //sottoclassi non possono essere parametri di superclassi
                 if (subClassAsParam.isSubType(this.classType))
                     res.add("Non si può usare una sottoclasse nel costruttore della superclasse\n");
             }
@@ -142,30 +165,8 @@ public class ClassNode implements INode {
             }
 
             try {
-                ClassType superClassType = (ClassType) env.processUse(idSuperClass).getType();
-                // TODO da gestire campi classe -> campi superclasse
-                // controllo che il numero di attributi del costruttore sia uguale a quello della superclasse
-                if (fieldDeclarationArraylist.size() >= superClassType.getFields().size()) {
-
-                    for (int i = 0; i < superClassType.getFields().size(); i++) {
-                        ParameterNode currentParameterNode = fieldDeclarationArraylist.get(i);
-                        Field superClassField = superClassType.getFields().get(i);
-                        //controllo che tipo e nome degli attributi siano uguali
-                        if (!superClassField.getFieldID().equals(currentParameterNode.getId())
-                                || !currentParameterNode.getType().isSubType(superClassField.getFieldType())) {
-                            res.add("Il campo '" + currentParameterNode.getId() + "' della classe '" + idClass + "' fa override della superclasse con tipo differente\n");
-                        }
-                    }
-                } else {
-                    res.add("La sottoclasse non ha i parametri della superclasse\n");
-                }
-            } catch (UndeclaredIDException e) {
-                res.add("La superclasse " + idSuperClass + " non è definita " + e.getMessage()+"\n");
-            }
-
-            try {
                 //controllo ovveride se possibile
-                // TODO verificare override campi, override metodi
+                // TODO verificare campi, override metodi
                 //prendo entry e tipo della superclasse
                 SymbolTableEntry superClassEntry = env.processUse(idSuperClass);
                 ClassType superClassType = (ClassType) superClassEntry.getType();

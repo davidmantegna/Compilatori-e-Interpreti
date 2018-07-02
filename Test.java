@@ -118,8 +118,8 @@ public class Test {
 
             System.out.println("--------------------------");
 
-        } catch (IOException | ParserException | LexerException | TypeException e) {
-            System.out.println(e.getMessage() + "\n\n");
+        } catch (IOException | ParserException | LexerException | SemanticException | TypeException e) {
+            System.err.println("Errore: " + e.getMessage() + "\n\n");
         }
     }
 }

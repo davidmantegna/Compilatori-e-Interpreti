@@ -57,7 +57,7 @@ public class FunCallNode implements INode {
             int index = 1;
             for (INode argument : argumentsArrayList) {
                 if (argument.getClass().getName().equals("nodes.FunCallNode")) {
-                    res.add("La funzione '" + id + "' ha una funzione come " + index+ "° parametro\n");
+                    res.add("La funzione '" + id + "' ha una funzione come " + index + "° parametro\n");
                 } else {
                     res.addAll(argument.checkSemantics(env));
                 }
@@ -74,22 +74,22 @@ public class FunCallNode implements INode {
     public IType typeCheck() throws TypeException {
         System.out.print("FunCallNode: typeCheck ->\t");
 
-        FunType funType;
+        FunType funType = null;
 
         if (entry.getType().getID().equals(IType.IDType.FUN)) {
             funType = (FunType) entry.getType();
-        } else {
+        }/* else {
             throw new TypeException("Invocazione di una non funzione " + id, funcallContext);
-        }
+        }*/
 
-        ArrayList<IType> arrowTypeArrayList = funType.getParametersTypeArrayList();
-        if (!(arrowTypeArrayList.size() == argumentsArrayList.size())) {
+        ArrayList<IType> funTypeArrayList = funType.getParametersTypeArrayList();
+        if (!(funTypeArrayList.size() == argumentsArrayList.size())) {
             throw new TypeException("Numero errato di parametri nell'invocazione di " + id, funcallContext);
         }
 
         //Controllo che il tipo dei parametri sia lo stesso del tipo degli argomenti
         for (int i = 0; i < argumentsArrayList.size(); i++)
-            if (!argumentsArrayList.get(i).typeCheck().isSubType(arrowTypeArrayList.get(i))) {
+            if (!argumentsArrayList.get(i).typeCheck().isSubType(funTypeArrayList.get(i))) {
                 throw new TypeException("Tipo errato per il parametro " + (i + 1) + " nell'invocazione di " + id, funcallContext);
             }
 

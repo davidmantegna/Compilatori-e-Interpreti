@@ -39,6 +39,7 @@ public class ObjectType implements IType {
 
     @Override
     public boolean isSubType(IType type) {
+        // classType parametro passato, it2 oarametro richiesto
         if (type instanceof ObjectType) {
             ObjectType it2 = (ObjectType) type;
             return classType.isSubType(it2.getClassType());

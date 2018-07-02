@@ -2,6 +2,7 @@ package nodes;
 
 import exceptions.MultipleIDException;
 import exceptions.TypeException;
+import exceptions.UndeclaredIDException;
 import type.ClassType;
 import type.FunType;
 import type.IType;
@@ -37,9 +38,11 @@ public class ClassDecNode implements INode {
                 ArrayList<Field> fieldArrayList = new ArrayList<>();
                 ArrayList<Method> methodArrayList = new ArrayList<>();
 
+
                 for (ParameterNode parameterNode : classNode.getFieldDeclarationArraylist()) {
                     fieldArrayList.add(new Field(parameterNode.getId(), parameterNode.getType()));
                 }
+
 
                 for (MethodNode methodNode : classNode.getMethodDeclarationArraylist()) {
                     ArrayList<IType> parameterTypeArrayList = new ArrayList<>();

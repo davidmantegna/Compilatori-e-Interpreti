@@ -1,6 +1,7 @@
 package type;
 
 import exceptions.UndeclaredIDException;
+import exceptions.UndeclaredMethodIDException;
 import util.Semantic.Field;
 import util.Semantic.Method;
 
@@ -42,6 +43,9 @@ public class ClassType implements IType {
         return fields;
     }
 
+    public void setSuperClassType(ClassType superClassType) {
+        this.superClassType = superClassType;
+    }
 
     @Override
     public IDType getID() {
@@ -51,6 +55,7 @@ public class ClassType implements IType {
     @Override
     public boolean isSubType(IType t) {
         //A è sottotipo di B, A.isSubTypeOf(B)
+        // t parametro richiesto, this parametro passato
 
         // Controllo se altro tipo è classe
         if (t instanceof ClassType) {
@@ -108,14 +113,14 @@ public class ClassType implements IType {
     }
 
     //ritorna l'offset del metodo situato nella dispatchTable
-    public int getOffsetOfMethod(String methodID) throws UndeclaredIDException {
+    public int getOffsetOfMethod(String methodID) throws UndeclaredMethodIDException {
         HashMap<String, Integer> methodsHashMap = methodsHashMapFromSuperClass();
         Integer offset = methodsHashMap.get(methodID);
         if (offset != null) {
             //ad offset 0 c'è la dispatch table, quindi vengono tutti aumentati di 1
             return offset + 1;
         } else {
-            throw new UndeclaredIDException(methodID);
+            throw new UndeclaredMethodIDException(methodID,classID);
         }
     }
 

@@ -1,16 +1,16 @@
+class A (){
+        A f(A a) a;
+};
+class B extends A (){
+        B f(A a)
+            let
+                B b = new B();
+            in
+                b;
+};
 let
-    bool b = false;
-    int x = 5;
-    int fatt(int n)
-        if (n <= 1) then{
-            1               //caso base
-        }else{
-            n * fatt(n-1)   //ricorsione
-        }
-    ;
-
-    void calcolare(int x)
-        x = fatt(x);
-    ;
+    A a = new A();
+    A b = new B();
 in
-    calcolare(fatt(x));
+    a.f(a);
+    b.f(b);

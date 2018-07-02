@@ -114,7 +114,7 @@ public class FunNode implements INode {
         //controllo che il corpo ritorni il tipo dichiarato dalla funzione
         IType bodyType = body.typeCheck();
         if (!bodyType.isSubType(returnType)) {
-            throw new TypeException("Il tipo restituito dal corpo della funzione '" + idFunzione + "' è '" + body.typeCheck().toPrint() + "'. Il tipo richiesto è '" + returnType.toPrint() + "'", parserRuleContext);
+            throw new TypeException("Il tipo restituito dal corpo della funzione '" + idFunzione + "' è '" + body.typeCheck().toPrint() + "'. Il tipo richiesto è '" + returnType.toPrint() + "'\n", parserRuleContext);
       }
 
         return new FunType(paramsType, returnType);
