@@ -74,8 +74,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
                     classNode = new ClassNode(classdecContext.ID(0).getText(), "", parameterNodeArrayList,
                             methodNodeArrayList);
                 } else { // altrimenti ha una superclasse
-                    classNode = new ClassNode(classdecContext.ID(0).getText(), classdecContext.ID().get(1).getText(),
-                            parameterNodeArrayList, methodNodeArrayList);
+                    classNode = new ClassNode(classdecContext.ID(0).getText(), classdecContext.ID().get(1).getText(), parameterNodeArrayList, methodNodeArrayList);
                 }
                 classDeclarations.add(classNode);
             }

@@ -35,7 +35,10 @@ public class ClassType implements IType {
         return superClassType;
     }
 
-    public String getSuperClassID(){
+    public String getSuperClassID() {
+        if (getSuperClassType() == null) {
+            return "";
+        }
         return getSuperClassType().getClassID();
     }
 
@@ -67,22 +70,21 @@ public class ClassType implements IType {
             // Vado avanti solo se la classe corrente ha un supertipo
             if (superClassType != null) {
                 ClassType tmp = superClassType;
-                if (superClassType.isSubType(t)){
+                if (superClassType.isSubType(t)) {
                     return true;
-                }
-                else if(ct2.getSuperClassType() != null){
+                } else if (ct2.getSuperClassType() != null) {
                     if (superClassType.getClassID().equals(ct2.getSuperClassID())) {
                         return true;
                     }
                 }
-                while (tmp.getSuperClassType() != null){
+                while (tmp.getSuperClassType() != null) {
                     tmp = tmp.getSuperClassType();
-                    if (tmp.getClassID().equals(ct2.getClassID())){
+                    if (tmp.getClassID().equals(ct2.getClassID())) {
                         return true;
                     }
-                    while (ct2.getSuperClassType() != null){
+                    while (ct2.getSuperClassType() != null) {
                         ct2 = ct2.getSuperClassType();
-                        if (tmp.getClassID().equals(ct2.getClassID())){
+                        if (tmp.getClassID().equals(ct2.getClassID())) {
                             return true;
                         }
                     }
@@ -120,7 +122,7 @@ public class ClassType implements IType {
             //ad offset 0 c'è la dispatch table, quindi vengono tutti aumentati di 1
             return offset + 1;
         } else {
-            throw new UndeclaredMethodIDException(methodID,classID);
+            throw new UndeclaredMethodIDException(methodID, classID);
         }
     }
 

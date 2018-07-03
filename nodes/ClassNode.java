@@ -73,7 +73,18 @@ public class ClassNode implements INode {
 
         // Eredito i Campi dell'eventuale SuperClasse
         if (superclassType != null) {
-            fieldArrayList.addAll(superclassType.getFields());
+            ArrayList<Field> listFields = new ArrayList<>();
+            ClassType supetType = superclassType;
+            while (supetType != null) {
+                listFields.addAll(0, supetType.getFields());
+                String idsuperClass = supetType.getSuperClassID();
+                try {
+                    supetType = (ClassType) env.processUse(idsuperClass).getType();
+                } catch (UndeclaredIDException e) {
+                    supetType = null;
+                }
+            }
+            fieldArrayList.addAll(listFields);
         }
 
         // inserisco i parametri della classe attuale
