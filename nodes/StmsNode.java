@@ -24,9 +24,7 @@ public class StmsNode implements INode {
         for (INode stm : stmsArrayList)
             res.addAll(stm.checkSemantics(env));
 
-
         return res;
-
     }
 
     @Override

@@ -38,7 +38,7 @@ public class Test {
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             tokens.fill();
 
-            System.out.println("Tokens: " + tokens.getTokens() + "\n");
+            //System.out.println("Tokens: " + tokens.getTokens() + "\n");
             System.out.println("Numero Tokens: " + tokens.getTokens().size() + "\n");
 
             //SIMPLISTIC BUT WRONG CHECK OF THE LEXER ERRORS

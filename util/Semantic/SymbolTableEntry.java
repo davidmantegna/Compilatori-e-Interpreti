@@ -43,6 +43,10 @@ public class SymbolTableEntry {
         return instanziato;
     }
 
+    public void setInstanziato(boolean instanziato) {
+        this.instanziato = instanziato;
+    }
+
     @Override
     public String toString() {
         return "SymbolTableEntry {" +

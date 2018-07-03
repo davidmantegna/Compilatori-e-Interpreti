@@ -8,9 +8,9 @@ class B extends A (){
             in
                 b;
 };
+class C (){};
 let
     A a = new A();
-    A b = new B();
+    B b = null;
 in
-    a.f(a);
-    b.f(b);
+    b = new A();

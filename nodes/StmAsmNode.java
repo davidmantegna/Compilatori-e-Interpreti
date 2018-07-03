@@ -4,6 +4,7 @@ import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import type.IType;
 import parser.FOOLParser.StmAssignmentContext;
+import type.ObjectType;
 import type.VoidType;
 import util.Semantic.SymbolTable;
 import util.Semantic.SymbolTableEntry;
@@ -44,6 +45,22 @@ public class StmAsmNode implements INode {
         }
 
         res.addAll(exp.checkSemantics(env));
+
+        // TODO Probabilmente da fare nel codeGen
+/*        if (idType instanceof ObjectType) {
+            boolean istanziato = entry.isInstanziato();
+            System.out.println("-----------------------------" + istanziato);
+            switch (exp.getClass().getName()) {
+                case "nodes.NewNode":
+                    istanziato = true;
+                    break;
+                case "nodes.NullNode":
+                    istanziato = false;
+                    break;
+            }
+            entry.setInstanziato(istanziato);
+        }*/
+        // TODO Probabilmente da fare nel codeGen
 
         return res;
     }

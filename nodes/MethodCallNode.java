@@ -45,7 +45,7 @@ public class MethodCallNode extends FunCallNode {
             SymbolTableEntry objectSTentry = env.processUse(classID);
             IType objectType = objectSTentry.getType();
             if (!objectSTentry.isInstanziato()) {
-                res.add("L'oggetto: " + classID + " non è stato inizializzato\n");
+                res.add("L'oggetto '" + classID + "' non è stato inizializzato\n");
             }
             objectOffset = objectSTentry.getOffset();
             objectNestingLevel = objectSTentry.getNestinglevel();

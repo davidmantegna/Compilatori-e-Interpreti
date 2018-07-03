@@ -7,6 +7,7 @@ import exceptions.TypeException;
 import nodes.*;
 import parser.FOOLBaseVisitor;
 import parser.FOOLLexer;
+import type.ObjectType;
 import type.VoidType;
 
 import java.util.ArrayList;
@@ -457,7 +458,6 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         System.out.print("visitStmAssignment -> \t");
 
         INode expNode = visit(stmAsmContext.exp());
-
 
         return new StmAsmNode(stmAsmContext.ID().getText(), expNode, stmAsmContext);
     }
