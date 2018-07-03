@@ -1,5 +1,3 @@
-import parser.SVMLexer;
-import parser.SVMParser;
 import type.IType;
 import nodes.INode;
 import exceptions.LexerException;
@@ -15,7 +13,6 @@ import parser.FOOLParser;
 import parser.FOOLParser.ProgContext;
 import util.FoolVisitorImpl;
 import util.Semantic.SymbolTable;
-import virtualMachine.ExecuteVM;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -25,9 +22,9 @@ import java.util.ArrayList;
 public class Test {
     public static void main(String[] args) {
 
+        //TODO implementare ExecuteVM
 
-        try {
-            //RILEVAZIONE INPUT
+        try { //RILEVAZIONE INPUT
             System.out.println("Rilevazione Input...\n");
             String fileName = "prova";
             String foolFileName = fileName + ".fool";
@@ -41,7 +38,7 @@ public class Test {
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             tokens.fill();
 
-            System.out.println("Tokens: " + tokens.getTokens() + "\n");
+            //System.out.println("Tokens: " + tokens.getTokens() + "\n");
             System.out.println("Numero Tokens: " + tokens.getTokens().size() + "\n");
 
             //SIMPLISTIC BUT WRONG CHECK OF THE LEXER ERRORS
@@ -68,31 +65,18 @@ public class Test {
 
 
             FoolVisitorImpl visitor = new FoolVisitorImpl();
-            INode nodes = visitor.visit(progContext); //generazione AST
+            INode ast = visitor.visit(progContext); //generazione AST
 
             System.out.println("\n--------------------------");
             System.out.println("Visualizing AST...\n");
-
-
-            /* //TODO Graphical interface
-            //show AST in GUI
-            JFrame frame = new JFrame("Antlr AST");
-            JPanel panel = new JPanel();
-            TreeViewer viewr = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
-            viewr.setScale(1.5);
-            panel.add(viewr);
-            frame.add(panel);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(1500, 700);
-            frame.setVisible(true);*/
-
+            //TODO Graphical interface
             System.out.println("--------------------------");
 
             System.out.println("Analisi Semantica...\n");
 
             SymbolTable env = new SymbolTable();
 
-            ArrayList<String> stringArrayListErr = nodes.checkSemantics(env);
+            ArrayList<String> stringArrayListErr = ast.checkSemantics(env);
 
 
             if (stringArrayListErr.size() > 0) {
@@ -101,36 +85,28 @@ public class Test {
             System.out.println("\n\ntype Checking...");
 
 
-            IType type = nodes.typeCheck(); //type-checking bottom-up
+            IType type = ast.typeCheck(); //type-checking bottom-up
             System.out.println("\n\ntype checking ok! Il tipo del programma è: " + type.toPrint() + "\n\n");
 
             // CODE GENERATION
-            System.out.println("------- CODE GENERATION -------");
-
-            String code = nodes.codeGeneration();
-
-            // code += DispatchTable.generaCodiceDispatchTable();
-
+            System.out.println("CODEGEN DA FARE");
+/*            String code = ast.codeGeneration();
             String asmFileName = fileName + ".asm";
             BufferedWriter out = new BufferedWriter(new FileWriter(asmFileName));
             out.write(code);
             out.close();
+            System.out.println("Code generated! Assembling and running generated code.");
+            System.out.println("Codice SVM Generato: #" + code.split("\n").length + " righe. Output: " + asmFileName);*/
 
-            System.out.println("Codice SVM generato: (" + code.split("\n").length + " linee). Output visibile in codice.svm. \n");
 
-            //Scommenta se vuoi vedere l'output del codice a console
-            //System.out.println(code);
-
+            System.out.println("--------------------------");
 
             //TODO codeGeneration execution
 
-            System.out.println("------- CODE GENERATION EXECUTION ------");
-
-            CharStream inputASM = CharStreams.fromFileName(asmFileName);
+/*            CharStream inputASM = CharStreams.fromFileName(asmFileName);
             SVMLexer lexerASM = new SVMLexer(inputASM);
             CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
             SVMParser parserASM = new SVMParser(tokensASM);
-
             parserASM.assembly();
 
             if (lexerASM.errors.size() > 0) {
@@ -138,16 +114,12 @@ public class Test {
             }
             if (parserASM.getNumberOfSyntaxErrors() > 0) {
                 throw new ParserException("Errore di parsing in SVM");
-            }int[] bytecode= parserASM.getBytecode();
-            ExecuteVM vm = new ExecuteVM(bytecode);
-            String risultato = "No output";
-            ArrayList<String> output = vm.cpu();
-            if (output.size() > 0)
-                risultato = output.get(output.size() - 1);
-            System.out.println("Risultato: "+risultato+"\n");
-        }
-        catch (LexerException | IOException | SemanticException | TypeException | ParserException e) {
-            System.out.println(e.getMessage());
+            }*/
+
+            System.out.println("--------------------------");
+
+        } catch (IOException | ParserException | LexerException | SemanticException | TypeException e) {
+            System.err.println("Errore: " + e.getMessage() + "\n\n");
         }
     }
 }

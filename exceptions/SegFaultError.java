@@ -1,8 +1,8 @@
 package exceptions;
 
-public class SegmentationFaultError extends Error {
+public class SegFaultError extends Error {
 
-    public SegmentationFaultError() {
+    public SegFaultError() {
         super("Tentativo di accedere a un indirizzo di memoria non valido.");
     }
 
