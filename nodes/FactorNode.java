@@ -64,6 +64,7 @@ public class FactorNode implements INode {
         String exit = Label.nuovaLabel();
         String codeGen = "";
 
+        //TODO codegen
         switch (operator) {
             case "And":
                 codeGen = leftNode.codeGeneration()
@@ -104,7 +105,7 @@ public class FactorNode implements INode {
             case "GreaterEq":
                 codeGen = rightNode.codeGeneration() +
                         leftNode.codeGeneration() +
-                        "bleq " + label + "\n" +
+                        "bge " + label + "\n" +
                         "push 0\n" +
                         "b " + exit + "\n" +
                         label + ":\n" +
@@ -114,7 +115,7 @@ public class FactorNode implements INode {
             case "LessEq":
                 codeGen = leftNode.codeGeneration() +
                         rightNode.codeGeneration() +
-                        "bleq " + label + "\n" +
+                        "ble " + label + "\n" +
                         "push 0\n" +
                         "b " + exit + "\n" +
                         label + ":\n" +
@@ -126,7 +127,7 @@ public class FactorNode implements INode {
                         "push 1\n" +
                         "add\n" +
                         leftNode.codeGeneration() +
-                        "bleq " + label + "\n" +
+                        "bgt " + label + "\n" +
                         "push 0\n" +
                         "b " + exit + "\n" +
                         label + ":\n" +
@@ -138,7 +139,7 @@ public class FactorNode implements INode {
                         "push 1\n" +
                         "add\n" +
                         rightNode.codeGeneration() +
-                        "bleq " + label + "\n" +
+                        "blt " + label + "\n" +
                         "push 0\n" +
                         "b " + exit + "\n" +
                         label + ":\n" +

@@ -1,36 +1,8 @@
-class C extends B (int z){
-    int g(A a, int b)
-        b + 9 + z
-    ;
-};
-
-class A (int a){
-    void funzI(int z)
-        z=7;
-    ;
-    bool funzB(bool b)
-        b
-    ;
-    int g(B a, int b)
-        b+3
-    ;
-};
-
-class B extends A(int ciao){
-    int g(B a, int b)
-        b*8
-    ;
-};
-
-
-
-
 let
     int x = 5;
-    int y = 2;
-    /*B b = new B(2,3);*/
-    A a = new A(45);
-    C c = new C(-10,-20, 5);
+    int y = 5;
+
 in
-    y = c.g(a,x+1);
-;
+    if ((x==y) && (x>=5)) then {x=3;} else {x=10};
+
+//3
