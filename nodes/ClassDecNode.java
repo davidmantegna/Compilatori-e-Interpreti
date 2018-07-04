@@ -34,26 +34,9 @@ public class ClassDecNode implements INode {
 
         for (ClassNode classNode : classDeclarationsArrayList) {
             try {
-                // definisco la classe con tutti i suoi campi e metodi
-                ArrayList<Field> fieldArrayList = new ArrayList<>();
-                ArrayList<Method> methodArrayList = new ArrayList<>();
-
-
-                for (ParameterNode parameterNode : classNode.getFieldDeclarationArraylist()) {
-                    fieldArrayList.add(new Field(parameterNode.getId(), parameterNode.getType()));
-                }
-
-
-                for (MethodNode methodNode : classNode.getMethodDeclarationArraylist()) {
-                    ArrayList<IType> parameterTypeArrayList = new ArrayList<>();
-                    for (ParameterNode parameterNode : methodNode.getParameterNodeArrayList()) {
-                        parameterTypeArrayList.add(parameterNode.getType());
-                    }
-                    methodArrayList.add(new Method(methodNode.getID(), new FunType(parameterTypeArrayList, methodNode.getReturnType())));
-                }
-
-                //controllo se la classe è già stata definita
-                ClassType classType = new ClassType(classNode.getIdClass(), new ClassType(classNode.getIdSuperClass()), fieldArrayList, methodArrayList);
+                // controllo se la classe è già stata definita
+                // se non è dichiarata più volte inserisco nella SymbolTable solo info relative a idClass e idSuperClass
+                ClassType classType = new ClassType(classNode.getIdClass(), new ClassType(classNode.getIdSuperClass()), new ArrayList<>(), new ArrayList<>());
                 env.processDeclaration(classNode.getIdClass(), classType, 0);
             } catch (MultipleIDException e) {
                 res.add("La classe '" + classNode.getIdClass() + "' è dichiarata più volte\n");

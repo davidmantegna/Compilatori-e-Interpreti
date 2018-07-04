@@ -60,8 +60,7 @@ public class ClassNode implements INode {
         ArrayList<Field> fieldArrayList = new ArrayList<>();
         ArrayList<Method> methodArrayList = new ArrayList<>();
 
-
-        // TODO  Test superclasse
+         // TODO  Test superclasse
         ClassType superclassType;
 
         //controllo se la classe ha una superclasse per aggiornare correttamente la SymbolTable
@@ -71,8 +70,8 @@ public class ClassNode implements INode {
             superclassType = null;
         }
 
-        // Eredito i Campi dell'eventuale SuperClasse
-        if (superclassType != null) {
+        // Eredito i Campi dell'eventuale SuperClasse -> funziona se le classi non sono ordinate
+        /* if (superclassType != null) {
             ArrayList<Field> listFields = new ArrayList<>();
             ClassType supetType = superclassType;
             while (supetType != null) {
@@ -85,6 +84,11 @@ public class ClassNode implements INode {
                 }
             }
             fieldArrayList.addAll(listFields);
+        }*/
+
+        // Eredito i Campi delle eventuali Superclassi
+        if (superclassType != null) {
+            fieldArrayList.addAll(superclassType.getFields());
         }
 
         // inserisco i parametri della classe attuale

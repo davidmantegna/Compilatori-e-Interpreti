@@ -15,7 +15,6 @@ import parser.FOOLParser;
 import parser.FOOLParser.ProgContext;
 import util.FoolVisitorImpl;
 import util.Semantic.SymbolTable;
-import virtualMachine.ExecuteVM;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -109,7 +108,7 @@ public class Test {
             // CODE GENERATION
             System.out.println("------- CODE GENERATION -------");
 
-            String code = nodes.codeGeneration();
+/*            String code = nodes.codeGeneration();
 
             // code += DispatchTable.generaCodiceDispatchTable();
 
@@ -146,10 +145,10 @@ public class Test {
             ArrayList<String> output = vm.cpu();
             if (output.size() > 0)
                 risultato = output.get(output.size() - 1);
-            System.out.println("Risultato: "+risultato+"\n");
+            System.out.println("Risultato: "+risultato+"\n");*/
         }
         catch (LexerException | IOException | SemanticException | TypeException | ParserException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 }
