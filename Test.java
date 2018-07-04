@@ -15,6 +15,7 @@ import parser.FOOLParser;
 import parser.FOOLParser.ProgContext;
 import util.FoolVisitorImpl;
 import util.Semantic.SymbolTable;
+import util.VM.DispatchTable;
 import virtualMachine.ExecuteVM;
 
 import java.io.BufferedWriter;
@@ -111,7 +112,7 @@ public class Test {
 
             String code = nodes.codeGeneration();
 
-            // code += DispatchTable.generaCodiceDispatchTable();
+            code += DispatchTable.generaCodiceDispatchTable();
 
             String asmFileName = fileName + ".asm";
             BufferedWriter out = new BufferedWriter(new FileWriter(asmFileName));

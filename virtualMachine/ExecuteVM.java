@@ -11,7 +11,6 @@ public class ExecuteVM {
 
     // TODO codegen() for all nodes
 
-    // TODO DispatchTable DTentry
     public static final int START_ADDRESS = 1234;   //indirizzo di partenza
     private static final int MEMSIZE = 135 ;        //dimensione totale della memoria
     //private static final int GARBAGE_THRESHOLD = Math.max((MEMSIZE / 100) * 10, 10);    //limite superato il quale agisce il gargabe collector
@@ -204,10 +203,10 @@ public class ExecuteVM {
                         v2 = pop();
                         push(v2 - v1);
                         break;
-                    /*case SVMParser.LOADC: //mette sullo stack l'indirizzo del metodo all'interno di code
+                    case SVMParser.LOADC: //mette sullo stack l'indirizzo del metodo all'interno di code
                         int indirizzoCodice = pop();
                         push(code[indirizzoCodice]);
-                        break;*/
+                        break;
                     case SVMParser.COPY:    //duplica il valore in cima allo stack
                         push(getMemory(sp));
                         break;
