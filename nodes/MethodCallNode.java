@@ -100,4 +100,41 @@ public class MethodCallNode extends FunCallNode {
                 throw new TypeException("Tipo errato per il parametro " + (i + 1) + " nell'invocazione di " + getId(), getFuncallContext());
         return funType.getReturnType();
     }
+
+    @Override
+    public String codeGeneration() {
+
+        //TODO test codeGeneration
+
+        /*StringBuilder parameterCode = new StringBuilder();
+        for (int i = argumentsArrayList.size() - 1; i >= 0; i--)
+            parameterCode.append(argumentsArrayList.get(i).codeGeneration());
+
+        StringBuilder getActivationRecord = new StringBuilder();
+
+        for (int i = 0; i < nestinglevel - objectNestingLevel; i++)
+            getActivationRecord.append("lw\n");
+
+        return "lfp\n"                                  // pusho frame pointer e parametri
+                + parameterCode
+                + "push " + objectOffset + "\n"         // pusho l'offset logico dell'oggetto (dispatch table)
+                + "lfp\n"
+                + getActivationRecord                                 //pusho access link (lw consecutivamente)
+                // così si potrà risalire la catena statica
+                + "add\n"                               // $fp + offset
+                + "lw\n"                                // pusho indirizzo di memoria in cui si trova
+                // l'indirizzo della dispatch table
+                + "copy\n"                              // copio
+                + "lw\n"                                // pusho l'indirizzo della dispatch table
+                + "push " + (methodOffset - 1) + "\n"   // pusho l'offset di dove si trova metodo rispetto
+                // all'inizio della dispatch table
+                + "add" + "\n"                          // dispatch_table_start + offset
+                + "loadc\n"                             // pusho il codice del metodo
+                + "js\n";                               // jump all'istruzione dove e' definito il metodo e
+        // salvo $ra
+    */
+        return super.codeGeneration();
+    }
+
+
 }

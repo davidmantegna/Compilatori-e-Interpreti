@@ -10,6 +10,8 @@ import util.Semantic.Field;
 import util.Semantic.Method;
 import util.Semantic.SymbolTable;
 import util.Semantic.SymbolTableEntry;
+import util.VM.DispatchTable;
+import util.VM.DispatchTableEntry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -217,7 +219,59 @@ public class ClassNode implements INode {
 
     @Override
     public String codeGeneration() {
-        // TODO codeGeneration ClassNode
-        return null;
+        // TODO Da rivedere e testare
+
+        ArrayList<DispatchTableEntry> dispatchTable;
+        // Creo una nuova dispatch table da zero se la classe non ha superclasse
+        if(idSuperClass.equals("")) {
+            dispatchTable=new ArrayList<>();
+        }
+        // Altrimenti la copio come base
+        else {
+            dispatchTable= DispatchTable.getDispatchTable(idSuperClass);
+        }
+
+        //contiene i metodi della superclasse
+        HashMap<String, String> superClassMethodsHashMap = new HashMap<>();
+        //aggiungo i metodi della superclasse alla hashmap
+        for (DispatchTableEntry d : dispatchTable) {
+            superClassMethodsHashMap.put(d.getMethodID(), d.getMethodLabel());
+        }
+        //contiene i metodi della classe attuale
+        HashMap<String, String> currentClassMethodsHashMap = new HashMap<>();
+        //aggiungo i metodi della classe attuale
+        for (MethodNode m : methodDeclarationArraylist) {
+            currentClassMethodsHashMap.put(m.getID(), m.codeGeneration());
+        }
+        //per ogni elemento della dispatch table:
+        for (int i = 0; i < dispatchTable.size(); i++) {
+            //gestione ovverride
+            //prende il metodo dalla dispatch table, se presente
+            String oldMethodID = dispatchTable.get(i).getMethodID();
+            //lo sostituisce con il metodo proprio della classe
+            String newMethodCode = currentClassMethodsHashMap.get(oldMethodID);
+            //se l'ID esiste, vuol dire che è stato fatto override e la dispatch table viene aggiornata
+            if (newMethodCode != null) {
+                dispatchTable.set(i, new DispatchTableEntry(oldMethodID, newMethodCode));
+            }
+        }
+        //per ogni metodo:
+        for (MethodNode m : methodDeclarationArraylist) {
+            //gestisce le funzioni aggiuntive della sottoclasse rispetto alla superclasse
+            //contiene l'ID del metodo corrente
+            String currentMethodID = m.getID();
+            //se la superclasse non ha il metodo che si sta esaminando, lo si aggiunge alla dispatch table.
+            if (superClassMethodsHashMap.get(currentMethodID) == null) {
+                dispatchTable.add(new DispatchTableEntry(currentMethodID, currentClassMethodsHashMap.get(currentMethodID)));
+            }
+
+        }
+
+        //viene aggiunta la dispatch table corrispondente alla classe esaminata
+        //questa operazione viene eseguita anche se la dispatch table è vuota
+        //in quanto può capitare di implementare una classe senza metodi
+        DispatchTable.addDispatchTable(idClass, dispatchTable);
+
+        return "";
     }
 }

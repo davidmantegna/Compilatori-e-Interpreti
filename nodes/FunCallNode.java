@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 public class FunCallNode implements INode {
 
-    private String id;
-    private ArrayList<INode> argumentsArrayList;
-    private SymbolTableEntry entry = null;
-    private int calledNestingLevel;
+    protected String id;
+    protected ArrayList<INode> argumentsArrayList;
+    protected SymbolTableEntry entry = null;
+    protected int calledNestingLevel;
     private FuncallContext funcallContext;
 
     public FunCallNode(String id, ArrayList<INode> argumentsArrayList, FuncallContext funcallContext) {
@@ -98,7 +98,9 @@ public class FunCallNode implements INode {
 
     @Override
     public String codeGeneration() {
-        StringBuilder parameterCode = new StringBuilder();
+
+        //TODO test codeGeneration
+        /*StringBuilder parameterCode = new StringBuilder();
         //parametri in ordine inverso
         for (int i = argumentsArrayList.size() - 1; i >= 0; i--)
             parameterCode.append(argumentsArrayList.get(i).codeGeneration());
@@ -118,6 +120,8 @@ public class FunCallNode implements INode {
                 "add\n" + //$fp + offset
                 "lw\n" + //tramite l'indirizzo accedo al codice della funzione
                 "js\n";
+    */
+        return "";
     }
 
 }

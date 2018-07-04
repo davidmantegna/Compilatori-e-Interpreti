@@ -24,6 +24,8 @@ public class NullNode implements INode {
 
     @Override
     public String codeGeneration() {
+
+        //TODO codegen
         return null;
     }
 }

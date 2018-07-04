@@ -46,9 +46,13 @@ public class ExpNode implements INode {
     @Override
     public String codeGeneration() {
         if (operation.equals("Plus")) {
-            return leftNode.codeGeneration() + rightNode.codeGeneration() + "add\n";
+            return leftNode.codeGeneration() +
+                    rightNode.codeGeneration() +
+                    "add\n";
         } else {
-            return leftNode.codeGeneration() + rightNode.codeGeneration() + "sub\n";
+            return leftNode.codeGeneration() +
+                    rightNode.codeGeneration() +
+                    "sub\n";
         }
     }
 }

@@ -99,5 +99,7 @@ public class VarExpNode implements INode {
                     "add\n" +
                     "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
         }
+
+        //TODO isNot
     }
 }

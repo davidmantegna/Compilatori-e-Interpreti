@@ -86,6 +86,7 @@ public class VarAsmNode implements INode {
 
     @Override
     public String codeGeneration() {
+
         return exp.codeGeneration();
     }
 }

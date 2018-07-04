@@ -77,7 +77,7 @@ assembly:
 	  | STOREHP                     {   code.add(STOREHP);    }
 	  | PRINT                       {   code.add(PRINT);      }
 	  | NEW                         {   code.add(NEW);        }
-	  //| LOADC                       {   code.add(LOADC);      }
+	  | LOADC                       {   code.add(LOADC);      }
 	  | HALT                        {   code.add(HALT);       }
 	  | l=LABEL                     {   labelRef.put(code.size(), $l.text);
 	                                    code.add(0);          }
@@ -114,7 +114,7 @@ BRANCHLESSEQ       : 'ble' ;        // jump to label if top <= next
 BRANCHGREATHER     : 'bgt' ;         // jump to label if top > next
 BRANCHGREATHEREQ   : 'bge' ;         // jump to label if top >= next
 
-// ??? AND, OR, NOT
+// ??? AND, OR
 
 JS	               : 'js' ;	         // jump to instruction pointed by top of stack and store next instruction in ra
 LOADRA	           : 'lra' ;	     // load from ra
@@ -130,7 +130,7 @@ PRINT	           : 'print' ;	     // print top of stack
 HALT	           : 'halt' ;	     // stop execution
 NEW                : 'new' ;         // alloca un'area di memoria nello heap
 
-//LOADC              : 'loadc' ;       // data la dispatch table di una classe mette sullo stack il codice
+LOADC              : 'loadc' ;       // data la dispatch table di una classe mette sullo stack il codice
                                      // del primo metodo
 COPY               : 'copy' ;        // duplica il valore in cima allo stack.
 HEAPOFFSET         : 'heapoffset' ;  // converte l'offset di un campo di un oggetto

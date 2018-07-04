@@ -64,7 +64,7 @@ public class FactorNode implements INode {
         String exit = Label.nuovaLabel();
         String codeGen = "";
 
-        //TODO codegen
+        //TODO codegen AND, OR
         switch (operator) {
             case "And":
                 codeGen = leftNode.codeGeneration()

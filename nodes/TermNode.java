@@ -45,8 +45,10 @@ public class TermNode implements INode {
 
     @Override
     public String codeGeneration() {
-        if (operation.equals("Times")) {
-            return leftNode.codeGeneration() + rightNode.codeGeneration() + "mult\n";
+
+        //TODO test codegen
+        if (operation.equals("times")) {
+            return leftNode.codeGeneration() + rightNode.codeGeneration() + "times\n";
         } else {
             return leftNode.codeGeneration() + rightNode.codeGeneration() + "div\n";
         }
