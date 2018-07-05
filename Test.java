@@ -147,7 +147,7 @@ public class Test {
             ArrayList<String> output = vm.cpu();
             if (output.size() > 0)
                 risultato = output.get(output.size() - 1);
-            System.out.println("Risultato: "+risultato+"\n");*/
+            System.out.println("Risultato: "+risultato+"\n");
         }
         catch (LexerException | IOException | SemanticException | TypeException | ParserException e) {
             System.err.println(e.getMessage());
