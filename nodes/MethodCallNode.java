@@ -97,7 +97,7 @@ public class MethodCallNode extends FunCallNode {
 
         for (int i = 0; i < getArgumentsArrayList().size(); i++)
             if (!getArgumentsArrayList().get(i).typeCheck().isSubType(funTypeArrayList.get(i)))
-                throw new TypeException("Tipo errato per il parametro " + (i + 1) + " nell'invocazione di " + getId(), getFuncallContext());
+                throw new TypeException("Tipo errato per il parametro " + (i + 1) + " nell'invocazione del metodo " + getId()+"()", getFuncallContext());
         return funType.getReturnType();
     }
 }
