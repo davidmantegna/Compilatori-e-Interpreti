@@ -63,7 +63,7 @@ public class IfNode implements INode {
         String exit = Label.nuovaLabel();
         return conditionNode.codeGeneration() +
                 "push 1\n" +
-                "beq" + thenBranch + "\n" +
+                "beq " + thenBranch + "\n" +
                 elseNode.codeGeneration() +
                 "b " + exit + "\n\n" +
                 thenBranch + ":\n" +

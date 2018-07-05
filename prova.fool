@@ -1,6 +1,15 @@
 let
-    bool x = true;
-    bool y = false;
+    int fatt(int n)
+        if (n <= 1) then{
+            1               //caso base
+        }else{
+            n * fatt(n-1)   //ricorsione
+        }
+    ;
 
+    void calcolare(int x)
+        x = fatt(x);
+    ;
 in
-    if(x&&y) then {9} else {5};
+    calcolare(3)
+;

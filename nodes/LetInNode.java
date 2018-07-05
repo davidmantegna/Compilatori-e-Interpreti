@@ -56,5 +56,5 @@ public class LetInNode implements INode {
                 + stmExp.codeGeneration()
                 + "halt\n"
                 + FunctionCode.getFunctionsCode();
-    }
+    }//TODO label halt
 }

@@ -1,5 +1,7 @@
 package type;
 
+import nodes.INode;
+
 import java.util.ArrayList;
 
 public class FunType implements IType {
@@ -38,15 +40,11 @@ public class FunType implements IType {
                 //Controllo che tutti i parametri abbiano lo stesso tipo(supertype, come da cosegna)
                 for (int i = 0; i < parametersTypeArrayList.size(); i++) {
                     controllo = controllo & (funType.getParametersTypeArrayList().get(i).isSubType(parametersTypeArrayList.get(i)));
-                    ObjectType paramB = (ObjectType) parametersTypeArrayList.get(i);
-                    ObjectType paramA = (ObjectType) funType.getParametersTypeArrayList().get(i);
-                    System.err.println("\n\n\n"+"CONTROVARIANZA: Parametri: " + paramB.getClassType().getClassID() + " è sovratipo di " + paramA.getClassType().getClassID() + " -> " + controllo);
+                    printParameter(funType.getParametersTypeArrayList().get(i), parametersTypeArrayList.get(i), controllo);
                 }
                 //Controllo che anche il valore di ritorno della funzione
                 controllo = controllo & returnType.isSubType(funType.getReturnType());
-                ObjectType returnB = (ObjectType) returnType;
-                ObjectType returnA = (ObjectType) funType.getReturnType();
-                System.err.println("COVARIANZA: \tRitorno: " + returnB.getClassType().getClassID() + " è sottotipo di " + returnA.getClassType().getClassID() + " -> " + controllo+"\n\n\n");
+                printReturn(returnType, funType.getReturnType(), controllo);
             } else {
                 controllo = false;
             }
@@ -59,5 +57,25 @@ public class FunType implements IType {
     @Override
     public String toPrint() {
         return "fun";
+    }
+
+    private void printParameter(IType paramA, IType paramB, boolean controllo) {
+        String parA = controlloTipo(paramA);
+        String parB = controlloTipo(paramB);
+        System.err.println("\n\n\n" + "CONTROVARIANZA: Parametri: " + parB + " è sovratipo di " + parA + " -> " + controllo);
+    }
+
+    private void printReturn(IType paramA, IType paramB, boolean controllo) {
+        String retA = controlloTipo(paramA);
+        String retB = controlloTipo(paramB);
+        System.err.println("COVARIANZA: \tRitorno: " + retB + " è sottotipo di " + retA + " -> " + controllo + "\n\n\n");
+    }
+
+    private String controlloTipo(IType param) {
+        if (param instanceof ObjectType) {
+            return ((ObjectType) param).getClassType().getClassID();
+        } else {
+            return param.getID().toString();
+        }
     }
 }
