@@ -35,7 +35,8 @@ cmake-build-release/
 out/
 
 #Parser Folder
-
+parser/*.tokens
+parser/*.java
 *.asm
 
 
