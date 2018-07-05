@@ -46,6 +46,8 @@ public class LetNode implements INode {
 
     @Override
     public String codeGeneration() {
+
+        //TODO test codeGeneration
         StringBuilder declCode = new StringBuilder();
         for (INode dec : declarationArrayList)
             declCode.append(dec.codeGeneration());

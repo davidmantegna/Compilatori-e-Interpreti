@@ -13,6 +13,7 @@ import util.Semantic.SymbolTableEntry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ListIterator;
 
 public class ClassDecNode implements INode {
 
@@ -69,6 +70,58 @@ public class ClassDecNode implements INode {
 
     @Override
     public String codeGeneration() {
-        return null;
+
+        //TODO Codegen
+        /*ArrayList<ClassNode> classNodeArrayList = new ArrayList<>();
+        HashMap<String, ClassNode> classHashMap = new HashMap<>();
+        String nameDeclaration = "";
+
+        //questi due loop sono usati per ordinare la dichiarazioni di classi in ordine top-down
+        //per gestire superclassi e sottoclassi
+        ListIterator iterator = classDeclarationsArrayList.listIterator();
+        while (iterator.hasNext()) {
+            ClassNode classDec = (ClassNode) iterator.next();
+            //se la classe che sto esaminando non ha una superclasse allora:
+            if (classDec.getIdSuperClass() == null || classDec.getIdSuperClass().isEmpty()) {
+                //aggiungo alla lista di classi la dichiarazione della classe
+                classNodeArrayList.add(classDec);
+                //aggiungo alla hashmap l'identificatore della classe e la dichiarazione della classe
+                //serve nel ciclo successivo per ottenere la superclasse
+                classHashMap.put(classDec.getIdClass(), classDec);
+                //per scorrere
+                iterator.remove();
+            }
+        }
+        //se entro dentro a questo while, vuole dire che è presente almeno una classe che ne estende un'altra
+        while (classDeclarationsArrayList.size() != 0) {
+            //per ripartire dall'inizio
+            iterator = classDeclarationsArrayList.listIterator();
+            while (iterator.hasNext()) {
+                //contiene la classe sottoclasse
+                ClassNode subClass = (ClassNode) iterator.next();
+                //contiene l'identificatore della superclasse
+                String superClassName = subClass.getIdSuperClass();
+                //contiene la superclasse
+                ClassNode superClass = classHashMap.get(superClassName);
+                //nel caso si estenda una classe ancora non dichiarata si entra in questo if
+                if (superClass != null) {
+                    //aggiungo alle classi dichiarati la sottoclasse
+                    classNodeArrayList.add(subClass);
+                    //aggiungo alla hashmap l'identificatore della sottoclasse e la sua dichiarazione
+                    classHashMap.put(subClass.getIdClass(), subClass);
+                    iterator.remove();
+                }
+
+            }
+        }
+
+        //per ogni classe dichiarata, eseguo la code generation
+        for (ClassNode cl : classNodeArrayList) {
+            nameDeclaration = nameDeclaration + cl.codeGeneration();
+        }
+
+        return nameDeclaration + letInNode.codeGeneration();
+    */
+        return "";
     }
 }

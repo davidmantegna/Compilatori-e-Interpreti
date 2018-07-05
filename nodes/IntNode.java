@@ -28,6 +28,7 @@ public class IntNode implements INode {
 
     @Override
     public String codeGeneration() {
+
         return "push " + value + "\n";
     }
 

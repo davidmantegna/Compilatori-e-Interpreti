@@ -60,7 +60,7 @@ public class StmAsmNode implements INode {
             }
             entry.setInstanziato(istanziato);
         }*/
-        // TODO Probabilmente da fare nel codeGen
+
 
         return res;
     }
@@ -76,6 +76,7 @@ public class StmAsmNode implements INode {
 
     @Override
     public String codeGeneration() {
+        //TODO codegen
         return exp.codeGeneration() + "\n";
     }
 }

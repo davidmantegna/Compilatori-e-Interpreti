@@ -76,6 +76,17 @@ public class NewNode implements INode {
     @Override
     public String codeGeneration() {
         // TODO codeGeneration NewMethod
+
+        /*//new pusha, in ordine, gli argomenti, il numero di argomenti e la label della classe
+        StringBuilder argsCode = new StringBuilder();
+        for (INode arg : argumentsArrayList) {
+            argsCode.append(arg.codeGeneration());
+        }
+        return argsCode
+                + "push " + argumentsArrayList.size() + "\n"
+                + "push class" +idClass + "\n"
+                + "new\n";
+    }*/
         return null;
     }
 }

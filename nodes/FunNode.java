@@ -58,7 +58,7 @@ public class FunNode implements INode {
 
         try {
             // Se restituisco un'istanza di una classe, aggiorno le informazioni
-            if ( returnType instanceof ObjectType) {
+            if (returnType instanceof ObjectType) {
                 ObjectType objectType = (ObjectType) returnType;
                 res.addAll(objectType.updateClassType(env));
             }
@@ -115,7 +115,7 @@ public class FunNode implements INode {
         IType bodyType = body.typeCheck();
         if (!bodyType.isSubType(returnType)) {
             throw new TypeException("Il tipo restituito dal corpo della funzione '" + idFunzione + "' è '" + body.typeCheck().toPrint() + "'. Il tipo richiesto è '" + returnType.toPrint() + "'\n", parserRuleContext);
-      }
+        }
 
         return new FunType(paramsType, returnType);
     }
@@ -123,7 +123,9 @@ public class FunNode implements INode {
     @Override
     public String codeGeneration() {
 
-        //variabili/funzioni dichiarate internamente
+        //TODO test codeGeneration
+
+        /*//variabili/funzioni dichiarate internamente
         StringBuilder localDeclarations = new StringBuilder();
         //variabili/funzioni da togliere dallo stack al termine del record di attivazione
         StringBuilder popLocalDeclarations = new StringBuilder();
@@ -156,6 +158,7 @@ public class FunNode implements INode {
                 "js\n" // jump al return address per continuare dall'istruzione dopo
         );
 
-        return "push " + funLabel + "\n";
+        return "push " + funLabel + "\n";*/
+        return "";
     }
 }

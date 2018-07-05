@@ -37,11 +37,6 @@ public class TypeNode implements INode {
         return type;
     }
 
-    @Override
-    public String codeGeneration() {
-        return " - TypeCode - ";
-    }
-
     private IType verificaType(String assignedType) {
         switch (assignedType) {
             case "int":
@@ -51,5 +46,10 @@ public class TypeNode implements INode {
             default:
                 return new ObjectType(new ClassType(assignedType));
         }
+    }
+
+    @Override
+    public String codeGeneration() {
+        return "";
     }
 }

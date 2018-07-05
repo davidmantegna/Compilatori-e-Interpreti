@@ -30,6 +30,9 @@ public class NotNode implements INode {
 
     @Override
     public String codeGeneration() {
+
+        //TODO test codegen
+
         String label = Label.nuovaLabel();
         String exit = Label.nuovaLabel();
         return value.codeGeneration() +

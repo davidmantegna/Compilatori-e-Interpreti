@@ -1,6 +1,5 @@
 package type;
 
-import exceptions.UndeclaredIDException;
 import exceptions.UndeclaredMethodIDException;
 import util.Semantic.Field;
 import util.Semantic.Method;
