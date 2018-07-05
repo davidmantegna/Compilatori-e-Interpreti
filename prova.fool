@@ -1,12 +1,6 @@
 let
-    int fatt(int n)
-        if (n <= 1)then{
-            1
-        }else{
-            n * fatt(n-1)
-        }
-    ;
-in
-   fatt(5);
+    bool x = true;
+    bool y = false;
 
-//type checking ok! Il tipo del programma è: int
+in
+    if(x&&y) then {9} else {5};

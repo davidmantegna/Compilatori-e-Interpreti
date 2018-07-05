@@ -39,9 +39,12 @@ assembly:
 	  | POP		                    {   code.add(POP);        }
       | ADD		                    {   code.add(ADD);        }
       | SUB		                    {   code.add(SUB);        }
-      | TIMES	                    {   code.add(TIMES);       }
+      | TIMES	                    {   code.add(TIMES);      }
       | DIV		                    {   code.add(DIV);        }
       | NOT                         {   code.add(NOT);        }
+
+      | AND		                    {   code.add(AND);        }
+      | OR		                    {   code.add(OR);         }
       | STOREW	                    {   code.add(STOREW);     }
       | LOADW                       {   code.add(LOADW);      }
 	  | l=LABEL COL                 {   labelAdd.put($l.text, code.size());   }
@@ -104,6 +107,9 @@ TIMES	           : 'times' ;       // times two values from the stack
 DIV	               : 'div' ;	     // div two values from the stack
 NOT	               : 'not' ;	     // not value from the stack
 
+AND	               : 'and' ;	     // AND between two values from the stack
+OR	               : 'or' ;	         // OR between two values from the stack
+
 STOREW	           : 'sw' ; 	     // store in the memory cell pointed by top the value next
 LOADW	           : 'lw' ;	         // load a value from the memory cell pointed by top
 
@@ -115,8 +121,6 @@ BRANCHLESSEQ       : 'ble' ;        // jump to label if top <= next
 
 BRANCHGREATHER     : 'bgt' ;         // jump to label if top > next
 BRANCHGREATHEREQ   : 'bge' ;         // jump to label if top >= next
-
-// ??? AND, OR
 
 JS	               : 'js' ;	         // jump to instruction pointed by top of stack and store next instruction in ra
 LOADRA	           : 'lra' ;	     // load from ra

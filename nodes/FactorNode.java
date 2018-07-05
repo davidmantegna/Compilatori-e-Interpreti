@@ -44,12 +44,11 @@ public class FactorNode implements INode {
         IType leftType = leftNode.typeCheck();
         IType rightType = rightNode.typeCheck();
 
-        if(operator.equals("And")||(operator.equals("Or"))) {
+        if (operator.equals("And") || (operator.equals("Or"))) {
             if (!leftType.isSubType(new BoolType()) || !rightType.isSubType(new BoolType())) {
                 throw new TypeException("Tipo incompatibile per " + operator + ". È richiesto un booleano.", factorContext);
             }
-        }
-        else {
+        } else {
             if (!leftType.isSubType(new IntType()) || !rightType.isSubType(new IntType())) {
                 throw new TypeException("Tipo incompatibile per " + operator + ". È richiesto un intero.", factorContext);
             }
@@ -61,7 +60,7 @@ public class FactorNode implements INode {
     @Override
     public String codeGeneration() {
         String label = Label.nuovaLabel();
-        String exit = Label.nuovaLabel();
+        String exit = Label.nuovaExitLabel();
         String codeGen = "";
 
         //TODO codegen AND, OR
@@ -69,82 +68,82 @@ public class FactorNode implements INode {
             case "And":
                 codeGen = leftNode.codeGeneration()
                         + "push 0\n"
-                        + "beq " + label + "\n"
+                        + "beq " + exit + "\n"
                         + rightNode.codeGeneration()
                         + "push 0\n"
-                        + "beq " + label + "\n"
-                        + "push 1\n"
-                        + "b " + exit + "\n"
+                        + "beq " + exit + "\n"
+                        + "b " + label + "\n\n"
+
                         + label + ":\n"
-                        + "push 0\n"
-                        + exit + ":\n";
+                        + "push 1\n\n"
+
+                        + exit + ":\n"
+                        + "push 0\n\n";
                 break;
             case "Or":
                 codeGen = leftNode.codeGeneration()
-                        + "push 1\n"
+                        + "push 0\n"
                         + "beq " + label + "\n"
+                        + "b " + exit + "\n\n"
+
+                        + label + ":\n"
                         + rightNode.codeGeneration()
                         + "push 1\n"
-                        + "beq " + label + "\n"
-                        + "push 0\n"
-                        + "b " + exit + "\n"
-                        + label + ":\n"
-                        + "push 1\n"
-                        + exit + ":\n";
+                        + "beq " + exit + "\n"
+                        + "push 0\n\n"
+
+                        + exit + ":\n"
+                        + "push 1\n\n";
                 break;
             case "Eq":
-                codeGen = leftNode.codeGeneration() +
-                        rightNode.codeGeneration() +
-                        "beq " + label + "\n" +
-                        "push 0\n" +
-                        "b " + exit + "\n" +
-                        label + ":\n" +
-                        "push 1\n" +
-                        exit + ":\n";
+                codeGen = leftNode.codeGeneration()
+                        + rightNode.codeGeneration()
+                        + "beq " + label + "\n"
+                        + "b " + exit + "\n\n"
+                        + label + ":\n"
+                        + "push 1\n\n"
+                        + exit + ":\n"
+                        + "push 0\n\n";
                 break;
             case "GreaterEq":
-                codeGen = rightNode.codeGeneration() +
-                        leftNode.codeGeneration() +
-                        "bge " + label + "\n" +
-                        "push 0\n" +
-                        "b " + exit + "\n" +
-                        label + ":\n" +
-                        "push 1\n" +
-                        exit + ":\n";
+                codeGen = rightNode.codeGeneration()
+                        + leftNode.codeGeneration()
+                        + "bge " + label + "\n"
+                        + "b " + exit + "\n\n"
+                        + label + ":\n"
+                        + "push 1\n\n"
+                        + exit + ":\n"
+                        + "push 0\n\n";
                 break;
             case "LessEq":
-                codeGen = leftNode.codeGeneration() +
-                        rightNode.codeGeneration() +
-                        "ble " + label + "\n" +
-                        "push 0\n" +
-                        "b " + exit + "\n" +
-                        label + ":\n" +
-                        "push 1\n" +
-                        exit + ":\n";
+                codeGen = rightNode.codeGeneration()
+                        + leftNode.codeGeneration()
+                        + "ble " + label + "\n"
+                        + "b " + exit + "\n\n"
+                        + label + ":\n"
+                        + "push 1\n\n"
+                        + exit + ":\n"
+                        + "push 0\n\n";
                 break;
             case "Greater":
-                codeGen = rightNode.codeGeneration() +
-                        "push 1\n" +
-                        "add\n" +
-                        leftNode.codeGeneration() +
-                        "bgt " + label + "\n" +
-                        "push 0\n" +
-                        "b " + exit + "\n" +
-                        label + ":\n" +
-                        "push 1\n" +
-                        exit + ":\n";
+                codeGen = rightNode.codeGeneration()
+                        + leftNode.codeGeneration()
+                        + "bgt " + label + "\n"
+                        + "b " + exit + "\n\n"
+                        + label + ":\n"
+                        + "push 1\n\n"
+                        + exit + ":\n"
+                        + "push 0\n\n";
                 break;
             case "Less":
-                codeGen = leftNode.codeGeneration() +
-                        "push 1\n" +
-                        "add\n" +
-                        rightNode.codeGeneration() +
-                        "blt " + label + "\n" +
-                        "push 0\n" +
-                        "b " + exit + "\n" +
-                        label + ":\n" +
-                        "push 1\n" +
-                        exit + ":\n";
+                codeGen = rightNode.codeGeneration()
+                        + leftNode.codeGeneration()
+                        + "blt " + label + "\n"
+                        + "b " + exit + "\n\n"
+                        + label + ":\n"
+                        + "push 1\n\n"
+                        + exit + ":\n"
+                        + "push 0\n\n";
                 break;
             default:
                 codeGen = "default";

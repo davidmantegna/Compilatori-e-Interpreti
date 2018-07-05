@@ -8,6 +8,10 @@ public class Label {
         return "label_" + incrementLabel();
     }
 
+    public static String nuovaExitLabel(){
+        return "exit_" + incrementLabel();
+    }
+
     public static String nuovaLabelFunzione() {
         return "fun_label_" + incrementFunctionLabel();
     }

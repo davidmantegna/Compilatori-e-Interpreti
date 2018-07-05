@@ -65,9 +65,9 @@ public class IfNode implements INode {
                 "push 1\n" +
                 "beq" + thenBranch + "\n" +
                 elseNode.codeGeneration() +
-                "b " + exit + "\n" +
+                "b " + exit + "\n\n" +
                 thenBranch + ":\n" +
-                thenNode.codeGeneration() +
+                thenNode.codeGeneration() +"\n\n" +
                 exit + ":\n";
     }
 }

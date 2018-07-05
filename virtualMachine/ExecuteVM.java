@@ -208,6 +208,25 @@ public class ExecuteVM {
                             push(1);
                         }
                         break;
+
+                    case SVMParser.AND:
+                        v1 = pop();
+                        v2 = pop();
+                        if((v1==1)&&(v2==1)){
+                            push(1);
+                        }else{
+                            push(0);
+                        }
+                        break;
+                    case SVMParser.OR:
+                        v1 = pop();
+                        v2 = pop();
+                        if((v1==0)&&(v2==0)){
+                            push(0);
+                        }else{
+                            push(1);
+                        }
+
                     case SVMParser.LOADC: //mette sullo stack l'indirizzo del metodo all'interno di code
                         int indirizzoCodice = pop();
                         push(code[indirizzoCodice]);
