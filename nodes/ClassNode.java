@@ -60,7 +60,7 @@ public class ClassNode implements INode {
         ArrayList<Field> fieldArrayList = new ArrayList<>();
         ArrayList<Method> methodArrayList = new ArrayList<>();
 
-         // TODO  Test superclasse
+        // TODO  Test superclasse
         ClassType superclassType;
 
         //controllo se la classe ha una superclasse per aggiornare correttamente la SymbolTable
@@ -93,8 +93,13 @@ public class ClassNode implements INode {
 
         // inserisco i parametri della classe attuale
         for (ParameterNode parameterNode : fieldDeclarationArraylist) {
-            fieldArrayList.add(new Field(parameterNode.getId(), parameterNode.getType()));
-            fieldHashMap.put(parameterNode.getId(), parameterNode.getType());
+            Boolean result = env.processUseParameter(superclassType, parameterNode.getId());
+            if (!result) {
+                fieldArrayList.add(new Field(parameterNode.getId(), parameterNode.getType()));
+                fieldHashMap.put(parameterNode.getId(), parameterNode.getType());
+            } else {
+                res.add("L'identificativo '" + parameterNode.getId() + "' della classe '" + idClass + "' è stato dichiarato già nella classe madre: " + idSuperClass + "\n");
+            }
         }
 
         // inserisco i metodi della classe attuale

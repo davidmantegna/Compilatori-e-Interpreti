@@ -38,9 +38,15 @@ public class FunType implements IType {
                 //Controllo che tutti i parametri abbiano lo stesso tipo(supertype, come da cosegna)
                 for (int i = 0; i < parametersTypeArrayList.size(); i++) {
                     controllo = controllo & (funType.getParametersTypeArrayList().get(i).isSubType(parametersTypeArrayList.get(i)));
+                    ObjectType paramB = (ObjectType) parametersTypeArrayList.get(i);
+                    ObjectType paramA = (ObjectType) funType.getParametersTypeArrayList().get(i);
+                    System.err.println("\n\n\n"+"CONTROVARIANZA: Parametri: " + paramB.getClassType().getClassID() + " è sovratipo di " + paramA.getClassType().getClassID() + " -> " + controllo);
                 }
                 //Controllo che anche il valore di ritorno della funzione
                 controllo = controllo & returnType.isSubType(funType.getReturnType());
+                ObjectType returnB = (ObjectType) returnType;
+                ObjectType returnA = (ObjectType) funType.getReturnType();
+                System.err.println("COVARIANZA: \tRitorno: " + returnB.getClassType().getClassID() + " è sottotipo di " + returnA.getClassType().getClassID() + " -> " + controllo+"\n\n\n");
             } else {
                 controllo = false;
             }

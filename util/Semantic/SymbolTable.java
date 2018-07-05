@@ -8,6 +8,7 @@ import exceptions.MultipleIDException;
 import exceptions.UndeclaredIDException;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -116,6 +117,20 @@ public class SymbolTable {
             }
         }
         throw new UndeclaredIDException(id);
+    }
+
+    // controllo se l'identificativo del campo è duplicato, restituisco true se è presente e false altrimenti
+    public Boolean processUseParameter(ClassType superClass, String id) {
+        if (superClass != null) {
+            ListIterator<Field> litr = superClass.getFields().listIterator();
+            while (litr.hasNext()) {
+                Field field = litr.next();
+                if (field.getFieldID().equals(id)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     //funzione ausiliaria per processDeclaration
