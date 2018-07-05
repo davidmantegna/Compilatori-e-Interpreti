@@ -36,8 +36,6 @@ out/
 
 #Parser Folder
 
-parser/*.tokens
-parser/*.java
 *.asm
 
 

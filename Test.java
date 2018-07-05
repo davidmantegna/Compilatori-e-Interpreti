@@ -1,5 +1,3 @@
-import parser.SVMLexer;
-import parser.SVMParser;
 import type.IType;
 import nodes.INode;
 import exceptions.LexerException;
@@ -16,8 +14,6 @@ import parser.FOOLParser.ProgContext;
 import util.FoolVisitorImpl;
 import util.Semantic.SymbolTable;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 

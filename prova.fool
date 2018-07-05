@@ -2,7 +2,7 @@ class U (){};
 class W extends U (){};
 class Z extends W (){};
 
-class A(int a, bool a){
+class A(int a){
     U getA(Z b)
         new Z();
 }
@@ -15,7 +15,7 @@ class B extends A(int b){
 class C extends B(){};
 
 let
-    A a = new A(1,true);
+    A a = new A(1);
     W w = new W();
     Z z = new Z();
 in
