@@ -41,6 +41,7 @@ assembly:
       | SUB		                    {   code.add(SUB);        }
       | TIMES	                    {   code.add(TIMES);       }
       | DIV		                    {   code.add(DIV);        }
+      | NOT                         {   code.add(NOT);        }
       | STOREW	                    {   code.add(STOREW);     }
       | LOADW                       {   code.add(LOADW);      }
 	  | l=LABEL COL                 {   labelAdd.put($l.text, code.size());   }
@@ -101,6 +102,7 @@ ADD	               : 'add' ;  	     // add two values from the stack
 SUB	               : 'sub' ;         // sub two values from the stack
 TIMES	           : 'times' ;       // times two values from the stack
 DIV	               : 'div' ;	     // div two values from the stack
+NOT	               : 'not' ;	     // not value from the stack
 
 STOREW	           : 'sw' ; 	     // store in the memory cell pointed by top the value next
 LOADW	           : 'lw' ;	         // load a value from the memory cell pointed by top

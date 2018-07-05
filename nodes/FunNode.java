@@ -50,24 +50,6 @@ public class FunNode implements INode {
         System.out.print("FunNode: checkSemantics -> \n\t" + env.toString() + "\n");
         ArrayList<String> res = new ArrayList<>();
 
-        ArrayList<IType> parameterTypeArrayList = new ArrayList<>();
-
-        for (ParameterNode parameterNode : parameterNodeArrayList) {
-            parameterTypeArrayList.add(parameterNode.getType());
-        }
-
-        try {
-            // Se restituisco un'istanza di una classe, aggiorno le informazioni
-            if (returnType instanceof ObjectType) {
-                ObjectType objectType = (ObjectType) returnType;
-                res.addAll(objectType.updateClassType(env));
-            }
-            env.processDeclaration(idFunzione, new FunType(parameterTypeArrayList, returnType), env.getOffset());
-            env.decreaseOffset();
-        } catch (MultipleIDException e) {
-            res.add("La funzione " + idFunzione + " è già stata dichiarata");
-        }
-
         //entro in un nuovo livello di scope
         HashMap<String, SymbolTableEntry> hm = new HashMap<>();
         env.pushHashMap(hm);

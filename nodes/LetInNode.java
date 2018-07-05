@@ -53,7 +53,8 @@ public class LetInNode implements INode {
 
         return "push 0\n" +
                 let.codeGeneration() +
-                stmExp.codeGeneration() + "halt\n" +
+                stmExp.codeGeneration() +
+                "halt\n" +
                 FunctionCode.getFunctionsCode();
     }
 }

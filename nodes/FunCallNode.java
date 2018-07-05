@@ -50,21 +50,21 @@ public class FunCallNode implements INode {
         ArrayList<String> res = new ArrayList<>();
 
         try {
-
             entry = env.processUse(id);
-            calledNestingLevel = env.getNestingLevel();
-
-            int index = 1;
-            for (INode argument : argumentsArrayList) {
-                if (argument.getClass().getName().equals("nodes.FunCallNode")) {
-                    res.add("La funzione '" + id + "' ha una funzione come " + index + "° parametro\n");
-                } else {
-                    res.addAll(argument.checkSemantics(env));
-                }
-                index++;
-            }
         } catch (UndeclaredIDException e) {
             res.add(id + ": identificativo non definito\n");
+        }
+
+        calledNestingLevel = env.getNestingLevel();
+
+        int index = 1;
+        for (INode argument : argumentsArrayList) {
+            if (argument instanceof FunCallNode) {
+                res.add("La funzione '" + id + "' ha una funzione come " + index + "° parametro\n");
+            } else {
+                res.addAll(argument.checkSemantics(env));
+            }
+            index++;
         }
 
         return res;

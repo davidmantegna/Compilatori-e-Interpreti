@@ -122,7 +122,7 @@ public class Test {
             System.out.println("Codice SVM generato: (" + code.split("\n").length + " linee). Output visibile in codice.svm. \n");
 
             //Scommenta se vuoi vedere l'output del codice a console
-            //System.out.println(code);
+            System.out.println(code);
 
 
             //TODO codeGeneration execution

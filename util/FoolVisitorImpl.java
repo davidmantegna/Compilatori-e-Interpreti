@@ -155,10 +155,8 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         }
 
         INode expNode = visit(varasmContext.exp());
-        boolean istanziato;
-        if (expNode.getClass().getName().equals("nodes.NullNode")) {
-            istanziato = false;
-        } else {
+        boolean istanziato = false;
+        if (!(expNode instanceof NullNode)) {
             istanziato = true;
         }
         return new VarAsmNode(varasmContext.vardec().ID().getText(), type, expNode, varasmContext, istanziato);

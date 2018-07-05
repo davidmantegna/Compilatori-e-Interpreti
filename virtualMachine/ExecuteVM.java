@@ -12,7 +12,7 @@ public class ExecuteVM {
     // TODO codegen() for all nodes
 
     public static final int START_ADDRESS = 1234;   //indirizzo di partenza
-    private static final int MEMSIZE = 135 ;        //dimensione totale della memoria
+    private static final int MEMSIZE = 135;        //dimensione totale della memoria
     //private static final int GARBAGE_THRESHOLD = Math.max((MEMSIZE / 100) * 10, 10);    //limite superato il quale agisce il gargabe collector
 
     private ArrayList<String> output = new ArrayList<>();   //contiene l'esito della print o gli errori
@@ -180,9 +180,6 @@ public class ExecuteVM {
                     case SVMParser.COPYFP: // copy stack pointer into frame pointer
                         fp = sp;
                         break;
-                    /*case SVMParser.PRINT:
-                        output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
-                        break;*/
                     case SVMParser.ADD:
                         v1 = pop();
                         v2 = pop();
@@ -202,6 +199,14 @@ public class ExecuteVM {
                         v1 = pop();
                         v2 = pop();
                         push(v2 - v1);
+                        break;
+                    case SVMParser.NOT:
+                        v1 = pop();
+                        if (v1 == 1) {
+                            push(0);
+                        }else {
+                            push(1);
+                        }
                         break;
                     case SVMParser.LOADC: //mette sullo stack l'indirizzo del metodo all'interno di code
                         int indirizzoCodice = pop();
@@ -265,8 +270,8 @@ public class ExecuteVM {
                         push(heapMemoryStart);
 
                         //gestisco il caso in cui l'heap superi lo stack, r
-                        if(heap.getFreeIndex() > hp) {
-                            hp=heap.getFreeIndex();
+                        if (heap.getFreeIndex() > hp) {
+                            hp = heap.getFreeIndex();
                         }
 
                         //TODO garbage
@@ -279,6 +284,7 @@ public class ExecuteVM {
                         }*/
                         break;
                     case SVMParser.HALT:
+                        output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
                         return output;
                 }
             }
@@ -287,9 +293,6 @@ public class ExecuteVM {
             return output;
         }
     }
-
-
-
 
 
 }

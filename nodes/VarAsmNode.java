@@ -16,14 +16,6 @@ public class VarAsmNode implements INode {
     private VarasmContext varasmContext;
     private boolean istanziato;
 
-    public VarAsmNode(String id, IType type, INode exp, VarasmContext varasmContext) {
-        this.id = id;
-        this.assignedType = type;
-        this.exp = exp;
-        this.varasmContext = varasmContext;
-        this.istanziato = true;
-    }
-
     public VarAsmNode(String id, IType assignedType, INode exp, VarasmContext varasmContext, boolean istanziato) {
         this.id = id;
         this.assignedType = assignedType;
@@ -52,7 +44,6 @@ public class VarAsmNode implements INode {
 
         try {
             env.processDeclarationClass(id, assignedType, env.getOffset(), istanziato);
-            //Perché decrementa offset nella symbolTable?!
             env.decreaseOffset();
         } catch (MultipleIDException e) {
             res.add(e.getMessage());
@@ -66,12 +57,12 @@ public class VarAsmNode implements INode {
         System.out.print("VarAsmNode: typeCheck -> \n");
 
         if (assignedType instanceof ObjectType) {
-            switch (exp.getClass().getName()){
+            switch (exp.getClass().getName()) {
                 case "nodes.NullNode":
                     return assignedType;
                 case "nodes.IfNode":
                     IfNode ifNode = (IfNode) exp;
-                    if (ifNode.getThenNode().getClass().getName().equals("nodes.NullNode") && ifNode.getElseNode().getClass().getName().equals("nodes.NullNode")) {
+                    if (ifNode.getThenNode() instanceof NullNode && ifNode.getElseNode() instanceof NullNode) {
                         return assignedType;
                     }
                     break;

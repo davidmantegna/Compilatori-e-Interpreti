@@ -72,7 +72,6 @@ public class VarExpNode implements INode {
             }
         }
 
-
         if (entry.getType() instanceof FunType) {
             throw new TypeException("Utilizzo errato di identificativo di funzione", parserRuleContext);
         }
@@ -84,22 +83,28 @@ public class VarExpNode implements INode {
         StringBuilder getActivationRecord = new StringBuilder();
 
         //for e getActivationRecord per gestire le funzioni annidate
-        for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++)
+        for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++) {
             getActivationRecord.append("lw\n");
+        }
+
         if (isNegative) {
             return "push " + entry.getOffset() + "\n" + //metto offset sullo stack
                     "lfp\n" + getActivationRecord + //risalgo la catena statica
                     "add\n" +
                     "lw\n" + //carico sullo stack il valore all'indirizzo ottenuto
                     "push -1\n" +
-                    "mult\n";
+                    "times\n";
+        } else if (isNot) {
+            return "push " + entry.getOffset() + "\n" + //metto offset sullo stack
+                    "lfp\n" + getActivationRecord + //risalgo la catena statica
+                    "add\n" +
+                    "lw\n" + //carico sullo stack il valore all'indirizzo ottenuto
+                    "not\n";
         } else {
             return "push " + entry.getOffset() + "\n" + //metto offset sullo stack
                     "lfp\n" + getActivationRecord + //risalgo la catena statica
                     "add\n" +
                     "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
         }
-
-        //TODO isNot
     }
 }
