@@ -1,15 +1,23 @@
-let
-    int fatt(int n)
-        if (n <= 1) then{
-            1               //caso base
-        }else{
-            n * fatt(n-1)   //ricorsione
-        }
-    ;
+class A(){
+    int funz1(int a)
+        a;
 
-    void calcolare(int x)
-        x = fatt(x);
-    ;
+    int funz2()
+        funz1(1);
+};
+class B extends A(){
+    int funz1(int b)
+        b;
+};
+
+class C extends B(){
+    int funz3()
+        funz2();
+};
+
+let
+    int x = 9;
+    A a = new B();
+    C b = new C();
 in
-    calcolare(3)
-;
+    b.funz3();

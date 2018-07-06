@@ -1,17 +1,12 @@
 package nodes;
 
 import exceptions.MultipleIDException;
-import exceptions.TypeException;
-import exceptions.UndeclaredIDException;
 import org.antlr.v4.runtime.ParserRuleContext;
-import type.ClassType;
 import type.FunType;
 import type.IType;
 import type.ObjectType;
 import util.Semantic.SymbolTable;
 import util.Semantic.SymbolTableEntry;
-import util.VM.FunctionCode;
-import util.VM.Label;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,9 +23,10 @@ public class MethodNode extends FunNode {
         this.idClass = idClass;
     }
 
+
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("MethodNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("MethodNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
 
         ArrayList<String> res = new ArrayList<>();
 
@@ -54,18 +50,17 @@ public class MethodNode extends FunNode {
         }
 
         // entro in un nuovo livello di scope
-        HashMap<String, SymbolTableEntry> hm = new HashMap<>();
-        env.pushHashMap(hm);
+        env.entryNewScope();
 
         // checkSemantics di tutti i parametri
-        for (ParameterNode parameter:parameterNodeArrayList){
+        for (ParameterNode parameter : parameterNodeArrayList) {
             res.addAll(parameter.checkSemantics(env));
         }
 
         // checkSemantics di tutte le dichiarazioni interne al metodo
-        if(declarationsArrayList.size()>0){
+        if (declarationsArrayList.size() > 0) {
             env.setOffset(-2);
-            for (INode node: declarationsArrayList){
+            for (INode node : declarationsArrayList) {
                 res.addAll(node.checkSemantics(env));
             }
         }
@@ -74,7 +69,7 @@ public class MethodNode extends FunNode {
         res.addAll(body.checkSemantics(env));
 
         //esco dal livello di scope
-        env.popHashMap();
+        env.exitLastScope();
 
         //ritorno eventuali errori rilevati
         return res;

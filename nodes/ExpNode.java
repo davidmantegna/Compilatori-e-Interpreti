@@ -23,7 +23,7 @@ public class ExpNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("ExpNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("ExpNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
         //create the result
         ArrayList<String> res = new ArrayList<String>();
 

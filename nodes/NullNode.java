@@ -13,7 +13,7 @@ public class NullNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("NullNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("NullNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
         return new ArrayList<>(); //non crea livelli di scope
     }
 

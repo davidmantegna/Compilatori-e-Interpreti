@@ -30,7 +30,7 @@ public class VarAsmNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("VarAsmNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("VarAsmNode: checkSemantics -> \n"/*+ env.toString() + "\n"*/);
         ArrayList<String> res = new ArrayList<>();
 
         // al momento gestisco così il tipo ID

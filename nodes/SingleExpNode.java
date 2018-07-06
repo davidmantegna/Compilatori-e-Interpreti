@@ -16,7 +16,7 @@ public class SingleExpNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("SingleExpNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("SingleExpNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
         return expression.checkSemantics(env);
     }
 

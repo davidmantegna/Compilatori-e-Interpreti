@@ -33,8 +33,9 @@ public class StmAsmNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("StmAsmNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("StmAsmNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
         ArrayList<String> res = new ArrayList<>();
+
 
         try {
             idType = env.getTypeOf(id);
@@ -44,23 +45,21 @@ public class StmAsmNode implements INode {
             res.add(id + ": identificativo non definito\n");
         }
 
+
         res.addAll(exp.checkSemantics(env));
 
-        // TODO Probabilmente da fare nel codeGen
-/*        if (idType instanceof ObjectType) {
-            boolean istanziato = entry.isInstanziato();
-            System.out.println("-----------------------------" + istanziato);
-            switch (exp.getClass().getName()) {
-                case "nodes.NewNode":
-                    istanziato = true;
-                    break;
-                case "nodes.NullNode":
-                    istanziato = false;
-                    break;
-            }
-            entry.setInstanziato(istanziato);
-        }*/
 
+        // evitare instanziazioni multiple
+        if (exp instanceof NewNode) {
+            if (entry.isInstanziato()) {
+                res.add("L'oggetto '" + id + "' è già stato istanziato\n");
+            } else {
+                entry.setInstanziato(true);
+            }
+        } else if (exp instanceof NullNode) {
+            // TODO gestire NULL NODE nell IN
+            // al mometo viene restituito errore durante il Type Check
+        }
 
         return res;
     }
