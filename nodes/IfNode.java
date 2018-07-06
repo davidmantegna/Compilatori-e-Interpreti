@@ -1,9 +1,11 @@
 package nodes;
 
 import type.BoolType;
+import type.ClassType;
 import type.IType;
 import exceptions.TypeException;
 import parser.FOOLParser.IfExpContext;
+import type.ObjectType;
 import util.Semantic.SymbolTable;
 import util.VM.Label;
 
@@ -52,7 +54,28 @@ public class IfNode implements INode {
             throw new TypeException("Condizione non booleana", ctx);
         IType thenType = thenNode.typeCheck();
         IType elType = elseNode.typeCheck();
-        if(thenType.isSubType(elType)) return elType;
+        ClassType superClassThen, superClassElse;
+
+        if(elType instanceof ObjectType && thenType instanceof ObjectType) {
+            ClassType classThen = ((ObjectType) thenType).getClassType();
+            ClassType classElse = ((ObjectType) elType).getClassType();
+
+            superClassThen = classThen.getSuperClassType();
+            superClassElse = classElse.getSuperClassType();
+
+            while (superClassThen.getSuperClassID() != "") {
+                superClassThen = superClassThen.getSuperClassType();
+            }
+
+            while (superClassElse.getSuperClassID() != ""){
+                superClassElse = superClassElse.getSuperClassType();
+            }
+
+            if(superClassThen.getClassID() == superClassElse.getClassID())
+                return superClassThen;
+        }
+
+        if(thenType.isSubType(elType)) return thenType;
         else if(elType.isSubType(thenType)) return elType;
         else throw new TypeException("Tipi non compatibili nel then e nell'else", ctx);
     }
