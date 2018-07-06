@@ -1,7 +1,6 @@
-package util.Semantic;
+package symboltable;
 
 
-import nodes.MethodNode;
 import type.ClassType;
 import type.FunType;
 import type.IType;
@@ -32,7 +31,7 @@ public class SymbolTable {
         return offset;
     }
 
-    public void setOffset(int n) {
+    public void setOffset(int n) {//TODO da testare occorrenze con offset -2
         offset = n;
     }
 

@@ -4,7 +4,7 @@ import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import type.ClassType;
 import type.IType;
-import util.Semantic.SymbolTable;
+import symboltable.SymbolTable;
 
 import java.util.ArrayList;
 

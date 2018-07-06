@@ -5,8 +5,8 @@ import exceptions.UndeclaredIDException;
 import parser.FOOLParser.FuncallContext;
 import type.FunType;
 import type.IType;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
+import symboltable.SymbolTable;
+import symboltable.SymbolTableEntry;
 
 import java.util.ArrayList;
 
@@ -52,6 +52,7 @@ public class FunCallNode implements INode {
         try {
             entry = env.processUse(id);
         } catch (UndeclaredIDException e) {
+
             res.add(id + ": identificativo non definito\n");
         }
 
@@ -78,9 +79,7 @@ public class FunCallNode implements INode {
 
         if (entry.getType().getID().equals(IType.IDType.FUN)) {
             funType = (FunType) entry.getType();
-        }/* else {
-            throw new TypeException("Invocazione di una non funzione " + id, funcallContext);
-        }*/
+        }
 
         ArrayList<IType> funTypeArrayList = funType.getParametersTypeArrayList();
         if (!(funTypeArrayList.size() == argumentsArrayList.size())) {

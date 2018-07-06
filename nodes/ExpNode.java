@@ -4,7 +4,7 @@ import type.IType;
 import type.IntType;
 import exceptions.TypeException;
 import parser.FOOLParser.ExpContext;
-import util.Semantic.SymbolTable;
+import symboltable.SymbolTable;
 
 import java.util.ArrayList;
 

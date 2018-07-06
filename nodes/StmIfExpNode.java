@@ -4,8 +4,8 @@ import type.BoolType;
 import type.IType;
 import exceptions.TypeException;
 import parser.FOOLParser.StmIfExpContext;
-import util.Semantic.SymbolTable;
-import util.VM.Label;
+import symboltable.SymbolTable;
+import codegen.VM.Label;
 
 import java.util.ArrayList;
 

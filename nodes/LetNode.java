@@ -6,11 +6,9 @@ import type.IType;
 import type.ObjectType;
 import type.VoidType;
 import exceptions.TypeException;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
+import symboltable.SymbolTable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LetNode implements INode {
     private ArrayList<INode> declarationArrayList;
@@ -29,7 +27,7 @@ public class LetNode implements INode {
 
         //CheckSemantic nella lista di dichiarazioni
         if (declarationArrayList.size() > 0) {
-            env.setOffset(-2);
+            env.setOffset(-1);
 
             //Checksemantic nei figli
             for (INode n : declarationArrayList) {

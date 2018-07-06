@@ -4,10 +4,9 @@ import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import type.IType;
 import parser.FOOLParser.StmAssignmentContext;
-import type.ObjectType;
 import type.VoidType;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
+import symboltable.SymbolTable;
+import symboltable.SymbolTableEntry;
 
 import java.util.ArrayList;
 

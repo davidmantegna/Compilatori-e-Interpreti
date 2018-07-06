@@ -1,7 +1,7 @@
 grammar FOOL;
 
 @header {
-    import java.util.ArrayList;
+    import java.visit.ArrayList;
 }
 
 @lexer::members {

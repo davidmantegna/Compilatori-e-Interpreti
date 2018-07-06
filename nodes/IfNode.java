@@ -6,8 +6,8 @@ import type.IType;
 import exceptions.TypeException;
 import parser.FOOLParser.IfExpContext;
 import type.ObjectType;
-import util.Semantic.SymbolTable;
-import util.VM.Label;
+import symboltable.SymbolTable;
+import codegen.VM.Label;
 
 import java.util.ArrayList;
 

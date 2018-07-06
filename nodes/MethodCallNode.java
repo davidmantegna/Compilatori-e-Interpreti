@@ -8,8 +8,8 @@ import type.ClassType;
 import type.FunType;
 import type.IType;
 import type.ObjectType;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
+import symboltable.SymbolTable;
+import symboltable.SymbolTableEntry;
 
 import java.util.ArrayList;
 

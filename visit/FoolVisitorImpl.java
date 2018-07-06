@@ -1,4 +1,4 @@
-package util;
+package visit;
 
 import parser.FOOLParser.*;
 import type.IType;
@@ -157,6 +157,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         if (!(expNode instanceof NullNode)) {
             istanziato = true;
         }
+
         return new VarAsmNode(varasmContext.vardec().ID().getText(), type, expNode, varasmContext, istanziato);
     }
 

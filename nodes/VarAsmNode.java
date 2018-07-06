@@ -5,7 +5,7 @@ import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import parser.FOOLParser.VarasmContext;
 import type.ObjectType;
-import util.Semantic.SymbolTable;
+import symboltable.SymbolTable;
 
 import java.util.ArrayList;
 

@@ -13,10 +13,10 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import parser.FOOLLexer;
 import parser.FOOLParser;
 import parser.FOOLParser.ProgContext;
-import util.FoolVisitorImpl;
-import util.Semantic.SymbolTable;
-import util.VM.DispatchTable;
-import virtualMachine.ExecuteVM;
+import visit.FoolVisitorImpl;
+import symboltable.SymbolTable;
+import codegen.VM.DispatchTable;
+import codegen.ExecuteVM;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -145,6 +145,7 @@ public class Test {
             ExecuteVM vm = new ExecuteVM(bytecode);
             String risultato = "No output";
             ArrayList<String> output = vm.cpu();
+            vm.print();
             if (output.size() > 0)
                 risultato = output.get(output.size() - 1);
             System.out.println("Risultato: "+risultato+"\n");

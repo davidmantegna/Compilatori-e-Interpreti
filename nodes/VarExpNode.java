@@ -4,8 +4,8 @@ import type.*;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import org.antlr.v4.runtime.ParserRuleContext;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
+import symboltable.SymbolTable;
+import symboltable.SymbolTableEntry;
 
 import java.util.ArrayList;
 

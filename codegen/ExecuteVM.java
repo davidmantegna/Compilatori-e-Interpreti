@@ -1,4 +1,4 @@
-package virtualMachine;
+package codegen;
 
 import exceptions.HeapOverflowError;
 import exceptions.SegmentationFaultError;
@@ -313,5 +313,13 @@ public class ExecuteVM {
         }
     }
 
+    public void print(){
+        int i=0;
+        System.out.println("START_ADDRESS: "+START_ADDRESS+"\n"+"MEMSIZE"+MEMSIZE+"\n");
+        for (i=START_ADDRESS+MEMSIZE-1; i>=sp; i--){
+            System.out.print("addr: " + i + " location: " + (i-START_ADDRESS) + " -> val: " +getMemory(i) + "\n");
+        }
+        System.err.println("addr: " + i  + " location: " + (i-START_ADDRESS) +  " -> top\n");
+    }
 
 }

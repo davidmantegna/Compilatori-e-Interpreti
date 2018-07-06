@@ -2,12 +2,10 @@ package nodes;
 
 import type.IType;
 import exceptions.TypeException;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
-import util.VM.FunctionCode;
+import symboltable.SymbolTable;
+import codegen.VM.FunctionCode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LetInNode implements INode {
 

@@ -1,8 +1,8 @@
 package type;
 
 import exceptions.UndeclaredMethodIDException;
-import util.Semantic.Field;
-import util.Semantic.Method;
+import symboltable.Field;
+import symboltable.Method;
 
 import java.util.ArrayList;
 import java.util.HashMap;

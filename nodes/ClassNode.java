@@ -7,12 +7,12 @@ import type.ClassType;
 import type.FunType;
 import type.IType;
 import type.ObjectType;
-import util.Semantic.Field;
-import util.Semantic.Method;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
-import util.VM.DispatchTable;
-import util.VM.DispatchTableEntry;
+import symboltable.Field;
+import symboltable.Method;
+import symboltable.SymbolTable;
+import symboltable.SymbolTableEntry;
+import codegen.VM.DispatchTable;
+import codegen.VM.DispatchTableEntry;
 
 import java.util.ArrayList;
 import java.util.HashMap;

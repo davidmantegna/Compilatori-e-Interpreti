@@ -1,4 +1,4 @@
-package util.VM;
+package codegen.VM;
 
 public class DispatchTableEntry {
 

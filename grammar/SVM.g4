@@ -1,9 +1,9 @@
 grammar SVM;
 
 @header {
-import java.util.HashMap;
-import java.util.ArrayList;
-import virtualMachine.ExecuteVM;
+import java.visit.HashMap;
+import java.visit.ArrayList;
+import codegen.ExecuteVM;
 }
 
 @lexer::members {

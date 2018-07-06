@@ -1,23 +1,5 @@
-class A(){
-    int funz1(int a)
-        a;
-
-    int funz2()
-        funz1(1);
-};
-class B extends A(){
-    int funz1(int b)
-        b;
-};
-
-class C extends B(){
-    int funz3()
-        funz2();
-};
-
 let
-    int x = 9;
-    A a = new B();
-    C b = new C();
+    int x=3;
 in
-    b.funz3();
+    x;
+;

@@ -5,11 +5,9 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import type.FunType;
 import type.IType;
 import type.ObjectType;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
+import symboltable.SymbolTable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MethodNode extends FunNode {
 

@@ -2,12 +2,11 @@ package nodes;
 
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
-import parser.FOOLParser;
 import type.ClassType;
 import type.IType;
 import type.ObjectType;
-import util.Semantic.Field;
-import util.Semantic.SymbolTable;
+import symboltable.Field;
+import symboltable.SymbolTable;
 
 import java.util.ArrayList;
 
@@ -18,6 +17,7 @@ public class NewNode implements INode {
     private String idClass;
     private ArrayList<INode> argumentsArrayList;
     private NewexpContext newMethodContext;
+    private boolean istanziato;
 
     private ClassType classType;
 

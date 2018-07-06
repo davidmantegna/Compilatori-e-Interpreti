@@ -3,7 +3,7 @@ package nodes;
 import type.*;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
-import util.Semantic.SymbolTable;
+import symboltable.SymbolTable;
 
 import java.util.ArrayList;
 
