@@ -1,5 +1,6 @@
 package nodes;
 
+import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import type.ClassType;
@@ -56,7 +57,7 @@ public class ClassNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("ClassNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("ClassNode: checkSemantics -> \n"/*+ env.toString() + "\n"*/);
         ArrayList<String> res = new ArrayList<>();
 
         ArrayList<Field> fieldArrayList = new ArrayList<>();
@@ -72,22 +73,6 @@ public class ClassNode implements INode {
             superclassType = null;
         }
 
-        // Eredito i Campi dell'eventuale SuperClasse -> funziona se le classi non sono ordinate
-        /* if (superclassType != null) {
-            ArrayList<Field> listFields = new ArrayList<>();
-            ClassType supetType = superclassType;
-            while (supetType != null) {
-                listFields.addAll(0, supetType.getFields());
-                String idsuperClass = supetType.getSuperClassID();
-                try {
-                    supetType = (ClassType) env.processUse(idsuperClass).getType();
-                } catch (UndeclaredIDException e) {
-                    supetType = null;
-                }
-            }
-            fieldArrayList.addAll(listFields);
-        }*/
-
         // Eredito i Campi delle eventuali Superclassi
         if (superclassType != null) {
             fieldArrayList.addAll(superclassType.getFields());
@@ -95,7 +80,7 @@ public class ClassNode implements INode {
 
         // inserisco i parametri della classe attuale
         for (ParameterNode parameterNode : fieldDeclarationArraylist) {
-            Boolean result = env.processUseParameter(superclassType, parameterNode.getId());
+            Boolean result = env.checkFieldDeclaration(superclassType, parameterNode.getId());
             if (!result) {
                 fieldArrayList.add(new Field(parameterNode.getId(), parameterNode.getType()));
                 fieldHashMap.put(parameterNode.getId(), parameterNode.getType());
@@ -140,8 +125,8 @@ public class ClassNode implements INode {
             res.add(e.getMessage());
         }
 
-        HashMap<String, SymbolTableEntry> hashMap = new HashMap<>();
-        env.pushHashMap(hashMap);
+        // entro in un nuovo livello di scope
+        env.entryNewScope();
 
         for (ParameterNode parameterNode : fieldDeclarationArraylist) {
             if (parameterNode.getType() instanceof ObjectType) {
@@ -166,15 +151,33 @@ public class ClassNode implements INode {
         }
 
 
-        HashMap<String, SymbolTableEntry> hashmap2 = new HashMap<>();
-        env.pushHashMap(hashmap2);
+        // entro in un nuovo livello di scope
+        env.entryNewScope();
+
+        // eredito i metodi senza 'override' dalla superclasse
+        if (superclassType != null) {
+            HashMap<String, Integer> info = superclassType.methodsHashMapFromSuperClass();
+            for (String s : info.keySet()) {
+                if (!methodHashMap.containsKey(s)) {
+                    try {
+                        int off = 0;
+                        if (info.get(s) != 0) {
+                            off = -info.get(s);
+                        }
+                        env.processDeclaration(s, superclassType.getMethodsMap().get(s), off);
+                    } catch (MultipleIDException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
 
         //checkSemantic di ogni metodo
         for (MethodNode methodNode : methodDeclarationArraylist) {
             res.addAll(methodNode.checkSemantics(env));
         }
-        env.popHashMap();
-        env.popHashMap();
+        env.exitLastScope();
+        env.exitLastScope();
 
         //controllo costruttore con superclasse
         if (!idSuperClass.isEmpty()) {
@@ -208,6 +211,7 @@ public class ClassNode implements INode {
             }
         }
 
+        printInfoClass(env); // TODO print info class
         return res;
     }
 
@@ -232,12 +236,12 @@ public class ClassNode implements INode {
 
         ArrayList<DispatchTableEntry> dispatchTable;
         // Creo una nuova dispatch table da zero se la classe non ha superclasse
-        if(idSuperClass.equals("")) {
-            dispatchTable=new ArrayList<>();
+        if (idSuperClass.equals("")) {
+            dispatchTable = new ArrayList<>();
         }
         // Altrimenti la copio come base
         else {
-            dispatchTable= DispatchTable.getDispatchTable(idSuperClass);
+            dispatchTable = DispatchTable.getDispatchTable(idSuperClass);
         }
 
         //contiene i metodi della superclasse
@@ -282,5 +286,35 @@ public class ClassNode implements INode {
         DispatchTable.addDispatchTable(idClass, dispatchTable);
 
         return "";
+    }
+
+
+    private void printInfoClass(SymbolTable env) {
+        try {
+            //DEBUG
+            ClassType t = (ClassType) env.processUse(idClass).getType();
+            ClassType st = t.getSuperClassType();
+            String supClass = "";
+            if (st != null) {
+                supClass = st.getClassID();
+            }
+
+            StringBuilder sFun = new StringBuilder();
+            for (String method : t.getMethodsMap().keySet()) {
+                FunType current = t.getMethodsMap().get(method);
+                StringBuilder sParams = new StringBuilder();
+                for (IType currentParam : current.getParametersTypeArrayList()) {
+                    sParams.append(currentParam.getID() + ",");
+                }
+                sFun.append("[" + method + ": (" + sParams.toString().toLowerCase() + ")->" + current.getReturnType().toPrint() + "] ");
+            }
+            System.out.println("\n\t\t\t" +
+                    t.getClassID() + " {" + supClass + "} [ #campi: " +
+                    t.getFields().size() + " | " + sFun
+                    + "]\n"
+            );
+        } catch (UndeclaredIDException e) {
+            e.printStackTrace();
+        }
     }
 }

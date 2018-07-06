@@ -32,7 +32,7 @@ public class ParameterNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("ParameterNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("ParameterNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
         ArrayList<String> res = new ArrayList<>();
         try {
             env.processDeclaration(idParameter, type, offset);

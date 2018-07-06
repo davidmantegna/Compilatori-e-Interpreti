@@ -45,6 +45,10 @@ public class ClassType implements IType {
         return fields;
     }
 
+    public ArrayList<Method> getMethods() {
+        return methods;
+    }
+
     public void setSuperClassType(ClassType superClassType) {
         this.superClassType = superClassType;
     }
@@ -98,8 +102,8 @@ public class ClassType implements IType {
         return "Object: " + classID;
     }
 
-    //funzioni ausiliarie utilizzate nella checksemantics
-    //ritorna un'HashMap di tutti i metodi di questa classe, con nome ed offset
+    // funzioni ausiliarie utilizzate nella checksemantics
+    // ritorna un'HashMap di tutti i metodi di questa classe, con nome ed offset
     public HashMap<String, FunType> getMethodsMap() {
         HashMap<String, FunType> methodsMap = new HashMap<>();
         if (superClassType != null) {
@@ -113,7 +117,7 @@ public class ClassType implements IType {
         return methodsMap;
     }
 
-    //ritorna l'offset del metodo situato nella dispatchTable
+    // ritorna l'offset del metodo situato nella dispatchTable
     public int getOffsetOfMethod(String methodID) throws UndeclaredMethodIDException {
         HashMap<String, Integer> methodsHashMap = methodsHashMapFromSuperClass();
         Integer offset = methodsHashMap.get(methodID);
@@ -125,7 +129,7 @@ public class ClassType implements IType {
         }
     }
 
-    //ritorna un'HashMap dei metodi della superclasse, con nome ed offset
+    // ritorna un'HashMap dei metodi della superclasse, con nome ed offset
     public HashMap<String, Integer> methodsHashMapFromSuperClass() {
         if (superClassType == null) {
             HashMap<String, Integer> methodsHashMap = new HashMap<>();
@@ -137,6 +141,9 @@ public class ClassType implements IType {
             HashMap<String, Integer> superMethodsMap = superClassType.methodsHashMapFromSuperClass();
             for (Method method : methods) {
                 if (!superMethodsMap.containsKey(method.getMethodID())) {
+                    superMethodsMap.put(method.getMethodID(), superMethodsMap.size());
+                } else {
+                    // aggiorno il valore dell'offset per via dell'override
                     superMethodsMap.put(method.getMethodID(), superMethodsMap.size());
                 }
             }

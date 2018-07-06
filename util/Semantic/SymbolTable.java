@@ -1,16 +1,14 @@
 package util.Semantic;
 
 
+import nodes.MethodNode;
 import type.ClassType;
 import type.FunType;
 import type.IType;
 import exceptions.MultipleIDException;
 import exceptions.UndeclaredIDException;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.*;
 
 public class SymbolTable {
 
@@ -55,12 +53,13 @@ public class SymbolTable {
     }
 
     //scope entry: si aggiunge un nuovo livello di scope
-    public void pushHashMap(HashMap hm) {
+    public void entryNewScope() {
+        HashMap<String, SymbolTableEntry> hm = new HashMap<>();
         symTable.add(hm);
     }
 
     //on scope exit: si rimuove il livello di scope più esterno, ovvero l'ultima HashMap aggiunta
-    public void popHashMap() {
+    public void exitLastScope() {
         symTable.remove(getNestingLevel());
     }
 
@@ -96,7 +95,7 @@ public class SymbolTable {
     //se non presente, l'ID non è definito e viene lanciata l'eccezione
     public SymbolTableEntry processUse(String id) throws UndeclaredIDException {
         ListIterator<HashMap<String, SymbolTableEntry>> li = symTable.listIterator(symTable.size());
-        System.out.println("Size symbol table: " + symTable.size());
+        //System.out.println("Size symbol table: " + symTable.size());
         while (li.hasPrevious()) {
             HashMap<String, SymbolTableEntry> current = li.previous();
             if (current.containsKey(id)) {
@@ -120,7 +119,7 @@ public class SymbolTable {
     }
 
     // controllo se l'identificativo del campo è duplicato, restituisco true se è presente e false altrimenti
-    public Boolean processUseParameter(ClassType superClass, String id) {
+    public Boolean checkFieldDeclaration(ClassType superClass, String id) {
         if (superClass != null) {
             ListIterator<Field> litr = superClass.getFields().listIterator();
             while (litr.hasNext()) {

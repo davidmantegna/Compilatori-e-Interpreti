@@ -7,7 +7,6 @@ import exceptions.TypeException;
 import nodes.*;
 import parser.FOOLBaseVisitor;
 import parser.FOOLLexer;
-import type.ObjectType;
 import type.VoidType;
 
 import java.util.ArrayList;
@@ -71,8 +70,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
                 ClassNode classNode;
                 // se è null significa che la classe non estende nulla
                 if (classdecContext.ID(1) == null) {
-                    classNode = new ClassNode(classdecContext.ID(0).getText(), "", parameterNodeArrayList,
-                            methodNodeArrayList);
+                    classNode = new ClassNode(classdecContext.ID(0).getText(), "", parameterNodeArrayList, methodNodeArrayList);
                 } else { // altrimenti ha una superclasse
                     classNode = new ClassNode(classdecContext.ID(0).getText(), classdecContext.ID().get(1).getText(), parameterNodeArrayList, methodNodeArrayList);
                 }

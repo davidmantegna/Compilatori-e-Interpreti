@@ -25,11 +25,12 @@ public class NewNode implements INode {
         this.idClass = idClass;
         this.argumentsArrayList = argumentsArrayList;
         this.newMethodContext = newMethodContext;
+
     }
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("VarAsmNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("VarAsmNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
         ArrayList<String> res = new ArrayList<>();
 
         try {
@@ -50,7 +51,6 @@ public class NewNode implements INode {
             } catch (Exception e1) {
                 throw new UndeclaredIDException(idClass);
             }
-
         } catch (UndeclaredIDException e) {
             res.add(e.getMessage());
         }

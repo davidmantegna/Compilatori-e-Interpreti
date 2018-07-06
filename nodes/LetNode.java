@@ -24,7 +24,7 @@ public class LetNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("LetNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("LetNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
         ArrayList<String> res = new ArrayList<>();
 
         //CheckSemantic nella lista di dichiarazioni

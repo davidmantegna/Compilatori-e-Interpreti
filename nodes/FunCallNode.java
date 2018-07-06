@@ -46,7 +46,7 @@ public class FunCallNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FunCallNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("FunCallNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
         ArrayList<String> res = new ArrayList<>();
 
         try {

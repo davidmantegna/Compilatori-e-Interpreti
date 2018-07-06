@@ -1,15 +1,11 @@
 package nodes;
 
-import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import type.FunType;
 import type.IType;
-import type.ObjectType;
 import util.Semantic.SymbolTable;
 import util.Semantic.SymbolTableEntry;
-import util.VM.FunctionCode;
-import util.VM.Label;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,12 +43,11 @@ public class FunNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FunNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("FunNode: checkSemantics -> \n"/*+ env.toString() + "\n"*/);
         ArrayList<String> res = new ArrayList<>();
 
-        //entro in un nuovo livello di scope
-        HashMap<String, SymbolTableEntry> hm = new HashMap<>();
-        env.pushHashMap(hm);
+        // entro in un nuovo livello di scope
+        env.entryNewScope();
 
         //checkSemantic di tutti i parametri
         for (ParameterNode param : parameterNodeArrayList) {
@@ -70,7 +65,7 @@ public class FunNode implements INode {
         res.addAll(body.checkSemantics(env));
 
         //esco dal livello di scope
-        env.popHashMap();
+        env.exitLastScope();
 
         //ritorno eventuali errori rilevati
         return res;

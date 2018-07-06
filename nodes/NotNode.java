@@ -18,7 +18,7 @@ public class NotNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("NotNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("NotNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
         return new ArrayList<>();
     }
 

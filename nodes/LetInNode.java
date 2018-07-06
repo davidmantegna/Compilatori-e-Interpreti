@@ -21,12 +21,11 @@ public class LetInNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("LetInNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("LetInNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
         ArrayList<String> res = new ArrayList<>();
 
-        HashMap<String, SymbolTableEntry> hashMap = new HashMap<>();
-        //entro in un nuovo livello di scope
-        env.pushHashMap(hashMap);
+        // entro in un nuovo livello di scope
+        env.entryNewScope();
         //parte Let
         res.addAll(let.checkSemantics(env));
 
@@ -34,7 +33,7 @@ public class LetInNode implements INode {
         res.addAll(stmExp.checkSemantics(env));
 
         //lascio il vecchio scope
-        env.popHashMap();
+        env.exitLastScope();
 
         return res;
     }
