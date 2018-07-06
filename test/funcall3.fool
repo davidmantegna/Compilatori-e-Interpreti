@@ -1,0 +1,10 @@
+let
+    int k = 10;
+    int x = 20;
+in
+    k = f(1, 5);
+    x = g(1, 5);
+;
+
+// f: identificativo non definito
+// g: identificativo non definito

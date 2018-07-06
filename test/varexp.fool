@@ -1,0 +1,13 @@
+let
+    int x=0;
+    int y=x;
+in
+    if (x<0)
+    then{
+        x
+    }else{
+        y
+    }
+;
+
+//Type checking ok! Il tipo del programma è: void

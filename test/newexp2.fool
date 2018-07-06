@@ -1,0 +1,12 @@
+class Numero(int a){
+    int ciao(int c)
+        a + c;
+}
+class X(){};
+let
+    Numero num = new Numero();
+in
+    num.ciao(9)
+;
+
+// Exception: Instanziazione di una nuova classe Numero con numero errato di parametri

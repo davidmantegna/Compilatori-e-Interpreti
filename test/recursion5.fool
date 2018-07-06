@@ -1,0 +1,12 @@
+let
+    bool fatt(int n)
+        if (n <= 1) then{
+            1
+        }else{
+            fatt(n-1)
+        }
+    ;
+in
+    fatt(5);
+
+// Errore: "Tipi non compatibili nel then e nell'else" Errore alla linea 3

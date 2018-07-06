@@ -1,0 +1,12 @@
+let
+    int fatt(int n)
+        if (n <= 1) then{
+            1               //caso base
+        }else{
+            n * fatt(n-1)   //ricorsione
+        }
+    ;
+in
+    fatt(3);
+
+// type checking ok! Il tipo del programma è: int
