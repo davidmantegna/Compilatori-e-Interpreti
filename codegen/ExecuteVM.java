@@ -34,7 +34,7 @@ public class ExecuteVM {
         code = c;
     }
 
-    //prende il valore contenuto all'indirizzo passato
+    //  prende il valore contenuto nell'indirizzo di memoria 'address'
     private int getMemory(int address) throws SegmentationFaultError {
         int location = address - START_ADDRESS;
         if (location < 0 || location >= MEMSIZE) {
@@ -43,7 +43,7 @@ public class ExecuteVM {
         return memory[location];
     }
 
-    //setta il valore passato all'indirizzo passato
+    //  inserisce il valore 'value' nell'indirizzo di memoria indicato da'address'
     private void setMemory(int address, int value) throws SegmentationFaultError {
         int location = address - START_ADDRESS;
         if (location < 0 || location >= MEMSIZE) {
@@ -85,14 +85,14 @@ public class ExecuteVM {
 
     }*/
 
-    //ritorno il valore presente sullo stack
+    // ritorna il valore presente sullo stack e reimposta il valore dell'indirizzo a '0'
     private int pop() throws SegmentationFaultError {
         int res = getMemory(sp);
         setMemory(sp++, 0);
         return res;
     }
 
-    //metto il valore passato sullo stack
+    //  inserisce il valore 'v' sullo stack nella locazione di memoria puntata da 'sp'
     private void push(int v) throws StackOverflowError, SegmentationFaultError {
         if (sp - 1 < hp) {
             throw new StackOverflowError();
@@ -115,8 +115,7 @@ public class ExecuteVM {
                         break;
                     case SVMParser.STOREW: //store in the memory cell pointed by top the value next
                         address = pop();
-                        v1 = pop();
-                        setMemory(address, v1);
+                        setMemory(address, pop());
                         break;
                     case SVMParser.LOADW: //load a value from the memory cell pointed by top
                         push(getMemory(pop()));
@@ -182,8 +181,8 @@ public class ExecuteVM {
                         fp = sp;
                         break;
                     case SVMParser.ADD:
-                        v1 = pop();
-                        v2 = pop();
+                        v1 = pop(); //   register address
+                        v2 = pop(); //   offset
                         push(v2 + v1);
                         break;
                     case SVMParser.TIMES:
@@ -205,7 +204,7 @@ public class ExecuteVM {
                         v1 = pop();
                         if (v1 == 1) {
                             push(0);
-                        }else {
+                        } else {
                             push(1);
                         }
                         break;
@@ -213,18 +212,18 @@ public class ExecuteVM {
                     case SVMParser.AND:
                         v1 = pop();
                         v2 = pop();
-                        if((v1==1)&&(v2==1)){
+                        if ((v1 == 1) && (v2 == 1)) {
                             push(1);
-                        }else{
+                        } else {
                             push(0);
                         }
                         break;
                     case SVMParser.OR:
                         v1 = pop();
                         v2 = pop();
-                        if((v1==0)&&(v2==0)){
+                        if ((v1 == 0) && (v2 == 0)) {
                             push(0);
-                        }else{
+                        } else {
                             push(1);
                         }
 
@@ -307,9 +306,10 @@ public class ExecuteVM {
                         output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
                         pop();
                         break;
-
                     case SVMParser.HALT:
-                        //output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
+                        if (output.size() == 0) {
+                            output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
+                        }
                         return output;
                 }
             }
@@ -319,13 +319,14 @@ public class ExecuteVM {
         }
     }
 
-    public void print(){
-        int i=0;
-        System.out.println("START_ADDRESS: "+START_ADDRESS+"\n"+"MEMSIZE: "+MEMSIZE+"\n");
-        for (i=START_ADDRESS+MEMSIZE-1; i>=sp; i--){
-            System.out.print("addr: " + i + " location: " + (i-START_ADDRESS) + " -> val: " +getMemory(i) + "\n");
+    public void print() {
+        int i;
+        System.out.println("START_ADDRESS: " + START_ADDRESS + "\t\t" + "MEMSIZE: " + MEMSIZE + "\t\t" + "Memoria: " + (START_ADDRESS + MEMSIZE));
+        System.out.println("SP init: " + (START_ADDRESS + MEMSIZE) + "\t\t\tFP init: " + (START_ADDRESS + MEMSIZE) + "\t\tHEAP inti: " + START_ADDRESS + "\n");
+        for (i = START_ADDRESS + MEMSIZE - 1; i >= sp; i--) {
+            System.out.print("addr: " + i + " location: " + (i - START_ADDRESS) + " -> val: " + getMemory(i) + "\n");
         }
-        System.err.println("addr: " + i  + " location: " + (i-START_ADDRESS) +  " -> top\n");
+        System.err.println("addr: " + i + " location: " + (i - START_ADDRESS) + " -> top\n");
     }
 
 }

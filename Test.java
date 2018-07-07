@@ -36,47 +36,36 @@ public class Test {
             String foolFileName = fileName + ".fool";
             CharStream input = CharStreams.fromFileName(foolFileName);
 
-            System.out.println("Analisi Lessicale...\n");
+            printPhase("INPUT");
+            System.out.println(input + "\n");
 
-            System.out.println("input: " + input + "\n");
-
+            printPhase("LEXICAL ANALYSIS");
             FOOLLexer lexer = new FOOLLexer(input);
+
+            // determino i token in base all'input
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             tokens.fill();
-
-            //System.out.println("Tokens: " + tokens.getTokens() + "\n");
             System.out.println("Numero Tokens: " + tokens.getTokens().size() + "\n");
 
-            //SIMPLISTIC BUT WRONG CHECK OF THE LEXER ERRORS
+            // verifico la presenza di errori lessicali
             if (lexer.lexicalErrors.size() > 0) {
-                System.out.println("The program was not in the right format. Exiting the compilation process now");
+                System.out.println("L'input non è stato scritto in modo corretto.");
                 throw new LexerException(lexer.lexicalErrors);
-            } else {
-                System.out.println("LEXER OK");
             }
 
-            System.out.println("Analisi Sintattica...\n");
+            printPhase("SYNTACTIC ANALYSIS");
             FOOLParser parser = new FOOLParser(tokens);
             ProgContext progContext = parser.prog(); //parser.prog riutilizzato
 
+            // verifico la presenza di errori sintattici
             if (parser.getNumberOfSyntaxErrors() > 0) {
-                throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
+                throw new ParserException("Errori Sintattici rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
             }
 
             ParseTree tree = progContext;
-
-            System.out.println("Sto per visualizzare l'AST...\n");
-            //show AST in console
+            //  show AST in console
+            System.out.println("------- Visualizing AST -------");
             System.out.println(tree.toStringTree(parser) + "\n");
-
-
-            FoolVisitorImpl visitor = new FoolVisitorImpl();
-            INode nodes = visitor.visit(progContext); //generazione AST
-
-            System.out.println("\n--------------------------");
-            System.out.println("Visualizing AST...\n");
-
-
             /* //TODO Graphical interface
             //show AST in GUI
             JFrame frame = new JFrame("Antlr AST");
@@ -89,27 +78,28 @@ public class Test {
             frame.setSize(1500, 700);
             frame.setVisible(true);*/
 
-            System.out.println("--------------------------");
+            printPhase("SEMANTIC ANALYSIS");
 
-            System.out.println("Analisi Semantica...\n");
+            // tramite visit determino i nodi presenti nell'AST
+            FoolVisitorImpl visitor = new FoolVisitorImpl();
+            INode nodes = visitor.visit(progContext);
 
+            // l'ambiente
             SymbolTable env = new SymbolTable();
 
             ArrayList<String> stringArrayListErr = nodes.checkSemantics(env);
 
-
+            // verifico la presenza di errori Semantici
             if (stringArrayListErr.size() > 0) {
                 throw new SemanticException(stringArrayListErr);
             }
-            System.out.println("\n\ntype Checking...");
 
-
+            printPhase("TYPE CHECKING");
             IType type = nodes.typeCheck(); //type-checking bottom-up
-            System.out.println("\n\ntype checking ok! Il tipo del programma è: " + type.toPrint() + "\n\n");
+            System.out.println("\n\n\t\ttype checking ok! Il tipo del programma è: " + type.toPrint() + "\n\n");
 
             // CODE GENERATION
-            System.out.println("------- CODE GENERATION -------");
-
+            printPhase("CODE GENERATION");
             String code = nodes.codeGeneration();
 
             code += DispatchTable.generaCodiceDispatchTable();
@@ -126,8 +116,7 @@ public class Test {
 
 
             //TODO codeGeneration execution
-
-            System.out.println("------- CODE GENERATION EXECUTION ------");
+            printPhase("CODE GENERATION EXECUTION");
 
             CharStream inputASM = CharStreams.fromFileName(asmFileName);
             SVMLexer lexerASM = new SVMLexer(inputASM);
@@ -147,17 +136,20 @@ public class Test {
             String risultato = "No output";
             ArrayList<String> output = vm.cpu();
             vm.print();
-
             if (output.size() > 0) {
                 StringBuilder stringBuilder = new StringBuilder();
                 for (String s : output) {
-                    stringBuilder = stringBuilder.append(s + "\t");
-                }risultato= String.valueOf(stringBuilder);
+                    stringBuilder.append(s + "\n");
+                }
+                risultato = String.valueOf(stringBuilder);
             }
-
             System.out.println("Risultato: " + risultato + "\n");
         } catch (LexerException | IOException | SemanticException | TypeException | ParserException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    private static void printPhase(String fase) {
+        System.out.println("------- \033[32;1;2m " + fase + " \033[0m ------");
     }
 }
