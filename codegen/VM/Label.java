@@ -4,16 +4,12 @@ public class Label {
     private static int labelCount = 0;
     private static int functionLabelCount = 0;
 
-    public static String nuovaLabel() {
-        return "label_" + incrementLabel();
+    public static String nuovaLabelString(String string) {
+        return "label" + string + incrementLabel();
     }
 
-    public static String nuovaExitLabel(){
-        return "exit_" + incrementLabel();
-    }
-
-    public static String nuovaLabelFunzione() {
-        return "fun_label_" + incrementFunctionLabel();
+    public static String nuovaLabelFunzioneString(String string) {
+        return "label" + string + incrementFunctionLabel();
     }
 
     private static int incrementLabel() {

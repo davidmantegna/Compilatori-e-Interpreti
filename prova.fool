@@ -1,5 +1,8 @@
 let
-    int x=3;
+    int x = 1;
+    int y = 9;
+
 in
-    x;
+
+    if(x>y)then{3}else{4}
 ;

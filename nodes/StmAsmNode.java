@@ -75,6 +75,16 @@ public class StmAsmNode implements INode {
     @Override
     public String codeGeneration() {
         //TODO codegen
-        return exp.codeGeneration() + "\n";
+
+        return exp.codeGeneration()
+                + "push " + entry.getOffset() +"\n"
+                + "lfp \n"
+                + "add \n"
+                + "sw \n"
+                + "push " + entry.getOffset() +"\n"
+                + "lfp \n"
+                + "add \n"
+                + "lw \n"
+                + "print \n";
     }
 }

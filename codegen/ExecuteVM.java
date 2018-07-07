@@ -23,7 +23,7 @@ public class ExecuteVM {
     private int hp = START_ADDRESS;             //heap pointer
     private int ip = 0;                         //istruction pointer
     private int sp = START_ADDRESS + MEMSIZE;   //stack pointer
-    private int fp = START_ADDRESS + MEMSIZE;   //frame pointerall'inizio punta alla stessa locazione dello stack pointer
+    private int fp = START_ADDRESS + MEMSIZE;   //frame pointer all'inizio punta alla stessa locazione dello stack pointer
     private int ra;
     private int rv;
 
@@ -115,7 +115,8 @@ public class ExecuteVM {
                         break;
                     case SVMParser.STOREW: //store in the memory cell pointed by top the value next
                         address = pop();
-                        setMemory(address, pop());
+                        v1 = pop();
+                        setMemory(address, v1);
                         break;
                     case SVMParser.LOADW: //load a value from the memory cell pointed by top
                         push(getMemory(pop()));
@@ -302,8 +303,13 @@ public class ExecuteVM {
                             }
                         }*/
                         break;
-                    case SVMParser.HALT:
+                    case SVMParser.PRINT:
                         output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
+                        pop();
+                        break;
+
+                    case SVMParser.HALT:
+                        //output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
                         return output;
                 }
             }
@@ -315,7 +321,7 @@ public class ExecuteVM {
 
     public void print(){
         int i=0;
-        System.out.println("START_ADDRESS: "+START_ADDRESS+"\n"+"MEMSIZE"+MEMSIZE+"\n");
+        System.out.println("START_ADDRESS: "+START_ADDRESS+"\n"+"MEMSIZE: "+MEMSIZE+"\n");
         for (i=START_ADDRESS+MEMSIZE-1; i>=sp; i--){
             System.out.print("addr: " + i + " location: " + (i-START_ADDRESS) + " -> val: " +getMemory(i) + "\n");
         }

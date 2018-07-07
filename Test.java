@@ -141,16 +141,22 @@ public class Test {
             }
             if (parserASM.getNumberOfSyntaxErrors() > 0) {
                 throw new ParserException("Errore di parsing in SVM");
-            }int[] bytecode= parserASM.getBytecode();
+            }
+            int[] bytecode = parserASM.getBytecode();
             ExecuteVM vm = new ExecuteVM(bytecode);
             String risultato = "No output";
             ArrayList<String> output = vm.cpu();
             vm.print();
-            if (output.size() > 0)
-                risultato = output.get(output.size() - 1);
-            System.out.println("Risultato: "+risultato+"\n");
-        }
-        catch (LexerException | IOException | SemanticException | TypeException | ParserException e) {
+
+            if (output.size() > 0) {
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String s : output) {
+                    stringBuilder = stringBuilder.append(s + "\t");
+                }risultato= String.valueOf(stringBuilder);
+            }
+
+            System.out.println("Risultato: " + risultato + "\n");
+        } catch (LexerException | IOException | SemanticException | TypeException | ParserException e) {
             System.err.println(e.getMessage());
         }
     }

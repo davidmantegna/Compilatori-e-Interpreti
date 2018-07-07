@@ -52,15 +52,15 @@ public class StmIfExpNode implements INode {
     public String codeGeneration() {
 
         //TODO test codegen
-        String thenBranch = Label.nuovaLabel();
-        String exit = Label.nuovaLabel();
+        String thenBranch = Label.nuovaLabelString("Then");
+        String exit = Label.nuovaLabelString("Exit");
         return conditionNode.codeGeneration() +
                 "push 1\n" +
-                "beq" + thenBranch + "\n" +
-                stmsThen.codeGeneration() +
-                "b " + exit + "\n" +
-                thenBranch + ":\n" +
+                "beq " + thenBranch + "\n" +
                 stmsElse.codeGeneration() +
+                "b " + exit + "\n\n" +
+                thenBranch + ":\n" +
+                stmsThen.codeGeneration() +
                 exit + ":\n";
     }
 }

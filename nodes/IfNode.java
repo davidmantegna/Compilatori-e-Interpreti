@@ -50,7 +50,7 @@ public class IfNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        if(!conditionNode.typeCheck().isSubType(new BoolType()))
+        if (!conditionNode.typeCheck().isSubType(new BoolType()))
             throw new TypeException("Condizione non booleana", ctx);
         IType thenType = thenNode.typeCheck();
         IType elType = elseNode.typeCheck();
@@ -82,15 +82,18 @@ public class IfNode implements INode {
 
     @Override
     public String codeGeneration() {
-        String thenBranch = Label.nuovaLabel();
-        String exit = Label.nuovaLabel();
-        return conditionNode.codeGeneration() +
-                "push 1\n" +
-                "beq " + thenBranch + "\n" +
-                elseNode.codeGeneration() +
-                "b " + exit + "\n\n" +
-                thenBranch + ":\n" +
-                thenNode.codeGeneration() +"\n\n" +
-                exit + ":\n";
+
+        //TODO da rivedere
+        String thenBranch = Label.nuovaLabelString("Then");
+        String exit = Label.nuovaLabelString("Exit");
+        return conditionNode.codeGeneration()
+                + "push 1\n"
+                + "beq " + thenBranch + "\n"
+                + elseNode.codeGeneration()
+                + "b " + exit + "\n\n"
+                + thenBranch + ":\n"
+                + thenNode.codeGeneration() + "\n\n"
+                + exit + ":\n"
+                ;
     }
 }

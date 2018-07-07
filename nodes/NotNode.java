@@ -33,8 +33,8 @@ public class NotNode implements INode {
 
         //TODO test codegen
 
-        String label = Label.nuovaLabel();
-        String exit = Label.nuovaLabel();
+        String label = Label.nuovaLabelString("Not");
+        String exit = Label.nuovaLabelString("Exit");
         return value.codeGeneration() +
                 "push 1\n" +
                 "beq " + label + "\n" +

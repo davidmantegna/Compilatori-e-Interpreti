@@ -90,7 +90,7 @@ public class VarExpNode implements INode {
         if (isNegative) {
             return "push " + entry.getOffset() + "\n" + //metto offset sullo stack
                     "lfp\n" + getActivationRecord + //risalgo la catena statica
-                    "add\n" +
+                    "add\n" + //TODO da rivedere add
                     "lw\n" + //carico sullo stack il valore all'indirizzo ottenuto
                     "push -1\n" +
                     "times\n";

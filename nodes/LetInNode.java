@@ -48,10 +48,11 @@ public class LetInNode implements INode {
     public String codeGeneration() {
         //TODO test codeGeneration
 
+
         return let.codeGeneration()
-                + "\n"
-                + stmExp.codeGeneration()
-                + "halt\n"
+                +"\n"
+                + stmExp.codeGeneration() + "halt\n"
                 + FunctionCode.getFunctionsCode();
+
     }//TODO label halt
 }

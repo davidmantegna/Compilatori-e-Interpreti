@@ -1,8 +1,8 @@
 grammar SVM;
 
 @header {
-import java.visit.HashMap;
-import java.visit.ArrayList;
+import java.util.HashMap;
+import java.util.ArrayList;
 import codegen.ExecuteVM;
 }
 

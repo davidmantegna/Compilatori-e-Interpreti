@@ -59,13 +59,14 @@ public class FactorNode implements INode {
 
     @Override
     public String codeGeneration() {
-        String label = Label.nuovaLabel();
-        String exit = Label.nuovaExitLabel();
+        String label;
+        String exit = Label.nuovaLabelString("Exit");
         String codeGen = "";
 
         //TODO codegen AND, OR
         switch (operator) {
             case "And":
+                label = Label.nuovaLabelString("And");
                 codeGen = leftNode.codeGeneration()
                         + "push 0\n"
                         + "beq " + exit + "\n"
@@ -81,6 +82,7 @@ public class FactorNode implements INode {
                         + "push 0\n\n";
                 break;
             case "Or":
+                label = Label.nuovaLabelString("Or");
                 codeGen = leftNode.codeGeneration()
                         + "push 0\n"
                         + "beq " + label + "\n"
@@ -96,6 +98,7 @@ public class FactorNode implements INode {
                         + "push 1\n\n";
                 break;
             case "Eq":
+                label = Label.nuovaLabelString("Eq");
                 codeGen = leftNode.codeGeneration()
                         + rightNode.codeGeneration()
                         + "beq " + label + "\n"
@@ -106,6 +109,7 @@ public class FactorNode implements INode {
                         + "push 0\n\n";
                 break;
             case "GreaterEq":
+                label = Label.nuovaLabelString("GreaterEq");
                 codeGen = rightNode.codeGeneration()
                         + leftNode.codeGeneration()
                         + "bge " + label + "\n"
@@ -116,6 +120,7 @@ public class FactorNode implements INode {
                         + "push 0\n\n";
                 break;
             case "LessEq":
+                label = Label.nuovaLabelString("LessEq");
                 codeGen = rightNode.codeGeneration()
                         + leftNode.codeGeneration()
                         + "ble " + label + "\n"
@@ -126,6 +131,7 @@ public class FactorNode implements INode {
                         + "push 0\n\n";
                 break;
             case "Greater":
+                label = Label.nuovaLabelString("Greater");
                 codeGen = rightNode.codeGeneration()
                         + leftNode.codeGeneration()
                         + "bgt " + label + "\n"
@@ -136,6 +142,7 @@ public class FactorNode implements INode {
                         + "push 0\n\n";
                 break;
             case "Less":
+                label = Label.nuovaLabelString("Less");
                 codeGen = rightNode.codeGeneration()
                         + leftNode.codeGeneration()
                         + "blt " + label + "\n"
