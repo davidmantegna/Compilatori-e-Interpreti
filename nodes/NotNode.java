@@ -30,18 +30,15 @@ public class NotNode implements INode {
 
     @Override
     public String codeGeneration() {
-
-        //TODO test codegen
-
-        String label = Label.nuovaLabelString("Not");
-        String exit = Label.nuovaLabelString("Exit");
-        return value.codeGeneration() +
+        return value.codeGeneration();// TODO forse il not bisogna scriverlo così 'not' perchè '!' viene negato al momento dell'acquisizione e ci evita di eseguire il codegen commentato
+/*              String label = Label.nuovaLabelString("Not");
+                String exit = Label.nuovaLabelString("Exit");
                 "push 1\n" +
                 "beq " + label + "\n" +
                 "push 1\n" +
                 "b " + exit + "\n" +
                 label + ":\n" +
                 "push 0\n" +
-                exit + ":\n";
+                exit + ":\n";*/
     }
 }

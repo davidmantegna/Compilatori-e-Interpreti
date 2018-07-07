@@ -125,34 +125,34 @@ public class ExecuteVM {
                         ip = address;
                         break;
                     case SVMParser.BRANCHEQ:
-                        address = code[ip++];
-                        v1 = pop();
+                        address = code[ip++]; // address ramo then
                         v2 = pop();
-                        if (v2 == v1) ip = address;
+                        v1 = pop();
+                        if (v1 == v2) ip = address;
                         break;
                     case SVMParser.BRANCHLESS:
                         address = code[ip++];
                         v1 = pop();
                         v2 = pop();
-                        if (v2 < v1) ip = address;
+                        if (v1 < v2) ip = address;
                         break;
                     case SVMParser.BRANCHLESSEQ:
                         address = code[ip++];
                         v1 = pop();
                         v2 = pop();
-                        if (v2 <= v1) ip = address;
+                        if (v1 <= v2) ip = address;
                         break;
                     case SVMParser.BRANCHGREATHER:
                         address = code[ip++];
                         v1 = pop();
                         v2 = pop();
-                        if (v2 > v1) ip = address;
+                        if (v1 > v2) ip = address;
                         break;
                     case SVMParser.BRANCHGREATHEREQ:
                         address = code[ip++];
                         v1 = pop();
                         v2 = pop();
-                        if (v2 >= v1) ip = address;
+                        if (v1 >= v2) ip = address;
                         break;
                     case SVMParser.JS: // jump to instruction pointed by top of stack and store next instruction in ra
                         address = pop();

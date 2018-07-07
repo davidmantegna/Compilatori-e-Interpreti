@@ -56,7 +56,7 @@ public class IfNode implements INode {
         IType elType = elseNode.typeCheck();
         ClassType superClassThen, superClassElse;
 
-        if(elType instanceof ObjectType && thenType instanceof ObjectType) {
+        if (elType instanceof ObjectType && thenType instanceof ObjectType) {
             ClassType classThen = ((ObjectType) thenType).getClassType();
             ClassType classElse = ((ObjectType) elType).getClassType();
 
@@ -67,16 +67,16 @@ public class IfNode implements INode {
                 superClassThen = superClassThen.getSuperClassType();
             }
 
-            while (superClassElse.getSuperClassID() != ""){
+            while (superClassElse.getSuperClassID() != "") {
                 superClassElse = superClassElse.getSuperClassType();
             }
 
-            if(superClassThen.getClassID() == superClassElse.getClassID())
+            if (superClassThen.getClassID() == superClassElse.getClassID())
                 return superClassThen;
         }
 
-        if(thenType.isSubType(elType)) return thenType;
-        else if(elType.isSubType(thenType)) return elType;
+        if (thenType.isSubType(elType)) return thenType;
+        else if (elType.isSubType(thenType)) return elType;
         else throw new TypeException("Tipi non compatibili nel then e nell'else", ctx);
     }
 

@@ -1,5 +1,6 @@
 package nodes;
 
+import codegen.VM.Label;
 import type.*;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
@@ -87,24 +88,30 @@ public class VarExpNode implements INode {
             getActivationRecord.append("lw\n");
         }
 
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("push " + entry.getOffset() + "\n" + //metto offset sullo stack
+                "lfp\n" + getActivationRecord + //risalgo la catena statica
+                "add\n" +
+                "lw\n" //carico sullo stack il valore all'indirizzo ottenuto
+        );
+
         if (isNegative) {
-            return "push " + entry.getOffset() + "\n" + //metto offset sullo stack
-                    "lfp\n" + getActivationRecord + //risalgo la catena statica
-                    "add\n" + //TODO da rivedere add
-                    "lw\n" + //carico sullo stack il valore all'indirizzo ottenuto
-                    "push -1\n" +
-                    "times\n";
+            stringBuilder.append("push -1\n" +
+                    "times\n");
         } else if (isNot) {
-            return "push " + entry.getOffset() + "\n" + //metto offset sullo stack
-                    "lfp\n" + getActivationRecord + //risalgo la catena statica
-                    "add\n" +
-                    "lw\n" + //carico sullo stack il valore all'indirizzo ottenuto
-                    "not\n";
-        } else {
-            return "push " + entry.getOffset() + "\n" + //metto offset sullo stack
-                    "lfp\n" + getActivationRecord + //risalgo la catena statica
-                    "add\n" +
-                    "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
+            //stringBuilder.append("not\n"); // TODO al momento l'ho rimosso
+            String thenBranch = Label.nuovaLabelString("Then");
+            String exit = Label.nuovaLabelString("Exit");
+            stringBuilder.append("push 1 \n" +
+                    "beq " + thenBranch + "\n" +
+                    "push 1\n" +
+                    "b " + exit + "\n" +
+                    thenBranch + ":\n" +
+                    "push 0\n" +
+                    exit + ":\n"
+            );
         }
+
+        return String.valueOf(stringBuilder);
     }
 }

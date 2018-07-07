@@ -59,98 +59,87 @@ public class FactorNode implements INode {
 
     @Override
     public String codeGeneration() {
-        String label;
+        String labelThen = Label.nuovaLabelString("Then");
         String exit = Label.nuovaLabelString("Exit");
         String codeGen = "";
 
-        //TODO codegen AND, OR
         switch (operator) {
             case "And":
-                label = Label.nuovaLabelString("And");
                 codeGen = leftNode.codeGeneration()
                         + "push 0\n"
-                        + "beq " + exit + "\n"
+                        + "beq " + labelThen + "\n\n"
                         + rightNode.codeGeneration()
                         + "push 0\n"
-                        + "beq " + exit + "\n"
-                        + "b " + label + "\n\n"
-
-                        + label + ":\n"
-                        + "push 1\n\n"
-
-                        + exit + ":\n"
-                        + "push 0\n\n";
+                        + "beq " + labelThen + "\n\n"
+                        + "push 1\n"
+                        + "b " + exit + "\n\n"
+                        + labelThen + ":\n"
+                        + "push 0\n"
+                        + exit + ":\n";
                 break;
             case "Or":
-                label = Label.nuovaLabelString("Or");
                 codeGen = leftNode.codeGeneration()
-                        + "push 0\n"
-                        + "beq " + label + "\n"
-                        + "b " + exit + "\n\n"
-
-                        + label + ":\n"
+                        + "push 1\n"
+                        + "beq " + labelThen + "\n\n"
                         + rightNode.codeGeneration()
                         + "push 1\n"
-                        + "beq " + exit + "\n"
-                        + "push 0\n\n"
-
-                        + exit + ":\n"
-                        + "push 1\n\n";
+                        + "beq " + labelThen + "\n\n"
+                        + "push 0\n"
+                        + "b " + exit + "\n\n"
+                        + labelThen + ":\n"
+                        + "push 1\n"
+                        + exit + ":\n";
                 break;
             case "Eq":
-                label = Label.nuovaLabelString("Eq");
+                //TODO richiede solo tipi interi? dovrebbe solo verificare che i due tipi appartengono allo stesso tipo
                 codeGen = leftNode.codeGeneration()
                         + rightNode.codeGeneration()
-                        + "beq " + label + "\n"
+                        + "beq " + labelThen + "\n"
+                        + "push 0\n"
                         + "b " + exit + "\n\n"
-                        + label + ":\n"
+                        + labelThen + ":\n"
                         + "push 1\n\n"
-                        + exit + ":\n"
-                        + "push 0\n\n";
+                        + exit + ":\n";
                 break;
             case "GreaterEq":
-                label = Label.nuovaLabelString("GreaterEq");
                 codeGen = rightNode.codeGeneration()
                         + leftNode.codeGeneration()
-                        + "bge " + label + "\n"
+                        + "bge " + labelThen + "\n"
+                        + "push 0\n"
                         + "b " + exit + "\n\n"
-                        + label + ":\n"
+                        + labelThen + ":\n"
                         + "push 1\n\n"
-                        + exit + ":\n"
-                        + "push 0\n\n";
+                        + exit + ":\n";
                 break;
             case "LessEq":
-                label = Label.nuovaLabelString("LessEq");
                 codeGen = rightNode.codeGeneration()
                         + leftNode.codeGeneration()
-                        + "ble " + label + "\n"
+                        + "ble " + labelThen + "\n"
+                        + "push 0\n"
                         + "b " + exit + "\n\n"
-                        + label + ":\n"
+                        + labelThen + ":\n"
                         + "push 1\n\n"
-                        + exit + ":\n"
-                        + "push 0\n\n";
+                        + exit + ":\n";
                 break;
             case "Greater":
-                label = Label.nuovaLabelString("Greater");
                 codeGen = rightNode.codeGeneration()
                         + leftNode.codeGeneration()
-                        + "bgt " + label + "\n"
+                        + "bgt " + labelThen + "\n"
+                        + "push 0\n"
                         + "b " + exit + "\n\n"
-                        + label + ":\n"
+                        + labelThen + ":\n"
                         + "push 1\n\n"
-                        + exit + ":\n"
-                        + "push 0\n\n";
+                        + exit + ":\n";
                 break;
             case "Less":
-                label = Label.nuovaLabelString("Less");
                 codeGen = rightNode.codeGeneration()
                         + leftNode.codeGeneration()
-                        + "blt " + label + "\n"
+                        + "blt " + labelThen + "\n"
+                        + "push 0\n"
                         + "b " + exit + "\n\n"
-                        + label + ":\n"
+                        + labelThen + ":\n"
                         + "push 1\n\n"
-                        + exit + ":\n"
-                        + "push 0\n\n";
+                        + exit + ":\n";
                 break;
             default:
                 codeGen = "default";
