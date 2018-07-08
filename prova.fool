@@ -1,5 +1,17 @@
-if(5 < 7)then{
-    2
-}else{
-    3
-};
+class B(){}
+class D extends B(){};
+
+let
+    B b1 = new B();
+    D d1 = new D();
+    int x = 0;
+    int f()
+        9;
+    int g()
+        4;
+in
+    if(f() && g())then{
+        x = 1;
+    }else{
+        x = 0;
+    };
