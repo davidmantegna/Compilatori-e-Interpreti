@@ -9,7 +9,7 @@ public class Label {
     }
 
     public static String nuovaLabelFunzioneString(String string) {
-        return "label" + string + incrementFunctionLabel();
+        return "function" + string + incrementFunctionLabel();
     }
 
     private static int incrementLabel() {

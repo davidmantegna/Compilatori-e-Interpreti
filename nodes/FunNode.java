@@ -1,5 +1,7 @@
 package nodes;
 
+import codegen.VM.FunctionCode;
+import codegen.VM.Label;
 import exceptions.TypeException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import type.FunType;
@@ -97,24 +99,23 @@ public class FunNode implements INode {
 
     @Override
     public String codeGeneration() {
-
         //TODO test codeGeneration
-
-        /*//variabili/funzioni dichiarate internamente
+        //variabili dichiarate internamente
         StringBuilder localDeclarations = new StringBuilder();
-        //variabili/funzioni da togliere dallo stack al termine del record di attivazione
+        //variabili da togliere dallo stack al termine del record di attivazione
         StringBuilder popLocalDeclarations = new StringBuilder();
         if (declarationsArrayList.size() > 0)
             for (INode dec : declarationsArrayList) {
                 localDeclarations.append(dec.codeGeneration());
                 popLocalDeclarations.append("pop\n");
             }
+
         //parametri in input da togliere dallo stack al termine del record di attivazione
         StringBuilder popInputParameters = new StringBuilder();
         for (INode dec : parameterNodeArrayList)
             popInputParameters.append("pop\n");
 
-        String funLabel = Label.nuovaLabelFunzione();
+        String funLabel = Label.nuovaLabelFunzioneString(idFunzione.toUpperCase());
 
         //inserisco il codice della funzione in fondo al main, davanti alla label
         FunctionCode.insertFunctionsCode(funLabel + ":\n" +
@@ -133,7 +134,6 @@ public class FunNode implements INode {
                 "js\n" // jump al return address per continuare dall'istruzione dopo
         );
 
-        return "push " + funLabel + "\n";*/
-        return "";
+        return "push " + funLabel + "\n";
     }
 }

@@ -97,19 +97,20 @@ public class FunCallNode implements INode {
 
     @Override
     public String codeGeneration() {
-
-        //TODO test codeGeneration
-        /*StringBuilder parameterCode = new StringBuilder();
+        //TODO test codeGeneration, removed function nested
+        StringBuilder parameterCode = new StringBuilder();
         //parametri in ordine inverso
-        for (int i = argumentsArrayList.size() - 1; i >= 0; i--)
+        for (int i = argumentsArrayList.size() - 1; i >= 0; i--){
             parameterCode.append(argumentsArrayList.get(i).codeGeneration());
+        }
+
 
         //utilizzato per gestire le funzioni annidate
         StringBuilder getActivationRecord = new StringBuilder();
         for (int i = 0; i < calledNestingLevel - entry.getNestinglevel(); i++)
             getActivationRecord.append("lw\n");
 
-        return "lfp\n" + //pusho frame pointer e parametri
+        return "lfp\n" + //push frame pointer e parametri
                 parameterCode +
                 "lfp\n" + getActivationRecord + //pusho access link (lw consecutivamente)
                 // così si potrà risalire la catena statica
@@ -119,8 +120,6 @@ public class FunCallNode implements INode {
                 "add\n" + //$fp + offset
                 "lw\n" + //tramite l'indirizzo accedo al codice della funzione
                 "js\n";
-    */
-        return "";
     }
 
 }
