@@ -32,6 +32,10 @@ public class ParameterNode implements INode {
         return type;
     }
 
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("ParameterNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);

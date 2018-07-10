@@ -5,8 +5,7 @@ import exceptions.SegmentationFaultError;
 import exceptions.StackOverflowError;
 import parser.SVMParser;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 public class ExecuteVM {
 
@@ -54,38 +53,6 @@ public class ExecuteVM {
     }
 
 
-    //TODO Garbage Collector
-
-    /*// Garbage collector con tecnica mark and sweep
-    private void garbageCollector() throws SegmentationFaultError {
-        HashMap<Integer, Boolean> hashMap = new HashMap<>(); //(indice cella, è usata true/false)
-        // Inizializzo a false tutti gli oggetti
-        for (HeapCell m : heapInUso) {
-            hashMap.put(m.getIndex(), false);
-        }
-        // Se viene trovato sullo stack l'indirizzo di un oggetto, setto la hashMap a true
-        for (int i = MEMSIZE + START_ADDRESS - 1; i >= sp; i--) {
-            if (hashMap.containsKey(getMemory(i))) {
-                hashMap.put(getMemory(i), true);
-            }
-        }
-        //Se viene trovato nel registro rv, setto la hashMap a true
-        if (hashMap.containsKey(rv)) {
-            hashMap.put(rv, true);
-        }
-        for (HeapCell heapCell : heapInUso) {
-            //se hashMap.get(heapCell.getIndex()) ritorna true, vuol dire che l'oggetto è in uso;
-            //quindi con ! non entro dentro al ciclo che lo deallocherebbe
-            if (!hashMap.get(heapCell.getIndex())) {
-                heap.deallocate(heapCell);
-            }
-        }
-        //se hashMap.get(m.getIndex()) è true, vuol dire che tale elemento è in uso
-        //quindi con ! non lo vado a rimuovere dal hashset
-        heapInUso.removeIf(m -> !hashMap.get(m.getIndex()));
-
-    }*/
-
     // ritorna il valore presente sullo stack e reimposta il valore dell'indirizzo a '0'
     private int pop() throws SegmentationFaultError {
         int res = getMemory(sp);
@@ -100,6 +67,8 @@ public class ExecuteVM {
         }
         setMemory(--sp, v);
     }
+
+    private HashMap<Integer, Integer> memoryFinalMap = new HashMap<>();
 
     public ArrayList<String> cpu() {
         try {
@@ -169,11 +138,18 @@ public class ExecuteVM {
                     case SVMParser.STORERV: // store top into rv
                         rv = pop();
                         break;
+                    case SVMParser.LOADC: //mette sullo stack l'indirizzo del metodo all'interno di code
+                        int indirizzoCodice = pop();
+                        push(code[indirizzoCodice]);
+                        break;
                     case SVMParser.LOADRV: // load from rv
                         push(rv);
                         break;
                     case SVMParser.LOADFP: // load frame pointer in the stack
                         push(fp);
+                        break;
+                    case SVMParser.LOADHP: // load heap pointer in the stack
+                        push(hp);
                         break;
                     case SVMParser.STOREFP: // store top into frame pointer
                         fp = pop();
@@ -201,14 +177,6 @@ public class ExecuteVM {
                         v2 = pop();
                         push(v2 - v1);
                         break;
-                    case SVMParser.NOT:
-                        v1 = pop();
-                        if (v1 == 1) {
-                            push(0);
-                        } else {
-                            push(1);
-                        }
-                        break;
                     case SVMParser.AND:
                         v1 = pop();
                         v2 = pop();
@@ -226,10 +194,6 @@ public class ExecuteVM {
                         } else {
                             push(1);
                         }
-                        break;
-                    case SVMParser.LOADC: //mette sullo stack l'indirizzo del metodo all'interno di code
-                        int indirizzoCodice = pop();
-                        push(code[indirizzoCodice]);
                         break;
                     case SVMParser.COPY:    //duplica il valore in cima allo stack
                         push(getMemory(sp));
@@ -260,19 +224,11 @@ public class ExecuteVM {
                             argomenti[i] = pop();
                         }
 
-                        //TODO garbage
-                        /*//Se il valore assoluto della differenza tra sp e hp supera il valore
-                        //della soglia massima, viene eseguito il garbage collector
-                        if (Math.abs(sp - hp) <= GARBAGE_THRESHOLD) {
-                            garbageCollector();
-                        }
-*/
                         HeapCell memoriaAllocata;
                         // Alloco memoria per gli argomenti e per l'indirizzo alla dispatch table
                         memoriaAllocata = heap.allocate(numeroArgomenti + 1);
 
-                        //Considero la memoria appena allocata come in uso,
-                        // così che il garbage collector possa controllarla
+                        //Considero la memoria appena allocata come in uso
                         heapInUso.add(memoriaAllocata);
 
                         int heapMemoryStart = memoriaAllocata.getIndex();
@@ -292,21 +248,15 @@ public class ExecuteVM {
                         if (heap.getFreeIndex() > hp) {
                             hp = heap.getFreeIndex();
                         }
-
-                        //TODO garbage
-                       /* //se la memoria termina, eseguo il garbageCollector
-                        if (hp == -1) {
-                            garbageCollector();
-                            if(heap.ottienIndirizzoLibero() > hp) {
-                                hp=heap.ottienIndirizzoLibero();
-                            }
-                        }*/
                         break;
                     case SVMParser.PRINT:
                         output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
                         pop();
                         break;
                     case SVMParser.HALT:
+                        for (int i = MEMSIZE - 1; i >= 0; i--) {
+                            memoryFinalMap.put(i, memory[i]);
+                        }
                         if (output.size() == 0) {
                             output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
                         }
@@ -327,6 +277,17 @@ public class ExecuteVM {
             System.out.print("addr: " + i + " location: " + (i - START_ADDRESS) + " -> val: " + getMemory(i) + "\n");
         }
 
+    }
+
+    public void getMemoryFinalMap() {
+        Iterator it = memoryFinalMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+
+            if ((Integer) pair.getValue() != 0) {
+                System.out.println(pair.getKey() + " = " + pair.getValue());
+            }
+        }
     }
 
 }

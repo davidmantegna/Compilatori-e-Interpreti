@@ -16,6 +16,7 @@ import type.ObjectType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ListIterator;
 
 public class ClassNode implements INode {
 
@@ -131,19 +132,23 @@ public class ClassNode implements INode {
         // eredito i campi della superClasse
         if (superclassType != null) {
             HashMap<String, Integer> info = superclassType.fieldHashMapFromSuperClass();
+            int lastOff = 0;
             for (String s : info.keySet()) {
                 if (!fieldHashMap.containsKey(s)) {
                     try {
-                        int off = 0;
-                        if (info.get(s) != 0) {
-                            off = -info.get(s);
-                        }
-                        env.processDeclaration(s, superclassType.getFieldsMap().get(s), off);
+                        int off = info.get(s);
+                        lastOff = off;
+                        env.processDeclarationClass(s, superclassType.getFieldsMap().get(s), off, true, true);
                     } catch (MultipleIDException e) {
                         e.printStackTrace();
                     }
                 }
             }
+            ListIterator<ParameterNode> li = fieldDeclarationArraylist.listIterator();
+            while (li.hasNext()) {
+                li.next().setOffset(++lastOff);
+            }
+
         }
 
         for (ParameterNode parameterNode : fieldDeclarationArraylist) {
@@ -178,16 +183,21 @@ public class ClassNode implements INode {
             for (String s : info.keySet()) {
                 if (!methodHashMap.containsKey(s)) {
                     try {
-                        int off = 0;
-                        if (info.get(s) != 0) {
-                            off = -info.get(s);
-                        }
+                        int off = info.get(s);
+                        System.out.println("Metodi senza override");
                         env.processDeclaration(s, superclassType.getMethodsMap().get(s), off);
                     } catch (MultipleIDException e) {
                         e.printStackTrace();
                     }
                 }
             }
+        }
+
+        //cerco la entry in cui è situata la classe
+        try {
+            env.processDeclaration("this", classType, 0);
+        } catch (MultipleIDException e) {
+            e.printStackTrace();
         }
 
         //checkSemantic di ogni metodo

@@ -24,6 +24,12 @@ public class MethodCallNode extends FunCallNode {
     private int methodOffset;
     private int nestinglevel;
 
+    public MethodCallNode(String id, ArrayList<INode> argumentsArrayList, FOOLParser.FuncallContext funcallContext, String methodID, IType methodType) {
+        super(id, argumentsArrayList, funcallContext);
+        this.methodID = methodID;
+        this.methodType = methodType;
+    }
+
     public MethodCallNode(String objID, String methodID, ArrayList<INode> argumentsArrayList, FOOLParser.MethodExpContext methodContext) {
         super(methodID, argumentsArrayList, methodContext.funcall());
         this.classID = objID;
@@ -117,15 +123,12 @@ public class MethodCallNode extends FunCallNode {
                 + parameterCode
                 + "push " + objectOffset + "\n"         // pusho l'offset logico dell'oggetto (dispatch table)
                 + "lfp\n"
-                + getActivationRecord                                 //pusho access link (lw consecutivamente)
-                // così si potrà risalire la catena statica
+                + getActivationRecord                                 //pusho access link (lw consecutivamente) così si potrà risalire la catena statica
                 + "add\n"                               // $fp + offset
-                + "lw\n"                                // pusho indirizzo di memoria in cui si trova
-                // l'indirizzo della dispatch table
+                + "lw\n"                                // pusho indirizzo di memoria in cui si trova l'indirizzo della dispatch table
                 + "copy\n"                              // copio
                 + "lw\n"                                // pusho l'indirizzo della dispatch table
-                + "push " + (methodOffset - 1) + "\n"   // pusho l'offset di dove si trova metodo rispetto
-                // all'inizio della dispatch table
+                + "push " + (methodOffset - 1) + "\n"   // pusho l'offset di dove si trova metodo rispetto all'inizio della dispatch table // TODO methodoffset -1 o (-2 funziona solo con overrride)
                 + "add" + "\n"                          // dispatch_table_start + offset
                 + "loadc\n"                             // pusho il codice del metodo
                 + "js\n";                               // jump all'istruzione dove e' definito il metodo e salvo $ra

@@ -93,23 +93,31 @@ public class VarExpNode implements INode {
     public String codeGeneration() {
         //for e getActivationRecord per gestire le funzioni annidate
         StringBuilder getActivationRecord = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
+
         if (entry.isInsideClass()) {
             for (int i = 0; i < nestingLevel - thisNestingLevel; i++)
                 getActivationRecord.append("lw\n");
+
+            stringBuilder.append(
+                    "push " + entry.getOffset() + "\n" + // pusho offset dell'ID
+                            "lfp\n" + getActivationRecord +
+                            //"lw \n"+// TODO in caso di errore nella heapoffset settare solo 1 lw; <- decommentare
+                            "heapoffset\n" +  // converto l'offset logico nell'offset fisico a cui l'identificatore si riferisce, poi lo carica sullo stack, utilizzato solo per i parametri dei metodi all'interno delle classi
+                            "add\n" +
+                            "lw\n"//carico sullo stack il valore dell'indirizzo ottenuto
+            );
 
         } else {
             for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++) {
                 getActivationRecord.append("lw\n");
             }
+            stringBuilder.append("push " + entry.getOffset() + "\n" + //metto offset sullo stack
+                    "lfp\n" + getActivationRecord + //risalgo la catena statica
+                    "add\n" +
+                    "lw\n" //carico sullo stack il valore all'indirizzo ottenuto
+            );
         }// TODO vedere altro progetto
-
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("push " + entry.getOffset() + "\n" + //metto offset sullo stack
-                "lfp\n" + getActivationRecord + //risalgo la catena statica
-                "add\n" +
-                "lw\n" //carico sullo stack il valore all'indirizzo ottenuto
-        );
 
         if (isNegative) {
             stringBuilder.append("push -1\n" + "times\n");

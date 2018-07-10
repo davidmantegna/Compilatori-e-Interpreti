@@ -41,7 +41,6 @@ assembly:
       | SUB		                    {   code.add(SUB);        }
       | TIMES	                    {   code.add(TIMES);      }
       | DIV		                    {   code.add(DIV);        }
-      | NOT                         {   code.add(NOT);        }
 
       | AND		                    {   code.add(AND);        }
       | OR		                    {   code.add(OR);         }

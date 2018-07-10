@@ -52,15 +52,6 @@ public class MethodNode extends FunNode {
             res.add("Il metodo " + idFunzione + " è già stato dichiarato\n");
         }
 
-
-        //cerco la entry in cui è situata la classe
-        try {
-            SymbolTableEntry classEntry = env.processUse(idClass);
-            env.processDeclaration("this", new ObjectType((ClassType) classEntry.getType()), 0);
-        } catch (MultipleIDException | UndeclaredIDException e) {
-            e.printStackTrace();
-        }
-
         // entro in un nuovo livello di scope
         env.entryNewScope();
 

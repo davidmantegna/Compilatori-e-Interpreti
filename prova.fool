@@ -1,13 +1,21 @@
-class A (int a, int b){
+class A (int a){
+    int getA()
+        100;
 
+     int getB()
+           50;
 };
 
-class B extends A (){
+class B extends A(int z){
     int getB()
+        z;
+
+    int getX()
         a;
 };
 
 let
-    B a = new B(2,4);
+   A a = new A(4);
+   B b = new B(1, 3);
  in
-    a.getB();
+    b.getX();

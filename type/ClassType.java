@@ -146,7 +146,7 @@ public class ClassType implements IType {
         if (superClassType == null) {
             HashMap<String, Integer> fieldsHashMap = new HashMap<>();
             for (Field field : fields) {
-                fieldsHashMap.put(field.getFieldID(), fieldsHashMap.size());
+                fieldsHashMap.put(field.getFieldID(), fieldsHashMap.size() + 1);
             }
             return fieldsHashMap;
         } else {
