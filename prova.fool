@@ -1,21 +1,15 @@
-class A (int a){
-    int getA()
-        100;
-
-     int getB()
-           50;
-};
-
-class B extends A(int z){
-    int getB()
-        z;
-
-    int getX()
-        a;
-};
-
 let
-   A a = new A(4);
-   B b = new B(1, 3);
+    int x = 5;
+   int fun1(int a)
+        funz2(a-1)
+    ;
+
+    int funz2(int b)
+        if(b == 0)then{
+            1
+        }else{
+            fun1(b)
+        }
+    ;
  in
-    b.getX();
+    fun1(20);

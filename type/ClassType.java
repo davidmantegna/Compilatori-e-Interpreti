@@ -176,9 +176,6 @@ public class ClassType implements IType {
             for (Method method : methods) {
                 if (!superMethodsMap.containsKey(method.getMethodID())) {
                     superMethodsMap.put(method.getMethodID(), superMethodsMap.size());
-                } else {
-                    // aggiorno il valore dell'offset per via dell'override
-                    superMethodsMap.put(method.getMethodID(), superMethodsMap.size());
                 }
             }
             return superMethodsMap;
