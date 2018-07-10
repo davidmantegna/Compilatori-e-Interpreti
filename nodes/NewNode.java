@@ -2,15 +2,15 @@ package nodes;
 
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
+import symboltable.Field;
+import symboltable.SymbolTable;
 import type.ClassType;
 import type.IType;
 import type.ObjectType;
-import symboltable.Field;
-import symboltable.SymbolTable;
 
 import java.util.ArrayList;
 
-import static parser.FOOLParser.*;
+import static parser.FOOLParser.NewexpContext;
 
 public class NewNode implements INode {
 
@@ -77,16 +77,14 @@ public class NewNode implements INode {
     public String codeGeneration() {
         // TODO codeGeneration NewMethod
 
-        /*//new pusha, in ordine, gli argomenti, il numero di argomenti e la label della classe
+        //new push, in ordine, gli argomenti, il numero di argomenti e la label della classe
         StringBuilder argsCode = new StringBuilder();
         for (INode arg : argumentsArrayList) {
             argsCode.append(arg.codeGeneration());
         }
         return argsCode
                 + "push " + argumentsArrayList.size() + "\n"
-                + "push class" +idClass + "\n"
+                + "push class" + idClass + "\n"
                 + "new\n";
-    }*/
-        return null;
     }
 }

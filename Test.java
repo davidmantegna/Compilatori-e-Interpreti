@@ -1,11 +1,10 @@
-import parser.SVMLexer;
-import parser.SVMParser;
-import type.IType;
-import nodes.INode;
+import codegen.ExecuteVM;
+import codegen.VM.DispatchTable;
 import exceptions.LexerException;
 import exceptions.ParserException;
 import exceptions.SemanticException;
 import exceptions.TypeException;
+import nodes.INode;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -13,10 +12,11 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import parser.FOOLLexer;
 import parser.FOOLParser;
 import parser.FOOLParser.ProgContext;
-import visit.FoolVisitorImpl;
+import parser.SVMLexer;
+import parser.SVMParser;
 import symboltable.SymbolTable;
-import codegen.VM.DispatchTable;
-import codegen.ExecuteVM;
+import type.IType;
+import visit.FoolVisitorImpl;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -86,7 +86,7 @@ public class Test {
 
             // l'ambiente
             SymbolTable env = new SymbolTable();
-
+            System.out.println("\n");
             ArrayList<String> stringArrayListErr = nodes.checkSemantics(env);
 
             // verifico la presenza di errori Semantici
@@ -143,13 +143,17 @@ public class Test {
                 }
                 risultato = String.valueOf(stringBuilder);
             }
-            System.out.println("Risultato: " + risultato + "\n");
+            printRisultato("Risultato: " + risultato + "\n");
         } catch (LexerException | IOException | SemanticException | TypeException | ParserException e) {
             System.err.println(e.getMessage());
         }
     }
 
     private static void printPhase(String fase) {
-        System.out.println("------- \033[32;1;2m " + fase + " \033[0m ------");
+        System.out.println("------- \033[32;1;2m\n" + fase + " \033[0m ------");
+    }
+
+    private static void printRisultato(String risultato) {
+        System.out.println("\033[32;1;2m " + risultato + " \033[0m ");
     }
 }

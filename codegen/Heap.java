@@ -12,11 +12,11 @@ public class Heap {
         heapSize = size;
 
         //TODO ExecuteVM
-        //listaDiCelle[size - 1] = new HeapCell(ExecuteVM.START_ADDRESS + size - 1, null); //l'ultimo elemento punta a null
+        listaDiCelle[size - 1] = new HeapCell(ExecuteVM.START_ADDRESS + size - 1, null); //l'ultimo elemento punta a null
 
         // Gli altri campi puntano a quello dopo
         for (int i = size - 2; i >= 0; i--) {
-            //listaDiCelle[i] = new HeapCell(ExecuteVM.START_ADDRESS + i, listaDiCelle[i + 1]);
+            listaDiCelle[i] = new HeapCell(ExecuteVM.START_ADDRESS + i, listaDiCelle[i + 1]);
         }
 
         // Il primo elemento e' la testa della lista

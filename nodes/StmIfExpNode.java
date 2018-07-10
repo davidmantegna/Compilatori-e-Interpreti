@@ -1,11 +1,11 @@
 package nodes;
 
-import type.BoolType;
-import type.IType;
+import codegen.VM.Label;
 import exceptions.TypeException;
 import parser.FOOLParser.StmIfExpContext;
 import symboltable.SymbolTable;
-import codegen.VM.Label;
+import type.BoolType;
+import type.IType;
 
 import java.util.ArrayList;
 
@@ -39,12 +39,12 @@ public class StmIfExpNode implements INode {
     @Override
     public IType typeCheck() throws TypeException {
         System.out.print("StmIfExpNode: typeCheck -> \t");
-        if(!conditionNode.typeCheck().isSubType(new BoolType()))
+        if (!conditionNode.typeCheck().isSubType(new BoolType()))
             throw new TypeException("Condizione non booleana", ctx);
         IType stmsThenType = stmsThen.typeCheck();
         IType stmsElType = stmsElse.typeCheck();
-        if(stmsThenType.isSubType(stmsElType)) return stmsElType ;
-        else if(stmsElType .isSubType(stmsThenType)) return stmsElType ;
+        if (stmsThenType.isSubType(stmsElType)) return stmsElType;
+        else if (stmsElType.isSubType(stmsThenType)) return stmsElType;
         else throw new TypeException("Incompatibilità di tipo nel then e nell'else", ctx);
     }
 

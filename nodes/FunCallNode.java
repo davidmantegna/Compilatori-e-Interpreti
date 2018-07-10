@@ -3,10 +3,10 @@ package nodes;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import parser.FOOLParser.FuncallContext;
-import type.FunType;
-import type.IType;
 import symboltable.SymbolTable;
 import symboltable.SymbolTableEntry;
+import type.FunType;
+import type.IType;
 
 import java.util.ArrayList;
 
@@ -61,7 +61,7 @@ public class FunCallNode implements INode {
         int index = 1;
         for (INode argument : argumentsArrayList) {
             if (argument instanceof FunCallNode) {
-                res.add("La funzione '" + id + "' ha una funzione come " + index + "° parametro\n");
+                res.add("Errore: La funzione '" + id + "' ha una funzione come " + index + "° parametro\n");
             } else {
                 res.addAll(argument.checkSemantics(env));
             }
@@ -97,22 +97,23 @@ public class FunCallNode implements INode {
 
     @Override
     public String codeGeneration() {
-        //TODO test codeGeneration, removed function nested
+        //TODO test codeGeneration, r
+
         StringBuilder parameterCode = new StringBuilder();
         //parametri in ordine inverso
-        for (int i = argumentsArrayList.size() - 1; i >= 0; i--){
+        for (int i = argumentsArrayList.size() - 1; i >= 0; i--) {
             parameterCode.append(argumentsArrayList.get(i).codeGeneration());
         }
 
 
-        //utilizzato per gestire le funzioni annidate
+        //utilizzato per gestire le funzioni
         StringBuilder getActivationRecord = new StringBuilder();
         for (int i = 0; i < calledNestingLevel - entry.getNestinglevel(); i++)
             getActivationRecord.append("lw\n");
 
         return "lfp\n" + //push frame pointer e parametri
                 parameterCode +
-                "lfp\n" + getActivationRecord + //pusho access link (lw consecutivamente)
+                "lfp\n" + getActivationRecord + //push access link (lw consecutivamente)
                 // così si potrà risalire la catena statica
                 "push " + entry.getOffset() + "\n" + // pusho l'offset logico per
                 // accedere al codice della funzione

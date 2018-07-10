@@ -1,10 +1,10 @@
 package nodes;
 
-import type.IType;
 import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import parser.FOOLParser.VardecContext;
 import symboltable.SymbolTable;
+import type.IType;
 
 import java.util.ArrayList;
 
@@ -13,12 +13,14 @@ public class ParameterNode implements INode {
     private String idParameter;
     private IType type;
     private int offset;
+    private boolean insideClass;
     private VardecContext vardecContext;
 
-    public ParameterNode(String ID, IType type, int offset, VardecContext vardecContext) {
-        this.idParameter = ID;
+    public ParameterNode(String idParameter, IType type, int offset, boolean insideClass, VardecContext vardecContext) {
+        this.idParameter = idParameter;
         this.type = type;
         this.offset = offset;
+        this.insideClass = insideClass;
         this.vardecContext = vardecContext;
     }
 
@@ -35,7 +37,7 @@ public class ParameterNode implements INode {
         System.out.print("ParameterNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
         ArrayList<String> res = new ArrayList<>();
         try {
-            env.processDeclaration(idParameter, type, offset);
+            env.processDeclarationClass(idParameter, type, offset, true, insideClass);
         } catch (MultipleIDException e) {
             res.add(e.getMessage());
         }

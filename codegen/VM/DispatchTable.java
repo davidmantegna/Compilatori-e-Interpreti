@@ -39,6 +39,7 @@ public class DispatchTable {
         }
         return stringBuilder.toString();
     }
+
     public static void reset() {
 
         dispatchTables = new HashMap<>();

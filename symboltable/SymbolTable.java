@@ -1,13 +1,15 @@
 package symboltable;
 
 
+import exceptions.MultipleIDException;
+import exceptions.UndeclaredIDException;
 import type.ClassType;
 import type.FunType;
 import type.IType;
-import exceptions.MultipleIDException;
-import exceptions.UndeclaredIDException;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 public class SymbolTable {
 
@@ -72,8 +74,8 @@ public class SymbolTable {
         return this;
     }
 
-    public SymbolTable processDeclarationClass(String id, IType type, int offset, boolean istanziato) throws MultipleIDException {
-        SymbolTableEntry nuovaEntry = new SymbolTableEntry(getNestingLevel(), type, offset, istanziato);
+    public SymbolTable processDeclarationClass(String id, IType type, int offset, boolean initialaized, boolean insideClass) throws MultipleIDException {
+        SymbolTableEntry nuovaEntry = new SymbolTableEntry(getNestingLevel(), type, offset, initialaized, insideClass);
         System.out.print("\t\t\033[31;1mprocessDeclarationClass: \033[0m" + nuovaEntry.toString() + "\n");
         checkProcessDeclaration(nuovaEntry, id, type);
         return this;

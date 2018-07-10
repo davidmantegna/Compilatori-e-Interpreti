@@ -1,12 +1,12 @@
 package nodes;
 
 import exceptions.MultipleIDException;
+import exceptions.TypeException;
+import symboltable.SymbolTable;
 import type.FunType;
 import type.IType;
 import type.ObjectType;
 import type.VoidType;
-import exceptions.TypeException;
-import symboltable.SymbolTable;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class LetNode implements INode {
 
         //CheckSemantic nella lista di dichiarazioni
         if (declarationArrayList.size() > 0) {
-            env.setOffset(-1);
+            env.setOffset(-1); //TODO era -2
 
             //Checksemantic nei figli
             for (INode n : declarationArrayList) {
@@ -55,7 +55,7 @@ public class LetNode implements INode {
 
 
             for (INode n : declarationArrayList) {
-                if (n instanceof FunNode){
+                if (n instanceof FunNode) {
                     res.addAll(n.checkSemantics(env));
                 }
             }

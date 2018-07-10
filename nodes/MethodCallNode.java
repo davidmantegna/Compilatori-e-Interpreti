@@ -4,12 +4,12 @@ import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import exceptions.UndeclaredMethodIDException;
 import parser.FOOLParser;
+import symboltable.SymbolTable;
+import symboltable.SymbolTableEntry;
 import type.ClassType;
 import type.FunType;
 import type.IType;
 import type.ObjectType;
-import symboltable.SymbolTable;
-import symboltable.SymbolTableEntry;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ public class MethodCallNode extends FunCallNode {
             //prendo la STentry dell'oggetto dalla Symbol Table
             SymbolTableEntry objectSTentry = env.processUse(classID);
             IType objectType = objectSTentry.getType();
-            if (!objectSTentry.isInstanziato()) {
+            if (!objectSTentry.isInitialaized()) {
                 res.add("L'oggetto '" + classID + "' non è stato inizializzato\n");
             }
             objectOffset = objectSTentry.getOffset();
@@ -82,7 +82,7 @@ public class MethodCallNode extends FunCallNode {
             for (INode node : getArgumentsArrayList())
                 res.addAll(node.checkSemantics(env));
 
-        } catch (UndeclaredIDException| UndeclaredMethodIDException e) {
+        } catch (UndeclaredIDException | UndeclaredMethodIDException e) {
             res.add(e.getMessage());
         }
 
@@ -97,16 +97,14 @@ public class MethodCallNode extends FunCallNode {
 
         for (int i = 0; i < getArgumentsArrayList().size(); i++)
             if (!getArgumentsArrayList().get(i).typeCheck().isSubType(funTypeArrayList.get(i)))
-                throw new TypeException("Tipo errato per il parametro " + (i + 1) + " nell'invocazione del metodo " + getId()+"()", getFuncallContext());
+                throw new TypeException("Tipo errato per il parametro " + (i + 1) + " nell'invocazione del metodo " + getId() + "()", getFuncallContext());
         return funType.getReturnType();
     }
 
     @Override
     public String codeGeneration() {
-
         //TODO test codeGeneration
-
-        /*StringBuilder parameterCode = new StringBuilder();
+        StringBuilder parameterCode = new StringBuilder();
         for (int i = argumentsArrayList.size() - 1; i >= 0; i--)
             parameterCode.append(argumentsArrayList.get(i).codeGeneration());
 
@@ -130,10 +128,7 @@ public class MethodCallNode extends FunCallNode {
                 // all'inizio della dispatch table
                 + "add" + "\n"                          // dispatch_table_start + offset
                 + "loadc\n"                             // pusho il codice del metodo
-                + "js\n";                               // jump all'istruzione dove e' definito il metodo e
-        // salvo $ra
-    */
-        return super.codeGeneration();
+                + "js\n";                               // jump all'istruzione dove e' definito il metodo e salvo $ra
     }
 
 

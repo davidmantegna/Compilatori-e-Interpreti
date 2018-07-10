@@ -1,12 +1,12 @@
 package visit;
 
-import parser.FOOLParser.*;
-import type.IType;
 import exceptions.OperatorException;
 import exceptions.TypeException;
 import nodes.*;
 import parser.FOOLBaseVisitor;
 import parser.FOOLLexer;
+import parser.FOOLParser.*;
+import type.IType;
 import type.VoidType;
 
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
                 for (int i = 0; i < classdecContext.vardec().size(); i++) {
                     VardecContext vardecContext = classdecContext.vardec().get(i);
                     parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(),
-                            visit(vardecContext.type()).typeCheck(), i + 1, vardecContext));
+                            visit(vardecContext.type()).typeCheck(), i + 1, true, vardecContext));
                 }
                 ArrayList<MethodNode> methodNodeArrayList = new ArrayList<>();
 
@@ -173,7 +173,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
             // this could be done differently by visiting instead the VardecContext
             for (int i = 0; i < funContext.vardec().size(); i++) {
                 VardecContext vardecContext = funContext.vardec().get(i);
-                parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(), visit(vardecContext.type()).typeCheck(), i + 1, vardecContext));
+                parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(), visit(vardecContext.type()).typeCheck(), i + 1, false, vardecContext));
             }
 
             // add body, create a list for the nested declarationsArrayList
@@ -478,8 +478,8 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
             //gestisco i parametri
             for (int i = 0; i < funContext.vardec().size(); i++) {
-                VardecContext vardecContext = funContext.vardec().get(i);
-                parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(), visit(vardecContext.type()).typeCheck(), i + 1, vardecContext));
+                VardecContext vardecContext = funContext.vardec().get(i); // TODO altro progetto settato a False
+                parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(), visit(vardecContext.type()).typeCheck(), i + 1, true, vardecContext));
             }
 
             // arraylist per le dichiarazioni annidate

@@ -1,13 +1,13 @@
 package nodes;
 
+import codegen.VM.Label;
+import exceptions.TypeException;
+import parser.FOOLParser.IfExpContext;
+import symboltable.SymbolTable;
 import type.BoolType;
 import type.ClassType;
 import type.IType;
-import exceptions.TypeException;
-import parser.FOOLParser.IfExpContext;
 import type.ObjectType;
-import symboltable.SymbolTable;
-import codegen.VM.Label;
 
 import java.util.ArrayList;
 

@@ -1,12 +1,10 @@
+class A (int a, int b){
+    int methodA()
+        a*b
+    ;
+};
+
 let
-    int x = 0;
-    int f(int a)
-        if(a == x)then{
-            10
-        }else{
-            5
-        };
-    int g()
-        4;
-in
-    f(0);
+    A a = new A(-4,-2);
+ in
+    a.methodA();

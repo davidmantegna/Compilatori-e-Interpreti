@@ -1,9 +1,9 @@
 package nodes;
 
-import type.*;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import symboltable.SymbolTable;
+import type.*;
 
 import java.util.ArrayList;
 

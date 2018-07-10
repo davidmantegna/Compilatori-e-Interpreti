@@ -4,9 +4,9 @@ import codegen.VM.FunctionCode;
 import codegen.VM.Label;
 import exceptions.TypeException;
 import org.antlr.v4.runtime.ParserRuleContext;
+import symboltable.SymbolTable;
 import type.FunType;
 import type.IType;
-import symboltable.SymbolTable;
 
 import java.util.ArrayList;
 
@@ -56,7 +56,7 @@ public class FunNode implements INode {
 
         //checkSemantic di tutte le dichiarazioni interne alla funzione
         if (declarationsArrayList.size() > 0) {
-            env.setOffset(-2);
+            env.setOffset(-1);//TODO era -2
             for (INode n : declarationsArrayList)
                 res.addAll(n.checkSemantics(env));
         }
@@ -100,20 +100,23 @@ public class FunNode implements INode {
     @Override
     public String codeGeneration() {
         //TODO test codeGeneration
-        //variabili dichiarate internamente
+        //  variabili dichiarate internamente e variabili da togliere dallo stack al termine del record di attivazione
         StringBuilder localDeclarations = new StringBuilder();
-        //variabili da togliere dallo stack al termine del record di attivazione
         StringBuilder popLocalDeclarations = new StringBuilder();
-        if (declarationsArrayList.size() > 0)
+
+        if (declarationsArrayList.size() > 0) {
             for (INode dec : declarationsArrayList) {
                 localDeclarations.append(dec.codeGeneration());
                 popLocalDeclarations.append("pop\n");
             }
+        }
 
         //parametri in input da togliere dallo stack al termine del record di attivazione
         StringBuilder popInputParameters = new StringBuilder();
-        for (INode dec : parameterNodeArrayList)
+        for (int i = 0; i < parameterNodeArrayList.size(); i++) {
             popInputParameters.append("pop\n");
+        }
+
 
         String funLabel = Label.nuovaLabelFunzioneString(idFunzione.toUpperCase());
 

@@ -1,18 +1,18 @@
 package nodes;
 
+import codegen.VM.DispatchTable;
+import codegen.VM.DispatchTableEntry;
 import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
-import type.ClassType;
-import type.FunType;
-import type.IType;
-import type.ObjectType;
 import symboltable.Field;
 import symboltable.Method;
 import symboltable.SymbolTable;
 import symboltable.SymbolTableEntry;
-import codegen.VM.DispatchTable;
-import codegen.VM.DispatchTableEntry;
+import type.ClassType;
+import type.FunType;
+import type.IType;
+import type.ObjectType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,14 +78,14 @@ public class ClassNode implements INode {
             fieldArrayList.addAll(superclassType.getFields());
         }
 
-        // inserisco i parametri della classe attuale
-        for (ParameterNode parameterNode : fieldDeclarationArraylist) {
-            Boolean result = env.checkFieldDeclaration(superclassType, parameterNode.getId());
+        // inserisco i campi della classe attuale
+        for (ParameterNode fieldNode : fieldDeclarationArraylist) {
+            Boolean result = env.checkFieldDeclaration(superclassType, fieldNode.getId());
             if (!result) {
-                fieldArrayList.add(new Field(parameterNode.getId(), parameterNode.getType()));
-                fieldHashMap.put(parameterNode.getId(), parameterNode.getType());
+                fieldArrayList.add(new Field(fieldNode.getId(), fieldNode.getType()));
+                fieldHashMap.put(fieldNode.getId(), fieldNode.getType());
             } else {
-                res.add("L'identificativo '" + parameterNode.getId() + "' della classe '" + idClass + "' è stato dichiarato già nella classe madre: " + idSuperClass + "\n");
+                res.add("L'identificativo '" + fieldNode.getId() + "' della classe '" + idClass + "' è stato dichiarato già nella classe madre: " + idSuperClass + "\n");
             }
         }
 
@@ -238,9 +238,7 @@ public class ClassNode implements INode {
         // Creo una nuova dispatch table da zero se la classe non ha superclasse
         if (idSuperClass.equals("")) {
             dispatchTable = new ArrayList<>();
-        }
-        // Altrimenti la copio come base
-        else {
+        } else {// Altrimenti la copio come base
             dispatchTable = DispatchTable.getDispatchTable(idSuperClass);
         }
 

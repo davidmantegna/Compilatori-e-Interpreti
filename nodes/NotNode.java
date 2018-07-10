@@ -1,10 +1,9 @@
 package nodes;
 
-import type.BoolType;
-import type.IType;
 import exceptions.TypeException;
 import symboltable.SymbolTable;
-import codegen.VM.Label;
+import type.BoolType;
+import type.IType;
 
 import java.util.ArrayList;
 

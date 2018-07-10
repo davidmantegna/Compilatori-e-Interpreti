@@ -1,10 +1,10 @@
 package nodes;
 
-import type.IType;
-import type.IntType;
 import exceptions.TypeException;
 import parser.FOOLParser.TermContext;
 import symboltable.SymbolTable;
+import type.IType;
+import type.IntType;
 
 import java.util.ArrayList;
 

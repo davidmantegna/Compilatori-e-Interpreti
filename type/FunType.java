@@ -1,7 +1,5 @@
 package type;
 
-import nodes.INode;
-
 import java.util.ArrayList;
 
 public class FunType implements IType {

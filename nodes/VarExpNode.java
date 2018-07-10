@@ -1,12 +1,12 @@
 package nodes;
 
 import codegen.VM.Label;
-import type.*;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import symboltable.SymbolTable;
 import symboltable.SymbolTableEntry;
+import type.*;
 
 import java.util.ArrayList;
 
@@ -20,9 +20,9 @@ public class VarExpNode implements INode {
     private int nestingLevel;
     private SymbolTableEntry entry;
 
-    //variabili utilizzate da this
-    /*private int thisNestingLevel;
-    private int thisOffset;*/
+    //variabili utilizzate per i campi della classe
+    private int thisNestingLevel;
+    private int thisOffset;
 
     public VarExpNode(String identificatore, ParserRuleContext parserRuleContext, boolean isNegative, boolean isNot) {
         this.identificatore = identificatore;
@@ -42,14 +42,25 @@ public class VarExpNode implements INode {
             //è utilizzato per poter definire un oggetto con lo stesso nome di un metodo
             //all'interno di una classe
             entry = env.processUseIgnoreFun(identificatore);
+            // true quando si è dentro ad una classe
+            if (entry.isInsideClass()) {
+                SymbolTableEntry thisPointer = env.processUse("this");
+                thisNestingLevel = thisPointer.getNestinglevel();
+                thisOffset = thisPointer.getOffset();
+                System.out.println(identificatore + " è un campo della classe -> nestingLevel: " + thisNestingLevel + " offset: " + thisOffset);
+            }
             nestingLevel = env.getNestingLevel();
 
             //serve per assegnare il supertipo dinamicamente agli oggetti
             //vedi Test
 
             if (entry.getType() instanceof ObjectType) {
-                ObjectType decType = (ObjectType) entry.getType();
-                res.addAll(decType.updateClassType(env));
+                if (!entry.isInitialaized()) {
+                    res.add("L'oggetto '" + identificatore + "' non è stato inizializzato\n");
+                } else {
+                    ObjectType decType = (ObjectType) entry.getType();
+                    res.addAll(decType.updateClassType(env));
+                }
             }
 
 
@@ -61,7 +72,6 @@ public class VarExpNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        // TODO Object Orientation
         if (isNot) {
             if (!entry.getType().isSubType(new BoolType())) {
                 throw new TypeException("Tipo incompatibile per l'operatore NOT. È richiesto un booleano.", parserRuleContext);
@@ -81,12 +91,18 @@ public class VarExpNode implements INode {
 
     @Override
     public String codeGeneration() {
-        StringBuilder getActivationRecord = new StringBuilder();
-
         //for e getActivationRecord per gestire le funzioni annidate
-        for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++) {
-            getActivationRecord.append("lw\n");
-        }
+        StringBuilder getActivationRecord = new StringBuilder();
+        if (entry.isInsideClass()) {
+            for (int i = 0; i < nestingLevel - thisNestingLevel; i++)
+                getActivationRecord.append("lw\n");
+
+        } else {
+            for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++) {
+                getActivationRecord.append("lw\n");
+            }
+        }// TODO vedere altro progetto
+
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("push " + entry.getOffset() + "\n" + //metto offset sullo stack
@@ -96,10 +112,8 @@ public class VarExpNode implements INode {
         );
 
         if (isNegative) {
-            stringBuilder.append("push -1\n" +
-                    "times\n");
+            stringBuilder.append("push -1\n" + "times\n");
         } else if (isNot) {
-            //stringBuilder.append("not\n"); // TODO al momento l'ho rimosso
             String thenBranch = Label.nuovaLabelString("Then");
             String exit = Label.nuovaLabelString("Exit");
             stringBuilder.append("push 1 \n" +

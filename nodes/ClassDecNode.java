@@ -2,11 +2,13 @@ package nodes;
 
 import exceptions.MultipleIDException;
 import exceptions.TypeException;
+import symboltable.SymbolTable;
 import type.ClassType;
 import type.IType;
-import symboltable.SymbolTable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.ListIterator;
 
 public class ClassDecNode implements INode {
 
@@ -28,7 +30,7 @@ public class ClassDecNode implements INode {
 
         for (ClassNode classNode : classDeclarationsArrayList) {
             try {
-                 // controllo se la classe è già stata definita
+                // controllo se la classe è già stata definita
                 // se non è dichiarata più volte inserisco nella SymbolTable solo info relative a idClass e idSuperClass
                 ClassType classType = new ClassType(classNode.getIdClass(), new ClassType(classNode.getIdSuperClass()), new ArrayList<>(), new ArrayList<>());
                 env.processDeclaration(classNode.getIdClass(), classType, 0);
@@ -65,7 +67,7 @@ public class ClassDecNode implements INode {
     public String codeGeneration() {
 
         //TODO Codegen
-        /*ArrayList<ClassNode> classNodeArrayList = new ArrayList<>();
+        ArrayList<ClassNode> classNodeArrayList = new ArrayList<>();
         HashMap<String, ClassNode> classHashMap = new HashMap<>();
         String nameDeclaration = "";
 
@@ -114,7 +116,5 @@ public class ClassDecNode implements INode {
         }
 
         return nameDeclaration + letInNode.codeGeneration();
-    */
-        return "";
     }
 }

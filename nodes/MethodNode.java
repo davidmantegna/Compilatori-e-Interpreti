@@ -1,11 +1,16 @@
 package nodes;
 
+import codegen.VM.FunctionCode;
+import codegen.VM.Label;
 import exceptions.MultipleIDException;
+import exceptions.UndeclaredIDException;
 import org.antlr.v4.runtime.ParserRuleContext;
+import symboltable.SymbolTable;
+import symboltable.SymbolTableEntry;
+import type.ClassType;
 import type.FunType;
 import type.IType;
 import type.ObjectType;
-import symboltable.SymbolTable;
 
 import java.util.ArrayList;
 
@@ -47,6 +52,15 @@ public class MethodNode extends FunNode {
             res.add("Il metodo " + idFunzione + " è già stato dichiarato\n");
         }
 
+
+        //cerco la entry in cui è situata la classe
+        try {
+            SymbolTableEntry classEntry = env.processUse(idClass);
+            env.processDeclaration("this", new ObjectType((ClassType) classEntry.getType()), 0);
+        } catch (MultipleIDException | UndeclaredIDException e) {
+            e.printStackTrace();
+        }
+
         // entro in un nuovo livello di scope
         env.entryNewScope();
 
@@ -57,7 +71,7 @@ public class MethodNode extends FunNode {
 
         // checkSemantics di tutte le dichiarazioni interne al metodo
         if (declarationsArrayList.size() > 0) {
-            env.setOffset(-2);
+            env.setOffset(-1);//TODO in precedenza era -2
             for (INode node : declarationsArrayList) {
                 res.addAll(node.checkSemantics(env));
             }
@@ -78,9 +92,9 @@ public class MethodNode extends FunNode {
         System.out.print("MethodNode: codeGeneration ->\t");
         // TODO codeGeneration
 
-        /*//variabili/funzioni dichiarate internamente
+        //variabili dichiarate internamente
         StringBuilder localDeclarations = new StringBuilder();
-        //variabili/funzioni da togliere dallo stack al termine del record di attivazione
+        //variabili da togliere dallo stack al termine del record di attivazione
         StringBuilder popLocalDeclarations = new StringBuilder();
         if (declarationsArrayList.size() > 0)
             for (INode dec : declarationsArrayList) {
@@ -89,10 +103,10 @@ public class MethodNode extends FunNode {
             }
         //parametri in input da togliere dallo stack al termine del record di attivazione
         StringBuilder popInputParameters = new StringBuilder();
-        for (INode dec : parameterNodeArrayList)
+        for (int i = 0; i < parameterNodeArrayList.size(); i++) {
             popInputParameters.append("pop\n");
-
-        String funLabel = Label.nuovaLabelFunzione();
+        }
+        String funLabel = Label.nuovaLabelMetodoString(idFunzione.toUpperCase());
 
         //inserisco il codice della funzione in fondo al main, davanti alla label
         FunctionCode.insertFunctionsCode(funLabel + ":\n" +
@@ -111,7 +125,6 @@ public class MethodNode extends FunNode {
                 "js\n" // jump al return address per continuare dall'istruzione dopo
         );
 
-        return funLabel + "\n";*/
-        return super.codeGeneration();
+        return funLabel + "\n";
     }
 }

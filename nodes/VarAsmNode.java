@@ -1,11 +1,11 @@
 package nodes;
 
-import type.IType;
 import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import parser.FOOLParser.VarasmContext;
-import type.ObjectType;
 import symboltable.SymbolTable;
+import type.IType;
+import type.ObjectType;
 
 import java.util.ArrayList;
 
@@ -14,14 +14,16 @@ public class VarAsmNode implements INode {
     private IType assignedType;
     private INode exp;
     private VarasmContext varasmContext;
-    private boolean istanziato;
+    private boolean initialaized;
+    private boolean insideClass;
 
-    public VarAsmNode(String id, IType assignedType, INode exp, VarasmContext varasmContext, boolean istanziato) {
+    public VarAsmNode(String id, IType assignedType, INode exp, VarasmContext varasmContext, boolean initialaized) {
         this.id = id;
         this.assignedType = assignedType;
         this.exp = exp;
         this.varasmContext = varasmContext;
-        this.istanziato = istanziato;
+        this.initialaized = initialaized;
+        this.insideClass = false;
     }
 
     public String getId() {
@@ -43,7 +45,7 @@ public class VarAsmNode implements INode {
         res.addAll(exp.checkSemantics(env));
 
         try {
-            env.processDeclarationClass(id, assignedType, env.getOffset(), istanziato);
+            env.processDeclarationClass(id, assignedType, env.getOffset(), initialaized, insideClass);
             env.decreaseOffset();
         } catch (MultipleIDException e) {
             res.add(e.getMessage());
@@ -57,15 +59,14 @@ public class VarAsmNode implements INode {
         System.out.print("VarAsmNode: typeCheck -> \n");
 
         if (assignedType instanceof ObjectType) {
-            switch (exp.getClass().getName()) {
-                case "nodes.NullNode":
+            if (exp instanceof NullNode) {
+                return assignedType;
+            }
+            if (exp instanceof IfNode) {
+                IfNode ifNode = (IfNode) exp;
+                if (ifNode.getThenNode() instanceof NullNode && ifNode.getElseNode() instanceof NullNode) {
                     return assignedType;
-                case "nodes.IfNode":
-                    IfNode ifNode = (IfNode) exp;
-                    if (ifNode.getThenNode() instanceof NullNode && ifNode.getElseNode() instanceof NullNode) {
-                        return assignedType;
-                    }
-                    break;
+                }
             }
         }
 

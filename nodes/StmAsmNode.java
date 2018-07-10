@@ -2,11 +2,11 @@ package nodes;
 
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
-import type.IType;
 import parser.FOOLParser.StmAssignmentContext;
-import type.VoidType;
 import symboltable.SymbolTable;
 import symboltable.SymbolTableEntry;
+import type.IType;
+import type.VoidType;
 
 import java.util.ArrayList;
 
@@ -50,10 +50,10 @@ public class StmAsmNode implements INode {
 
         // evitare instanziazioni multiple
         if (exp instanceof NewNode) {
-            if (entry.isInstanziato()) {
+            if (entry.isInitialaized()) {
                 res.add("L'oggetto '" + id + "' è già stato istanziato\n");
             } else {
-                entry.setInstanziato(true);
+                entry.setInitialaized(true);
             }
         } else if (exp instanceof NullNode) {
             // TODO gestire NULL NODE nell IN
@@ -77,11 +77,11 @@ public class StmAsmNode implements INode {
         //TODO codegen
 
         return exp.codeGeneration()
-                + "push " + entry.getOffset() +"\n"
+                + "push " + entry.getOffset() + "\n"
                 + "lfp \n"
                 + "add \n"
                 + "sw \n"
-                + "push " + entry.getOffset() +"\n" // TODO usato solo per controllare che vada tutto ok
+                + "push " + entry.getOffset() + "\n" // TODO usato solo per controllare che vada tutto ok
                 + "lfp \n"
                 + "add \n"
                 + "lw \n"

@@ -1,9 +1,9 @@
 package nodes;
 
 import exceptions.TypeException;
+import symboltable.SymbolTable;
 import type.IType;
 import type.VoidType;
-import symboltable.SymbolTable;
 
 import java.util.ArrayList;
 

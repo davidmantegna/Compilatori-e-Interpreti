@@ -1,9 +1,9 @@
 package nodes;
 
-import type.IType;
+import codegen.VM.FunctionCode;
 import exceptions.TypeException;
 import symboltable.SymbolTable;
-import codegen.VM.FunctionCode;
+import type.IType;
 
 import java.util.ArrayList;
 
@@ -50,9 +50,8 @@ public class LetInNode implements INode {
 
 
         return let.codeGeneration()
-                +"\n"
+                + "\n"
                 + stmExp.codeGeneration() + "halt\n"
                 + FunctionCode.getFunctionsCode();
-
-    }//TODO label halt
+    }
 }

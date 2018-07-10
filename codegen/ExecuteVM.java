@@ -2,6 +2,7 @@ package codegen;
 
 import exceptions.HeapOverflowError;
 import exceptions.SegmentationFaultError;
+import exceptions.StackOverflowError;
 import parser.SVMParser;
 
 import java.util.ArrayList;
@@ -208,7 +209,6 @@ public class ExecuteVM {
                             push(1);
                         }
                         break;
-
                     case SVMParser.AND:
                         v1 = pop();
                         v2 = pop();
@@ -226,7 +226,7 @@ public class ExecuteVM {
                         } else {
                             push(1);
                         }
-
+                        break;
                     case SVMParser.LOADC: //mette sullo stack l'indirizzo del metodo all'interno di code
                         int indirizzoCodice = pop();
                         push(code[indirizzoCodice]);
@@ -268,7 +268,7 @@ public class ExecuteVM {
                         }
 */
                         HeapCell memoriaAllocata;
-                        // Alloco memoria per i gli argomenti e per l'indirizzo alla dispatch table
+                        // Alloco memoria per gli argomenti e per l'indirizzo alla dispatch table
                         memoriaAllocata = heap.allocate(numeroArgomenti + 1);
 
                         //Considero la memoria appena allocata come in uso,
@@ -322,11 +322,11 @@ public class ExecuteVM {
     public void print() {
         int i;
         System.out.println("START_ADDRESS: " + START_ADDRESS + "\t\t" + "MEMSIZE: " + MEMSIZE + "\t\t" + "Memoria: " + (START_ADDRESS + MEMSIZE));
-        System.out.println("SP init: " + (START_ADDRESS + MEMSIZE) + "\t\t\tFP init: " + (START_ADDRESS + MEMSIZE) + "\t\tHEAP inti: " + START_ADDRESS + "\n");
+        System.out.println("SP init: " + (START_ADDRESS + MEMSIZE) + "\t\t\tFP init: " + (START_ADDRESS + MEMSIZE) + "\t\tHEAP init: " + START_ADDRESS + "\n");
         for (i = START_ADDRESS + MEMSIZE - 1; i >= sp; i--) {
             System.out.print("addr: " + i + " location: " + (i - START_ADDRESS) + " -> val: " + getMemory(i) + "\n");
         }
-        System.err.println("addr: " + i + " location: " + (i - START_ADDRESS) + " -> top\n");
+
     }
 
 }
