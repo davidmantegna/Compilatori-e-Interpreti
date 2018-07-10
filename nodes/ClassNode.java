@@ -128,6 +128,24 @@ public class ClassNode implements INode {
         // entro in un nuovo livello di scope
         env.entryNewScope();
 
+        // eredito i campi della superClasse
+        if (superclassType != null) {
+            HashMap<String, Integer> info = superclassType.fieldHashMapFromSuperClass();
+            for (String s : info.keySet()) {
+                if (!fieldHashMap.containsKey(s)) {
+                    try {
+                        int off = 0;
+                        if (info.get(s) != 0) {
+                            off = -info.get(s);
+                        }
+                        env.processDeclaration(s, superclassType.getFieldsMap().get(s), off);
+                    } catch (MultipleIDException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
         for (ParameterNode parameterNode : fieldDeclarationArraylist) {
             if (parameterNode.getType() instanceof ObjectType) {
                 ClassType subClassAsParam = ((ObjectType) parameterNode.getType()).getClassType();
@@ -285,7 +303,6 @@ public class ClassNode implements INode {
 
         return "";
     }
-
 
     private void printInfoClass(SymbolTable env) {
         try {

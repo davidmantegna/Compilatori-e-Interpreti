@@ -478,8 +478,8 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
             //gestisco i parametri
             for (int i = 0; i < funContext.vardec().size(); i++) {
-                VardecContext vardecContext = funContext.vardec().get(i); // TODO altro progetto settato a False
-                parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(), visit(vardecContext.type()).typeCheck(), i + 1, true, vardecContext));
+                VardecContext vardecContext = funContext.vardec().get(i); //TODO settato insideCLass a False per prendere i parametri del metodo
+                parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(), visit(vardecContext.type()).typeCheck(), i + 1, false, vardecContext));
             }
 
             // arraylist per le dichiarazioni annidate

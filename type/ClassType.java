@@ -129,6 +129,40 @@ public class ClassType implements IType {
         }
     }
 
+    public HashMap<String, IType> getFieldsMap() {
+        HashMap<String, IType> methodsMap = new HashMap<>();
+        if (superClassType != null) {
+            HashMap<String, IType> superFieldsMap = superClassType.getFieldsMap();
+            for (String m : superFieldsMap.keySet())
+                methodsMap.put(m, superFieldsMap.get(m));
+        }
+        for (Field m : fields) {
+            methodsMap.put(m.getFieldID(), m.getFieldType());
+        }
+        return methodsMap;
+    }
+
+    public HashMap<String, Integer> fieldHashMapFromSuperClass() {
+        if (superClassType == null) {
+            HashMap<String, Integer> fieldsHashMap = new HashMap<>();
+            for (Field field : fields) {
+                fieldsHashMap.put(field.getFieldID(), fieldsHashMap.size());
+            }
+            return fieldsHashMap;
+        } else {
+            HashMap<String, Integer> superFieldsMap = superClassType.fieldHashMapFromSuperClass();
+            for (Field field : fields) {
+                if (!superFieldsMap.containsKey(field.getFieldID())) {
+                    superFieldsMap.put(field.getFieldID(), superFieldsMap.size());
+                } else {
+                    // aggiorno il valore dell'offset per via dell'override
+                    superFieldsMap.put(field.getFieldID(), superFieldsMap.size());
+                }
+            }
+            return superFieldsMap;
+        }
+    }
+
     // ritorna un'HashMap dei metodi della superclasse, con nome ed offset
     public HashMap<String, Integer> methodsHashMapFromSuperClass() {
         if (superClassType == null) {

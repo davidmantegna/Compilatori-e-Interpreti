@@ -1,10 +1,13 @@
 class A (int a, int b){
-    int methodA()
-        a*b
-    ;
+
+};
+
+class B extends A (){
+    int getB()
+        a;
 };
 
 let
-    A a = new A(-4,-2);
+    B a = new B(2,4);
  in
-    a.methodA();
+    a.getB();
