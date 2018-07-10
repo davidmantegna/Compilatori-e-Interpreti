@@ -25,7 +25,7 @@ public class LetNode implements INode {
 
         //CheckSemantic nella lista di dichiarazioni
         if (declarationArrayList.size() > 0) {
-            env.setOffset(-1);
+            env.setOffset(-1); //TODO era -2
 
             //Checksemantic nei figli
             for (INode n : declarationArrayList) {
