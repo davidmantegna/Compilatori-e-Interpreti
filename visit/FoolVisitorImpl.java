@@ -345,6 +345,9 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         // ciclare i parent di funcallcontext alla ricerca di classexpcontext
         // e lanciare new MethodCallNode
 
+        // ciclare i parent di funcallcontext alla ricerca di classexpcontext
+        // e lanciare new MethodCallNode
+
         return res;
     }
 
