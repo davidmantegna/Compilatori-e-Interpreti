@@ -3,6 +3,7 @@ package visit;
 import exceptions.OperatorException;
 import exceptions.TypeException;
 import nodes.*;
+import org.antlr.v4.runtime.RuleContext;
 import parser.FOOLBaseVisitor;
 import parser.FOOLLexer;
 import parser.FOOLParser.*;
@@ -315,7 +316,24 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
         functionId = funcallContext.ID().getText();
 
-        res = new FunCallNode(functionId, args, funcallContext);
+        RuleContext funRule = funcallContext.parent;
+        boolean isMethod = false;
+        while (funRule.getParent() != null) {
+            if (funRule instanceof MethodContext) {
+                System.out.println("MethodContext");
+                isMethod = true;
+                break;
+            }
+            funRule = funRule.getParent();
+        }
+
+
+        if (isMethod) {
+            res = new MethodCallNode("this", functionId, args, funcallContext);
+        } else {
+            res = new FunCallNode(functionId, args, funcallContext);
+        }
+
 
         // ciclare i parent di funcallcontext alla ricerca di classexpcontext
         // e lanciare new MethodCallNode
