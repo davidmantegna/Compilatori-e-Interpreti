@@ -46,8 +46,6 @@ public class LetInNode implements INode {
 
     @Override
     public String codeGeneration() {
-        //TODO test codeGeneration
-
 
         return let.codeGeneration()
                 + "\n"

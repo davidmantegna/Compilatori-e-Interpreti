@@ -83,7 +83,6 @@ public class IfNode implements INode {
     @Override
     public String codeGeneration() {
 
-        //TODO da rivedere
         String thenBranch = Label.nuovaLabelString("Then");
         String exit = Label.nuovaLabelString("Exit");
         return conditionNode.codeGeneration()
@@ -93,7 +92,6 @@ public class IfNode implements INode {
                 + "b " + exit + "\n\n"
                 + thenBranch + ":\n"
                 + thenNode.codeGeneration() + "\n\n"
-                + exit + ":\n"
-                ;
+                + exit + ":\n";
     }
 }

@@ -54,13 +54,13 @@ public class StmIfExpNode implements INode {
         //TODO test codegen
         String thenBranch = Label.nuovaLabelString("Then");
         String exit = Label.nuovaLabelString("Exit");
-        return conditionNode.codeGeneration() +
-                "push 1\n" +
-                "beq " + thenBranch + "\n" +
-                stmsElse.codeGeneration() +
-                "b " + exit + "\n\n" +
-                thenBranch + ":\n" +
-                stmsThen.codeGeneration() +
-                exit + ":\n";
+        return conditionNode.codeGeneration()
+                + "push 1\n"
+                + "beq " + thenBranch + "\n"
+                + stmsElse.codeGeneration()
+                + "b " + exit + "\n\n"
+                + thenBranch + ":\n"
+                + stmsThen.codeGeneration() + "\n\n"
+                + exit + ":\n";
     }
 }

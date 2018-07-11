@@ -37,7 +37,6 @@ public class StmsNode implements INode {
 
     @Override
     public String codeGeneration() {
-        //TODO test codegen
         StringBuilder stmsCode = new StringBuilder();
         for (INode stm : stmsArrayList)
             stmsCode.append(stm.codeGeneration());

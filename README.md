@@ -9,13 +9,16 @@ Il progetto è una estensione object-oriented imperativa del linguaggio FOOL. In
 
 ###ESPRESSIONI
 
-Estensione delle espressioni con operatori "<=", ">=", "||", "&&", "/", "-" e "not"
+Estensione delle espressioni con operatori "<", "<=", ">", ">=", "||", "&&", "/", "-" e "not"
 ###COMANDI
 Esiste la categoria sintattica stm:
 
 stm : 	id = exp (assegnamento) ;
-	| if exp then { stms } else { stms } (condizionale)	
+| if exp then { stms } else { stms } (condizionale)	
+
+
 stms :  ( stm )+
+
 ###OBJECT-ORIENTATION
 * E` possibile dichiarare classi e sottoclassi al top level
 * Le classi contengono 
@@ -47,6 +50,7 @@ Il compilatore deve comprendere un type-checker che controlli il corretto uso de
 * esiste il tipo void, oltre al tipo classe
 * Si deve considerare una nozione di subtyping fra classi e tipi di funzioni. Il tipo di una funzione f1 è sottotipo del tipo di una funzione f2 se il tipo ritornato da f1 è sottotipo del tipo ritornato da f2, se hanno il medesimo numero di parametri, e se ogni tipo di parametro di f1 è sopratipo del corrisponde tipo di parametro di f2.  Una classe C1 è sottotipo di una classe C2 se C1 estende C2 e se i campi e metodi che vengono sovrascritti sono sottotipi rispetto ai campi e metodi corrispondenti di C2.  Inoltre, C1 è sottotipo di C2 se esiste una classe C3 sottotipo di C2 di cui C1 e` sottotipo.
 * definire e implementare le regole di tipaggio per tutti i costrutti, in particolare per il condizionale. 
+
 ###IL CODICE OGGETTO
 Il compilatore deve generare codice per un esecutore virtuale chiamato SVM (stack virtual machine) la cui sintassi è definita nel file SVM.g. Tale esecutore ha una memoria in cui gli indirizzi alti sono usati per uno stack. Uno stack pointer punta alla locazione successiva alla prossima locazione libera per lo stack (se la memoria ha indirizzi da 0 a MEMSIZE-1, lo stack pointer inizialmente punta a MEMSIZE). 
 In questo modo, quando lo stack non è vuoto, lo stack pointer punta al top dello stack. 
