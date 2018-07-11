@@ -9,11 +9,8 @@ import java.util.*;
 
 public class ExecuteVM {
 
-    // TODO codegen() for all nodes
-
     public static final int START_ADDRESS = 1234;   //indirizzo di partenza
     private static final int MEMSIZE = 135;        //dimensione totale della memoria
-    //private static final int GARBAGE_THRESHOLD = Math.max((MEMSIZE / 100) * 10, 10);    //limite superato il quale agisce il gargabe collector
 
     private ArrayList<String> output = new ArrayList<>();   //contiene l'esito della print o gli errori
 

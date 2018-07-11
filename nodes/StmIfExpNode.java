@@ -51,7 +51,6 @@ public class StmIfExpNode implements INode {
     @Override
     public String codeGeneration() {
 
-        //TODO test codegen
         String thenBranch = Label.nuovaLabelString("Then");
         String exit = Label.nuovaLabelString("Exit");
         return conditionNode.codeGeneration()

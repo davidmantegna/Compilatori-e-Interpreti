@@ -1,15 +1,11 @@
 let
-    int x = 5;
-   int fun1(int a)
-        funz2(a-1)
-    ;
+   int x = 4;
+   int a = 3;
+   int b = 7;
 
-    int funz2(int b)
-        if(b == 0)then{
-            1
-        }else{
-            fun1(b)
-        }
-    ;
- in
-    fun1(20);
+in
+   if(x>=5)
+      then{x = a;}
+   else{
+      x = b;
+    }

@@ -11,7 +11,6 @@ public class Heap {
         HeapCell[] listaDiCelle = new HeapCell[size];
         heapSize = size;
 
-        //TODO ExecuteVM
         listaDiCelle[size - 1] = new HeapCell(ExecuteVM.START_ADDRESS + size - 1, null); //l'ultimo elemento punta a null
 
         // Gli altri campi puntano a quello dopo

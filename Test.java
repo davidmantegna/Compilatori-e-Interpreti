@@ -66,17 +66,7 @@ public class Test {
             //  show AST in console
             System.out.println("------- Visualizing AST -------");
             System.out.println(tree.toStringTree(parser) + "\n");
-            /* //TODO Graphical interface
-            //show AST in GUI
-            JFrame frame = new JFrame("Antlr AST");
-            JPanel panel = new JPanel();
-            TreeViewer viewr = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
-            viewr.setScale(1.5);
-            panel.add(viewr);
-            frame.add(panel);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(1500, 700);
-            frame.setVisible(true);*/
+
 
             printPhase("SEMANTIC ANALYSIS");
 
@@ -151,7 +141,7 @@ public class Test {
     }
 
     private static void printPhase(String fase) {
-        System.out.println("------- \033[32;1;2m\n" + fase + " \033[0m ------");
+        System.out.println("------- \033[32;1;2m" + fase + " \033[0m ------");
     }
 
     private static void printRisultato(String risultato) {

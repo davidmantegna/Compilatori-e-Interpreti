@@ -239,7 +239,7 @@ public class ClassNode implements INode {
             }
         }
 
-        printInfoClass(env); // TODO print info class
+        printInfoClass(env);
         return res;
     }
 

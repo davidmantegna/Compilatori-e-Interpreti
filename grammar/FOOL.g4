@@ -12,8 +12,6 @@ grammar FOOL;
  * PARSER RULES
  *------------------------------------------------------------------*/
 
-//TODO i campi sono modificabili
-
 prog   : exp  SEMIC                                                                           #singleExp
        | let ((exp SEMIC)| stms)                                                              #letInExp
        | (classdec (SEMIC)?)+ SEMIC  (let)? ((exp SEMIC)| stms)	                              #classExp

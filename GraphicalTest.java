@@ -154,7 +154,7 @@ public class GraphicalTest {
         }
 
         private static void printPhase(String fase) {
-            System.out.println("------- \033[32;1;2m\n" + fase + " \033[0m ------");
+            System.out.println("------- \033[32;1;2m" + fase + " \033[0m ------");
         }
 
         private static void printRisultato(String risultato) {
