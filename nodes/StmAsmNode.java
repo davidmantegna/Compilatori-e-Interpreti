@@ -79,11 +79,6 @@ public class StmAsmNode implements INode {
                 + "push " + entry.getOffset() + "\n"
                 + "lfp \n"
                 + "add \n"
-                + "sw \n"
-                + "push " + entry.getOffset() + "\n" // TODO usato solo per controllare che vada tutto ok
-                + "lfp \n"
-                + "add \n"
-                + "lw \n"
-                + "print \n";
+                + "sw \n";
     }
 }
