@@ -1,25 +1,13 @@
-class A (int a){
-    A funz (B b)
-        b
+class A (int a, int b){
+    void funzI(int b)
+        b = b;
     ;
-}
-class B extends A(int b){
-    C funz (A a)
-        let
-            C c = new C(1, 2, 3);
-        in
-            c
-    ;
-}
-class C extends B(int c){
-
 };
 
 let
-    int x = -3;
-    A a = new A(1);
-    C c = new C(5,6,7);
-    B ogg = null;
+    int x=10;
+    int y=20;
+    A a = new A(x,y);
 in
-    ogg = new B(x,3);
+    a.funzI(x)
 ;
