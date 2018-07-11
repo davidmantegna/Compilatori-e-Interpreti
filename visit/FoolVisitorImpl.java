@@ -153,13 +153,20 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
             return null;
         }
 
-        INode expNode = visit(varasmContext.exp());
-        boolean istanziato = false;
-        if (!(expNode instanceof NullNode)) {
-            istanziato = true;
+        INode expNode;
+        boolean initialaized = false;
+        if (varasmContext.exp() == null) {
+            String classID = "";
+            if (varasmContext.vardec().type().ID() != null) {
+                classID = varasmContext.vardec().type().ID().getText();
+            }
+            expNode = new NullNode(classID);
+        } else {
+            initialaized = true;
+            expNode = visit(varasmContext.exp());
         }
 
-        return new VarAsmNode(varasmContext.vardec().ID().getText(), type, expNode, varasmContext, istanziato);
+        return new VarAsmNode(varasmContext.vardec().ID().getText(), type, expNode, varasmContext, initialaized);
     }
 
     @Override
@@ -449,12 +456,6 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     }
 
     @Override
-    public INode visitNullExp(NullExpContext nullExpContext) {
-        System.out.print("visitNullExp -> \t");
-        return new NullNode();
-    }
-
-    @Override
     public INode visitStms(StmsContext stmsContext) {
         System.out.print("visitStms -> \t");
 
@@ -474,7 +475,13 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     public INode visitStmAssignment(StmAssignmentContext stmAsmContext) {
         System.out.print("visitStmAssignment -> \t");
 
-        INode expNode = visit(stmAsmContext.exp());
+        INode expNode;
+
+        if (stmAsmContext.exp() == null) {
+            expNode = new NullNode("");
+        } else {
+            expNode = visit(stmAsmContext.exp());
+        }
 
         return new StmAsmNode(stmAsmContext.ID().getText(), expNode, stmAsmContext);
     }

@@ -9,6 +9,12 @@ import java.util.ArrayList;
 
 public class NullNode implements INode {
 
+    public String classID;
+
+    public NullNode(String classID) {
+        this.classID = classID;
+    }
+
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("NullNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
@@ -22,7 +28,8 @@ public class NullNode implements INode {
 
     @Override
     public String codeGeneration() {
-        //TODO codegen
-        return null;
+        return "push 0\n" +
+                "push class" + classID + "\n" +
+                "new\n";
     }
 }

@@ -56,6 +56,10 @@ public class ClassNode implements INode {
         return classType;
     }
 
+    public void setFieldDeclarationArraylist(ArrayList<ParameterNode> fieldDeclarationArraylist) {
+        this.fieldDeclarationArraylist = fieldDeclarationArraylist;
+    }
+
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         System.out.print("ClassNode: checkSemantics -> \n"/*+ env.toString() + "\n"*/);
@@ -229,6 +233,8 @@ public class ClassNode implements INode {
                 HashMap<String, FunType> superClassMethodsHashMap = superClassType.getMethodsMap();
                 for (String method : methodHashMap.keySet()) {
                     if (superClassMethodsHashMap.containsKey(method)) {
+                        ObjectType retType = infoReturnType(methodHashMap.get(method).getReturnType(), env);
+                        methodHashMap.get(method).setReturnType(retType);
                         if (!methodHashMap.get(method).isSubType(superClassMethodsHashMap.get(method))) {
                             res.add("Override incompatibile del metodo '" + method + "' della classe '" + idClass + "'\n");
                         }
@@ -341,5 +347,33 @@ public class ClassNode implements INode {
         } catch (UndeclaredIDException e) {
             e.printStackTrace();
         }
+    }
+
+    private ObjectType infoReturnType(IType type, SymbolTable env) {
+        try {
+            ObjectType objectType = (ObjectType) type;
+            ClassType classType = objectType.getClassType();
+            ClassType infoclass = classType;
+
+            while (classType != null) {
+                if (classType.getSuperClassType() == null) {
+                    SymbolTableEntry entry = env.processUse(classType.getClassID());
+                    classType = ((ClassType) entry.getType()).getSuperClassType();
+                    if (classType != null) {
+                        infoclass.setSuperClassType(classType);
+                    }
+                } else {
+                    classType = classType.getSuperClassType();
+                    infoclass.setSuperClassType(classType);
+                    infoclass = infoclass.getSuperClassType();
+                }
+            }
+
+            return objectType;
+
+        } catch (UndeclaredIDException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

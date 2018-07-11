@@ -25,7 +25,7 @@ letnest: LET (varasm SEMIC)+ IN;
 
 vardec : type ID ;
 
-varasm : vardec ASM exp ;
+varasm : vardec ASM (exp | NULL) ;
 
 fun    : (type | VOID) ID LPAR ( vardec ( COMMA vardec)* )? RPAR (letnest)? ((exp)| stms ) ;
 
@@ -56,12 +56,11 @@ value  : (MINUS)? INTEGER                                                       
        | funcall                                                                        #funExp
        | ID DOT funcall                                                                 #methodExp
        | newexp                                                                         #newMethod
-       | NULL                                                                           #nullExp
        ;
 
 stms   : ( stm )+ ;
 
-stm    : ID ASM exp (SEMIC)?                                                              #stmAssignment
+stm    : ID ASM (exp | NULL )(SEMIC)?                                                              #stmAssignment
        | IF cond=exp THEN CLPAR thenBranch=stms CRPAR ELSE CLPAR elseBranch=stms CRPAR  #stmIfExp
        ;
 

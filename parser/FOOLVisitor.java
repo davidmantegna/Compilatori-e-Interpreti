@@ -215,15 +215,6 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
     T visitNewMethod(FOOLParser.NewMethodContext ctx);
 
     /**
-     * Visit a parse tree produced by the {@code nullExp}
-     * labeled alternative in {@link FOOLParser#value}.
-     *
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    T visitNullExp(FOOLParser.NullExpContext ctx);
-
-    /**
      * Visit a parse tree produced by {@link FOOLParser#stms}.
      *
      * @param ctx the parse tree

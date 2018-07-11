@@ -1,13 +1,25 @@
-class A(){
-    int fat(int a)
-    if(a == 1)then{
-        1
-    }else{
-        a * fat(a-1)
-    };
+class A (int a){
+    A funz (B b)
+        b
+    ;
+}
+class B extends A(int b){
+    C funz (A a)
+        let
+            C c = new C(1, 2, 3);
+        in
+            c
+    ;
+}
+class C extends B(int c){
+
 };
 
 let
-    A a = new A();
+    int x = -3;
+    A a = new A(1);
+    C c = new C(5,6,7);
+    B ogg = null;
 in
-   a.fat(3);
+    ogg = new B(x,3);
+;

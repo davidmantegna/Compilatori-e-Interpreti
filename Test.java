@@ -5,6 +5,7 @@ import exceptions.ParserException;
 import exceptions.SemanticException;
 import exceptions.TypeException;
 import nodes.INode;
+import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -18,17 +19,17 @@ import symboltable.SymbolTable;
 import type.IType;
 import visit.FoolVisitorImpl;
 
+import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Test {
     public static void main(String[] args) {
+        boolean graphicalTest = false;
 
-
-        //TODO codegen fo all nodes
-        //TODO dynamic dispatch
         try {
             //RILEVAZIONE INPUT
             System.out.println("Rilevazione Input...\n");
@@ -65,8 +66,21 @@ public class Test {
             ParseTree tree = progContext;
             //  show AST in console
             System.out.println("------- Visualizing AST -------");
-            System.out.println(tree.toStringTree(parser) + "\n");
 
+            if (graphicalTest) {
+                //show AST in GUI
+                JFrame frame = new JFrame("ANTLR AST");
+                JPanel panel = new JPanel();
+                TreeViewer viewr = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
+                viewr.setScale(1.1);
+                panel.add(viewr);
+                frame.add(panel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setSize(1500, 700);
+                frame.setVisible(true);
+            } else {
+                System.out.println(tree.toStringTree(parser) + "\n");
+            }
 
             printPhase("SEMANTIC ANALYSIS");
 
@@ -104,8 +118,6 @@ public class Test {
             //Scommenta se vuoi vedere l'output del codice a console
             System.out.println(code);
 
-
-            //TODO codeGeneration execution
             printPhase("CODE GENERATION EXECUTION");
 
             CharStream inputASM = CharStreams.fromFileName(asmFileName);

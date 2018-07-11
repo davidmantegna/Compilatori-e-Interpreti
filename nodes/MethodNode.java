@@ -59,7 +59,7 @@ public class MethodNode extends FunNode {
 
         // checkSemantics di tutte le dichiarazioni interne al metodo
         if (declarationsArrayList.size() > 0) {
-            env.setOffset(-1);//TODO in precedenza era -2
+            env.setOffset(-2);
             for (INode node : declarationsArrayList) {
                 res.addAll(node.checkSemantics(env));
             }

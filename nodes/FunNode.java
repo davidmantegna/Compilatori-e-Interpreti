@@ -56,7 +56,7 @@ public class FunNode implements INode {
 
         //checkSemantic di tutte le dichiarazioni interne alla funzione
         if (declarationsArrayList.size() > 0) {
-            env.setOffset(-1);//TODO era -2
+            env.setOffset(-2);
             for (INode n : declarationsArrayList)
                 res.addAll(n.checkSemantics(env));
         }

@@ -20,6 +20,11 @@ public class FunType implements IType {
         return returnType;
     }
 
+    // necessario per aggiornare le infomazioni altrimenti
+    public void setReturnType(IType returnType) {
+        this.returnType = returnType;
+    }
+
     @Override
     public IDType getID() {
         return IDType.FUN;
@@ -66,7 +71,7 @@ public class FunType implements IType {
     private void printReturn(IType paramA, IType paramB, boolean controllo) {
         String retA = controlloTipo(paramA);
         String retB = controlloTipo(paramB);
-        System.err.println("COVARIANZA: \tRitorno: " + retB + " è sottotipo di " + retA + " -> " + controllo + "\n\n\n");
+        System.err.println("COVARIANZA: \tRitorno: " + retA + " è sottotipo di " + retB + " -> " + controllo + "\n\n\n");
     }
 
     private String controlloTipo(IType param) {
