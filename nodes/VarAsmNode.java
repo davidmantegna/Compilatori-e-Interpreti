@@ -43,7 +43,6 @@ public class VarAsmNode implements INode {
         }
 
         res.addAll(exp.checkSemantics(env));
-        // TODO test null
 
         try {
             env.processDeclarationClass(id, assignedType, env.getOffset(), initialized, insideClass);
