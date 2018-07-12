@@ -44,7 +44,6 @@ public class FunCallNode implements INode {
         try {
             entry = env.processUse(id);
         } catch (UndeclaredIDException e) {
-
             res.add("Errore: " + id + ": identificativo non definito\n");
         }
 

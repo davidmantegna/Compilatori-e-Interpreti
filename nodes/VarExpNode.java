@@ -131,7 +131,6 @@ public class VarExpNode implements INode {
                     exit + ":\n"
             );
         }
-
         return String.valueOf(stringBuilder);
     }
 }

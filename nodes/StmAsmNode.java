@@ -42,7 +42,7 @@ public class StmAsmNode implements INode {
             nestingLevel = env.getNestingLevel();
 
             if (exp instanceof NewNode) {
-                if (entry.isInitialized()) {
+                if (entry.isInitialized()) {// vieto di istanziare più volte l'oggetto
                     // res.add("L'oggetto '" + id + "' è già stato istanziato\n");
                 } else {
                     entry.setInitialized(true);
@@ -65,7 +65,7 @@ public class StmAsmNode implements INode {
         System.out.print("StmAsmNode: typeCheck -> \t");
 
         if (exp instanceof NullNode) {
-            throw new TypeException("Oggetto già istanziato, impossibile annullare l'istanza di '" + id + "'", stmAssignmentContext);
+            throw new TypeException("Oggetto istanziato, impossibile annullare l'istanza di '" + id + "'", stmAssignmentContext);
         }
 
         if (!exp.typeCheck().isSubType(idType)) {
