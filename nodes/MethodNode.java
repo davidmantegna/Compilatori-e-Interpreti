@@ -8,6 +8,7 @@ import symboltable.SymbolTable;
 import type.FunType;
 import type.IType;
 import type.ObjectType;
+import type.VoidType;
 
 import java.util.ArrayList;
 
@@ -94,25 +95,43 @@ public class MethodNode extends FunNode {
         for (int i = 0; i < parameterNodeArrayList.size(); i++) {
             popInputParameters.append("pop\n");
         }
-        String funLabel = Label.nuovaLabelMetodoString(idFunzione.toUpperCase());
+        String methodLabel = Label.nuovaLabelMetodoString(idFunzione.toUpperCase());
 
-        //inserisco il codice della funzione in fondo al main, davanti alla label
-        FunctionCode.insertFunctionsCode(funLabel + ":\n" +
-                "cfp\n" + //$fp diventa uguale al valore di $sp
-                "lra\n" + //push return address
-                localDeclarations + //push dichiarazioni locali
-                body.codeGeneration() +
-                "srv\n" + //pop del return value
-                popLocalDeclarations +
-                "sra\n" + // pop del return address
-                "pop\n" + // pop dell'access link, per ritornare al vecchio livello di scope
-                popInputParameters +
-                "sfp\n" +  // $fp diventa uguale al valore del control link
-                "lrv\n" + // push del risultato
-                "lra\n" + // push del return address
-                "js\n" // jump al return address per continuare dall'istruzione dopo
-        );
+        if (returnType instanceof VoidType) {
+            // siccome il return è Void vengono rimosse le operazioni per restituire returnvalue
+            FunctionCode.insertFunctionsCode(methodLabel + ":\n" +
+                    "cfp\n" + //$fp diventa uguale al valore di $sp
+                    "lra\n" + //push return address
+                    localDeclarations + //push dichiarazioni locali
+                    body.codeGeneration() +
+                    popLocalDeclarations +
+                    "sra\n" + // pop del return address
+                    "pop\n" + // pop dell'access link, per ritornare al vecchio livello di scope
+                    popInputParameters +
+                    "sfp\n" +  // $fp diventa uguale al valore del control link
+                    "lra\n" + // push del return address
+                    "js\n" // jump al return address per continuare dall'istruzione dopo
+            );
+        } else {
+            //inserisco il codice della funzione in fondo al main, davanti alla label
+            FunctionCode.insertFunctionsCode(methodLabel + ":\n" +
+                    "cfp\n" + //$fp diventa uguale al valore di $sp
+                    "lra\n" + //push return address
+                    localDeclarations + //push dichiarazioni locali
+                    body.codeGeneration() +
+                    "srv\n" + //pop del return value
+                    popLocalDeclarations +
+                    "sra\n" + // pop del return address
+                    "pop\n" + // pop dell'access link, per ritornare al vecchio livello di scope
+                    popInputParameters +
+                    "sfp\n" +  // $fp diventa uguale al valore del control link
+                    "lrv\n" + // push del risultato
+                    "lra\n" + // push del return address
+                    "js\n" // jump al return address per continuare dall'istruzione dopo
+            );
+        }
 
-        return funLabel + "\n";
+
+        return methodLabel + "\n";
     }
 }

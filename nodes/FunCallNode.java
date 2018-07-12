@@ -53,7 +53,7 @@ public class FunCallNode implements INode {
             entry = env.processUse(id);
         } catch (UndeclaredIDException e) {
 
-            res.add(id + ": identificativo non definito\n");
+            res.add("Errore: " + id + ": identificativo non definito\n");
         }
 
         calledNestingLevel = env.getNestingLevel();

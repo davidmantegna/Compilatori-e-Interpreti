@@ -67,7 +67,7 @@ public class NewNode implements INode {
             IType argumentType = argumentsArrayList.get(i).typeCheck();
             IType fieldType = fieldArrayList.get(i).getFieldType();
             if (!argumentType.isSubType(fieldType)) {
-                throw new TypeException("Tipo errato per il parametro " + (i + 1) + " nell'invocazione del costruttore di " + idClass + "\n", newMethodContext);
+                throw new TypeException("Tipo errato per il parametro " + (i + 1) + " nell'invocazione del costruttore di " + idClass, newMethodContext);
             }
         }
         return new ObjectType(classType);

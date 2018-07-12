@@ -1,0 +1,31 @@
+let
+    bool f(int a)
+        if(a == 1) then {
+            true
+        }
+        else{
+            f(a-1)
+        }
+    ;
+    int g(int b)
+        b*3/2
+    ;
+    bool h(int c)
+      if(c == 1) then {
+                true
+            }
+            else{
+                f(c-1)
+            }
+    ;
+    int x = 3;
+    bool ris = false;
+    int y = 4;
+in
+    ris = f(x)||h(y);
+;
+
+// Risultato 4
+// x = 3
+// ris = 1 <- true
+// y = 4

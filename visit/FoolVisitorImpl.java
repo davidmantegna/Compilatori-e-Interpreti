@@ -154,7 +154,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         }
 
         INode expNode;
-        boolean initialaized = false;
+        boolean initialized = false;
         if (varasmContext.exp() == null) {
             String classID = "";
             if (varasmContext.vardec().type().ID() != null) {
@@ -162,11 +162,11 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
             }
             expNode = new NullNode(classID);
         } else {
-            initialaized = true;
+            initialized = true;
             expNode = visit(varasmContext.exp());
         }
 
-        return new VarAsmNode(varasmContext.vardec().ID().getText(), type, expNode, varasmContext, initialaized);
+        return new VarAsmNode(varasmContext.vardec().ID().getText(), type, expNode, varasmContext, initialized);
     }
 
     @Override

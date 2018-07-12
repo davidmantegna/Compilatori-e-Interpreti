@@ -14,15 +14,15 @@ public class VarAsmNode implements INode {
     private IType assignedType;
     private INode exp;
     private VarasmContext varasmContext;
-    private boolean initialaized;
+    private boolean initialized;
     private boolean insideClass;
 
-    public VarAsmNode(String id, IType assignedType, INode exp, VarasmContext varasmContext, boolean initialaized) {
+    public VarAsmNode(String id, IType assignedType, INode exp, VarasmContext varasmContext, boolean initialized) {
         this.id = id;
         this.assignedType = assignedType;
         this.exp = exp;
         this.varasmContext = varasmContext;
-        this.initialaized = initialaized;
+        this.initialized = initialized;
         this.insideClass = false;
     }
 
@@ -46,7 +46,7 @@ public class VarAsmNode implements INode {
         // TODO test null
 
         try {
-            env.processDeclarationClass(id, assignedType, env.getOffset(), initialaized, insideClass);
+            env.processDeclarationClass(id, assignedType, env.getOffset(), initialized, insideClass);
             env.decreaseOffset();
         } catch (MultipleIDException e) {
             res.add(e.getMessage());

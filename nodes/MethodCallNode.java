@@ -58,7 +58,7 @@ public class MethodCallNode extends FunCallNode {
                 //prendo la STentry dell'oggetto dalla Symbol Table
                 SymbolTableEntry objectSTentry = env.processUse(classID);
 
-                if (!objectSTentry.isInitialaized()) {
+                if (!objectSTentry.isInitialized()) {
                     res.add("L'oggetto '" + classID + "' non è stato ancora inizializzato!\n");
                 }
 

@@ -55,7 +55,7 @@ public class VarExpNode implements INode {
             //vedi Test
 
             if (entry.getType() instanceof ObjectType) {
-                if (!entry.isInitialaized()) {
+                if (!entry.isInitialized()) {
                     res.add("L'oggetto '" + identificatore + "' non è stato inizializzato\n");
                 } else {
                     ObjectType decType = (ObjectType) entry.getType();
@@ -65,7 +65,7 @@ public class VarExpNode implements INode {
 
 
         } catch (UndeclaredIDException e) {
-            res.add(identificatore + ": identificativo non definito\n");
+            res.add("Errore:" + identificatore + ": identificativo non definito\n");
         }
         return res;
     }

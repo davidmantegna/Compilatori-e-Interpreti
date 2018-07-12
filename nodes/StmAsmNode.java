@@ -40,25 +40,22 @@ public class StmAsmNode implements INode {
             idType = env.getTypeOf(id);
             entry = env.processUseIgnoreFun(id);
             nestingLevel = env.getNestingLevel();
-        } catch (UndeclaredIDException e) {
-            res.add(id + ": identificativo non definito\n");
-        }
 
+            if (exp instanceof NewNode) {
+                if (entry.isInitialized()) {
+                    // res.add("L'oggetto '" + id + "' è già stato istanziato\n");
+                } else {
+                    entry.setInitialized(true);
+                }
+            } else if (exp instanceof MethodCallNode) {
+                entry.setInitialized(true);
+            }
+
+        } catch (UndeclaredIDException e) {
+            res.add("Errore: " + id + ": identificativo non definito\n");
+        }
 
         res.addAll(exp.checkSemantics(env));
-
-
-        // evitare instanziazioni multiple
-        if (exp instanceof NewNode) {
-            if (entry.isInitialaized()) {
-                res.add("L'oggetto '" + id + "' è già stato istanziato\n");
-            } else {
-                entry.setInitialaized(true);
-            }
-        } else if (exp instanceof NullNode) {
-            // TODO gestire NULL NODE nell IN
-            // al mometo viene restituito errore durante il Type Check
-        }
 
         return res;
     }
@@ -66,6 +63,11 @@ public class StmAsmNode implements INode {
     @Override
     public IType typeCheck() throws TypeException {
         System.out.print("StmAsmNode: typeCheck -> \t");
+
+        if (exp instanceof NullNode) {
+            throw new TypeException("Oggetto già istanziato, impossibile annullare l'istanza di '" + id + "'", stmAssignmentContext);
+        }
+
         if (!exp.typeCheck().isSubType(idType)) {
             throw new TypeException("Valore incompatibile per la variabile " + id, stmAssignmentContext.exp());
         }
@@ -75,9 +77,14 @@ public class StmAsmNode implements INode {
     @Override
     public String codeGeneration() {
 
+        StringBuilder lwActivationRecord = new StringBuilder();
+        for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++)
+            lwActivationRecord.append("lw\n");
+
         return exp.codeGeneration()
                 + "push " + entry.getOffset() + "\n"
-                + "lfp \n"
+                + "lfp \n" +
+                lwActivationRecord
                 + "add \n"
                 + "sw \n";
     }
