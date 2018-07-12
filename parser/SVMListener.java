@@ -1,9 +1,5 @@
-// Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\SVM.g4 by ANTLR 4.7
+// Generated from C:/Users/massi/Documents/IntelliJProject/Compilatori-e-Interpreti/grammar\SVM.g4 by ANTLR 4.7
 package parser;
-
-import java.util.HashMap;
-import java.util.ArrayList;
-import virtualMachine.ExecuteVM;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

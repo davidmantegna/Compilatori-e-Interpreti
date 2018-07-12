@@ -1,7 +1,5 @@
-// Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
+// Generated from C:/Users/massi/Documents/IntelliJProject/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
 package parser;
-
-    import java.util.ArrayList;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -272,18 +270,6 @@ public interface FOOLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNewMethod(FOOLParser.NewMethodContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code nullExp}
-	 * labeled alternative in {@link FOOLParser#value}.
-	 * @param ctx the parse tree
-	 */
-	void enterNullExp(FOOLParser.NullExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code nullExp}
-	 * labeled alternative in {@link FOOLParser#value}.
-	 * @param ctx the parse tree
-	 */
-	void exitNullExp(FOOLParser.NullExpContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FOOLParser#stms}.
 	 * @param ctx the parse tree
