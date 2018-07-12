@@ -33,7 +33,7 @@ public class SymbolTable {
         return offset;
     }
 
-    public void setOffset(int n) {//TODO da testare occorrenze con offset -2
+    public void setOffset(int n) {
         offset = n;
     }
 
