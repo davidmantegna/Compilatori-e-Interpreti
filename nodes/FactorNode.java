@@ -23,7 +23,7 @@ public class FactorNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FactorNode: checkSemantics -> \n");
+        //System.out.print("FactorNode: checkSemantics -> \n");
         //create the result
         ArrayList<String> res = new ArrayList<String>();
 
@@ -36,7 +36,7 @@ public class FactorNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.println("FactorNode: typeCheck ->\t");
+        //System.out.println("FactorNode: typeCheck ->\t");
 
         IType leftType = leftNode.typeCheck();
         IType rightType = rightNode.typeCheck();

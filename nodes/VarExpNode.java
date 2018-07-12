@@ -33,7 +33,7 @@ public class VarExpNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("VarExpNode: checkSemantics -> \n");
+        //System.out.print("VarExpNode: checkSemantics -> \n");
 
         //cercare ID nella symbol table, con casi particolari per le classi
         ArrayList<String> res = new ArrayList<>();
@@ -131,7 +131,6 @@ public class VarExpNode implements INode {
                     exit + ":\n"
             );
         }
-
         return String.valueOf(stringBuilder);
     }
 }

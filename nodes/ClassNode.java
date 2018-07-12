@@ -55,7 +55,7 @@ public class ClassNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("ClassNode: checkSemantics -> \n");
+        //System.out.print("ClassNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         ArrayList<Field> fieldArrayList = new ArrayList<>();
@@ -242,7 +242,7 @@ public class ClassNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.print("ClassNode: typeCheck ->\t");
+        //System.out.print("ClassNode: typeCheck ->\t");
         //typecheck di ogni parametro
         for (ParameterNode parameterNode : fieldDeclarationArraylist) {
             parameterNode.typeCheck();
@@ -360,8 +360,6 @@ public class ClassNode implements INode {
                         infoclass = infoclass.getSuperClassType();
                     }
                 }
-
-                System.out.println(objectType.toString());
             } catch (UndeclaredIDException e) {
                 e.printStackTrace();
             }

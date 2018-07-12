@@ -44,7 +44,7 @@ public class FunNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FunNode: checkSemantics -> \n");
+        //System.out.print("FunNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         // entro in un nuovo livello di scope
@@ -74,7 +74,7 @@ public class FunNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.print("FunNode: typeCheck ->\t");
+        //System.out.print("FunNode: typeCheck ->\t");
 
         //typecheck di ogni parametro
         ArrayList<IType> paramsType = new ArrayList<>();

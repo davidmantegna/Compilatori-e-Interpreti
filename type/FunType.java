@@ -65,13 +65,13 @@ public class FunType implements IType {
     private void printParameter(IType paramA, IType paramB, boolean controllo) {
         String parA = controlloTipo(paramA);
         String parB = controlloTipo(paramB);
-        System.err.println("\n\n\n" + "CONTROVARIANZA: Parametri: " + parB + " è sovratipo di " + parA + " -> " + controllo);
+        System.out.println("\033[31;1mCONTROVARIANZA:\033[0m\t Parametri: " + parB + " è sovratipo di " + parA + " -> " + controllo);
     }
 
     private void printReturn(IType paramA, IType paramB, boolean controllo) {
         String retA = controlloTipo(paramA);
         String retB = controlloTipo(paramB);
-        System.err.println("COVARIANZA: \tRitorno: " + retA + " è sottotipo di " + retB + " -> " + controllo + "\n\n\n");
+        System.out.println("\033[31;1mCOVARIANZA:\033[0m\t Ritorno: " + retA + " è sottotipo di " + retB + " -> " + controllo);
     }
 
     private String controlloTipo(IType param) {

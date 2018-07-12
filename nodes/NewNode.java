@@ -29,7 +29,7 @@ public class NewNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("VarAsmNode: checkSemantics -> \n");
+        //System.out.print("VarAsmNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         try {
@@ -58,7 +58,7 @@ public class NewNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.print("VarAsmNode: typeCheck -> \n");
+        //System.out.print("VarAsmNode: typeCheck -> \n");
         ArrayList<Field> fieldArrayList = classType.getFields();
 
         for (int i = 0; i < argumentsArrayList.size(); i++) {

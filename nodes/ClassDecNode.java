@@ -27,7 +27,7 @@ public class ClassDecNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("ClassDecNode: checkSemantics -> \n");
+        //System.out.print("ClassDecNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         // entro in un nuovo livello di scope
@@ -86,7 +86,7 @@ public class ClassDecNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.print("ClassDecNode: typeCheck ->\t");
+        //System.out.print("ClassDecNode: typeCheck ->\t");
         for (ClassNode classNode : classDeclarationsArrayList) {
             classNode.typeCheck();
         }

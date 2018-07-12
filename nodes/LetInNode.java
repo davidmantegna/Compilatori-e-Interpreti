@@ -19,7 +19,7 @@ public class LetInNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("LetInNode: checkSemantics -> \n");
+        //System.out.print("LetInNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         // entro in un nuovo livello di scope

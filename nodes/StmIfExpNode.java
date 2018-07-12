@@ -25,7 +25,7 @@ public class StmIfExpNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("StmIfExpNode: checkSemantics -> \n");
+        //System.out.print("StmIfExpNode: checkSemantics -> \n");
         ArrayList<String> result = new ArrayList<>();
         //checkSemantic sulla condizione
         result.addAll(conditionNode.checkSemantics(env));
@@ -38,7 +38,7 @@ public class StmIfExpNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.print("StmIfExpNode: typeCheck -> \t");
+        //System.out.print("StmIfExpNode: typeCheck -> \t");
         if (!conditionNode.typeCheck().isSubType(new BoolType()))
             throw new TypeException("Condizione non booleana", ctx);
         IType stmsThenType = stmsThen.typeCheck();

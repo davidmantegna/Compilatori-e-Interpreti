@@ -32,7 +32,7 @@ public class VarAsmNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("VarAsmNode: checkSemantics -> \n");
+        //System.out.print("VarAsmNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         // gestisco il tipo ID
@@ -56,7 +56,7 @@ public class VarAsmNode implements INode {
     //valore di ritorno non utilizzato
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.print("VarAsmNode: typeCheck -> \n");
+        //System.out.print("VarAsmNode: typeCheck -> \n");
 
         if (assignedType instanceof ObjectType) {
             if (exp instanceof NullNode) {
@@ -67,6 +67,10 @@ public class VarAsmNode implements INode {
                 if (ifNode.getThenNode() instanceof NullNode && ifNode.getElseNode() instanceof NullNode) {
                     return assignedType;
                 }
+            }
+        } else {
+            if (exp instanceof NullNode) {
+                throw new TypeException("Valore incompatibile per la variabile: " + id, varasmContext);
             }
         }
 

@@ -17,13 +17,13 @@ public class NotNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("NotNode: checkSemantics -> \n");
+        //System.out.print("NotNode: checkSemantics -> \n");
         return new ArrayList<>();
     }
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.print("NotNode: typeCheck ->\t");
+        //System.out.print("NotNode: typeCheck ->\t");
         return new BoolType();
     }
 

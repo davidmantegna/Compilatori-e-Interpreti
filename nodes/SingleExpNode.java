@@ -16,13 +16,13 @@ public class SingleExpNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("SingleExpNode: checkSemantics -> \n");
+        //System.out.print("SingleExpNode: checkSemantics -> \n");
         return expression.checkSemantics(env);
     }
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.println("SingleExpNode: typeCheck ->\t");
+        //System.out.println("SingleExpNode: typeCheck ->\t");
         return expression.typeCheck();
     }
 

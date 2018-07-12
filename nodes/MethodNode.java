@@ -27,7 +27,7 @@ public class MethodNode extends FunNode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("MethodNode: checkSemantics -> \n");
+        //System.out.print("MethodNode: checkSemantics -> \n");
 
         ArrayList<String> res = new ArrayList<>();
 
@@ -78,7 +78,7 @@ public class MethodNode extends FunNode {
 
     @Override
     public String codeGeneration() {
-        System.out.print("MethodNode: codeGeneration ->\t");
+        //System.out.print("MethodNode: codeGeneration ->\t");
 
         //variabili dichiarate internamente
         StringBuilder localDeclarations = new StringBuilder();
