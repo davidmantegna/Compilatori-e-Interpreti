@@ -29,19 +29,19 @@ public class TestCase {
             System.out.println("Rilevazione Input...\n");
             String fileNameFool = "";
             String fileName;
+            //String packageName = "test/testCaseOK/";
+            String packageName = "test/testCaseFail/";
 
-
-            final File folder = new File("test/testCaseOK");
-            //final File folder = new File("test/testCaseFail");
+            final File folder = new File(packageName);
 
             //int rand = ThreadLocalRandom.current().nextInt(1, folder.listFiles().length);
-
             //fileName = listFilesForFolder(folder, String.valueOf(rand));
-            fileName = listFilesForFolder(folder, "11");
+
+            fileName = listFilesForFolder(folder, "64_");
 
             System.out.println("File: " + fileName + "\n");
 
-            fileNameFool = "test/testCaseOK/" + fileName;
+            fileNameFool = packageName + fileName;
 
             CharStream input = CharStreams.fromFileName(fileNameFool);
             printPhase("INPUT");
@@ -73,6 +73,7 @@ public class TestCase {
             ParseTree tree = progContext;
             //  show AST in console
             System.out.println("------- Visualizing AST -------");
+            System.out.println(tree.toStringTree(parser) + "\n");
 
             printPhase("SEMANTIC ANALYSIS");
 
@@ -82,7 +83,6 @@ public class TestCase {
 
             // l'ambiente
             SymbolTable env = new SymbolTable();
-            System.out.println("\n");
             ArrayList<String> stringArrayListErr = nodes.checkSemantics(env);
 
             // verifico la presenza di errori Semantici
@@ -92,7 +92,7 @@ public class TestCase {
 
             printPhase("TYPE CHECKING");
             IType type = nodes.typeCheck(); //type-checking bottom-up
-            System.out.println("\n\n\t\ttype checking ok! Il tipo del programma è: " + type.toPrint() + "\n\n");
+            System.out.println("\ttype checking ok! Il tipo del programma è: " + type.toPrint());
 
             // CODE GENERATION
             printPhase("CODE GENERATION");
@@ -105,7 +105,7 @@ public class TestCase {
             out.write(code);
             out.close();
 
-            System.out.println("Codice SVM generato: (" + code.split("\n").length + " linee). Output visibile in codice.svm. \n");
+            System.out.println("Codice SVM generato: (" + code.split("\n").length + " linee). Output visibile in codice.svm.");
 
             //Scommenta se vuoi vedere l'output del codice a console
             System.out.println(code);

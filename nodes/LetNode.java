@@ -20,7 +20,7 @@ public class LetNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("LetNode: checkSemantics -> \n");
+        //System.out.print("LetNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         //CheckSemantic nella lista di dichiarazioni
@@ -63,7 +63,7 @@ public class LetNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.print("LetNode: typeCheck ->\t");
+        //System.out.print("LetNode: typeCheck ->\t");
         for (INode dec : declarationArrayList) {
             dec.typeCheck();
         }

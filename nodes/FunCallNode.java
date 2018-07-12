@@ -38,7 +38,7 @@ public class FunCallNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FunCallNode: checkSemantics -> \n");
+        //System.out.print("FunCallNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         try {
@@ -64,7 +64,7 @@ public class FunCallNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.print("FunCallNode: typeCheck ->\t");
+        //System.out.print("FunCallNode: typeCheck ->\t");
 
         FunType funType = null;
 

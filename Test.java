@@ -90,7 +90,6 @@ public class Test {
 
             // l'ambiente
             SymbolTable env = new SymbolTable();
-            System.out.println("\n");
             ArrayList<String> stringArrayListErr = nodes.checkSemantics(env);
 
             // verifico la presenza di errori Semantici
@@ -100,7 +99,7 @@ public class Test {
 
             printPhase("TYPE CHECKING");
             IType type = nodes.typeCheck(); //type-checking bottom-up
-            System.out.println("\n\n\t\ttype checking ok! Il tipo del programma è: " + type.toPrint() + "\n\n");
+            System.out.println("\ttype checking ok! Il tipo del programma è: " + type.toPrint());
 
             // CODE GENERATION
             printPhase("CODE GENERATION");
@@ -113,10 +112,10 @@ public class Test {
             out.write(code);
             out.close();
 
-            System.out.println("Codice SVM generato: (" + code.split("\n").length + " linee). Output visibile in codice.svm. \n");
+            System.out.println("Codice SVM generato: (" + code.split("\n").length + " linee). Output visibile in codice.svm.");
 
             //Scommenta se vuoi vedere l'output del codice a console
-            System.out.println(code);
+            //System.out.println(code);
 
             printPhase("CODE GENERATION EXECUTION");
 

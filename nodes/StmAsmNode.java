@@ -5,7 +5,9 @@ import exceptions.UndeclaredIDException;
 import parser.FOOLParser.StmAssignmentContext;
 import symboltable.SymbolTable;
 import symboltable.SymbolTableEntry;
+import type.BoolType;
 import type.IType;
+import type.IntType;
 import type.VoidType;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class StmAsmNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("StmAsmNode: checkSemantics -> \n");
+        //System.out.print("StmAsmNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
 
@@ -40,6 +42,10 @@ public class StmAsmNode implements INode {
             idType = env.getTypeOf(id);
             entry = env.processUseIgnoreFun(id);
             nestingLevel = env.getNestingLevel();
+
+            if ((entry.getType() instanceof IntType || entry.getType() instanceof BoolType) && exp instanceof NullNode) {
+                res.add("Errore: impossibile assegnare il valore null ad una variabile di tipo '" + entry.getType().getID().toString() + "'\n");
+            }
 
             if (exp instanceof NewNode) {
                 if (entry.isInitialized()) {// vieto di istanziare più volte l'oggetto
@@ -50,6 +56,7 @@ public class StmAsmNode implements INode {
             } else if (exp instanceof MethodCallNode) {
                 entry.setInitialized(true);
             }
+
 
         } catch (UndeclaredIDException e) {
             res.add("Errore: " + id + ": identificativo non definito\n");
@@ -62,7 +69,7 @@ public class StmAsmNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.print("StmAsmNode: typeCheck -> \t");
+        //System.out.print("StmAsmNode: typeCheck -> \t");
 
         if (exp instanceof NullNode) {
             throw new TypeException("Oggetto istanziato, impossibile annullare l'istanza di '" + id + "'", stmAssignmentContext);

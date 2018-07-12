@@ -1,18 +1,25 @@
-class A (){
+class A (int a){
+    A funz (B b)
+        b
+    ;
+}
+class B extends A(int b){
+    C funz (A a)
+        let
+            C c = new C(6,7,8);
+        in
+            c
+    ;
+}
+class C extends B(int c){
+
 };
 
-class B extends A(){};
-
 let
-    A aaa = null;
-    B b= new B();
-    A funz1(A a)
-        a;
+    int x = -3;
+    B ogg = null;
 in
-    aaa = new A();
-    aaa = funz1(b);
+    ogg = new B(x,3);
 ;
 
-// Risultato: 1235
-// b = -6
-// a = 1235
+// Risultato: 1235 <- indirizzo di memoria di 'ogg'

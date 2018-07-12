@@ -16,14 +16,14 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitSingleExp(SingleExpContext singleExpContext) {
-        System.out.print("visitSingleExp -> \t");
+        //System.out.print("visitSingleExp -> \t");
 
         return new SingleExpNode(visit(singleExpContext.exp()));
     }
 
     @Override
     public INode visitLetInExp(LetInExpContext letInExpContext) {
-        System.out.print("visitLetInExp -> \t");
+        //System.out.print("visitLetInExp -> \t");
         LetInNode res;
 
         INode let = visit(letInExpContext.let());
@@ -42,7 +42,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitClassExp(ClassExpContext classExpContext) {
-        System.out.print("visitClassExp -> \t");
+        //System.out.print("visitClassExp -> \t");
 
         ClassDecNode res;
 
@@ -103,14 +103,14 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitClassdec(ClassdecContext classdecContext) {
-        System.out.print("visitClassdec -> \t");
+        //System.out.print("visitClassdec -> \t");
 
         return super.visitClassdec(classdecContext);
     }
 
     @Override
     public INode visitLet(LetContext letContext) {
-        System.out.print("visitLet -> \t");
+        //System.out.print("visitLet -> \t");
         LetNode res;
         ArrayList<INode> declarations = new ArrayList<>();
 
@@ -124,7 +124,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitLetnest(LetnestContext letnestContext) {
-        System.out.print("visitLetnest -> \t");
+        //System.out.print("visitLetnest -> \t");
         LetNode res;
         ArrayList<INode> declarations = new ArrayList<>();
 
@@ -138,13 +138,13 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitVardec(VardecContext vardecContext) {
-        System.out.print("visitVardec -> \t");
+        //System.out.print("visitVardec -> \t");
         return super.visitVardec(vardecContext);
     }
 
     @Override
     public INode visitVarasm(VarasmContext varasmContext) {
-        System.out.print("visitVarasm -> \t");
+        //System.out.print("visitVarasm -> \t");
         //var declaration + assignment
         IType type;
         try {
@@ -171,7 +171,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitFun(FunContext funContext) {
-        System.out.print("visitFun -> \t");
+        //System.out.print("visitFun -> \t");
         try {
 
             ArrayList<ParameterNode> parameterNodeArrayList = new ArrayList<>();
@@ -221,7 +221,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitType(TypeContext typeContext) {
-        System.out.print("visitType -> \t");
+        //System.out.print("visitType -> \t");
         //tutti i tipi gestiti da TypeNode
         INode type = new TypeNode(typeContext.getText());
         return type;
@@ -229,7 +229,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitExp(ExpContext expContext) {
-        System.out.print("visitExp -> \t");
+        //System.out.print("visitExp -> \t");
         //check whether this is a simple or binary expression
         //notice here the necessity of having named elements in the grammar
         if (expContext.right == null) {
@@ -247,7 +247,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitTerm(TermContext termContext) {
-        System.out.print("visitTerm -> \t");
+        //System.out.print("visitTerm -> \t");
         //check whether this is a simple or binary expression
         //notice here the necessity of having named elements in the grammar
         if (termContext.right == null) {
@@ -266,7 +266,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitFactor(FactorContext factorContext) {
-        System.out.print("visitFactor -> \t");
+        //System.out.print("visitFactor -> \t");
         //check whether this is a simple or binary expression
         //notice here the necessity of having named elements in the grammar
         if (factorContext.right == null) {
@@ -311,7 +311,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitFuncall(FuncallContext funcallContext) {
-        System.out.print("visitFuncall -> \t");
+        //System.out.print("visitFuncall -> \t");
 
         INode res;
         String functionId;
@@ -373,7 +373,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitIntVal(IntValContext intValContext) {
-        System.out.print("visitIntVal -> \t");
+        //System.out.print("visitIntVal -> \t");
         if (intValContext.MINUS() == null) {
             return new IntNode(Integer.parseInt(intValContext.INTEGER().getText()));
         } else {//gestiamo il caso di numeri negativi
@@ -383,7 +383,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitBoolVal(BoolValContext boolValContext) {
-        System.out.print("visitBoolVal -> \t");
+        //System.out.print("visitBoolVal -> \t");
 
 
         if (boolValContext.NOT() == null) {
@@ -395,13 +395,13 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitBaseExp(BaseExpContext baseExpContext) {
-        System.out.print("visitBaseExp -> \t");
+        //System.out.print("visitBaseExp -> \t");
         return visit(baseExpContext.exp());
     }
 
     @Override
     public INode visitIfExp(IfExpContext ifExpContext) {
-        System.out.print("visitIfExp -> \t");
+        //System.out.print("visitIfExp -> \t");
         INode cond = visit(ifExpContext.cond);
         INode then = visit(ifExpContext.thenBranch);
         INode el = visit(ifExpContext.elseBranch);
@@ -411,7 +411,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitVarExp(VarExpContext varExpContext) {
-        System.out.print("visitVarExp -> \t");
+        //System.out.print("visitVarExp -> \t");
         Boolean isNeg = true;
         Boolean isNot = true;
 
@@ -427,13 +427,13 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitFunExp(FunExpContext funExpContext) {
-        System.out.print("visitFunExp -> \t");
+        //System.out.print("visitFunExp -> \t");
         return super.visitFunExp(funExpContext);
     }
 
     @Override
     public INode visitMethodExp(MethodExpContext methodExpContext) {
-        System.out.print("visitMethodExp -> \t");
+        //System.out.print("visitMethodExp -> \t");
         ArrayList<INode> arguments = new ArrayList<>();
 
         //gestione argomenti dati come input al metodo
@@ -453,13 +453,13 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitNewMethod(NewMethodContext newMethodContext) {
-        System.out.print("visitNewMethod -> \t");
+        //System.out.print("visitNewMethod -> \t");
         return super.visitNewMethod(newMethodContext);
     }
 
     @Override
     public INode visitStms(StmsContext stmsContext) {
-        System.out.print("visitStms -> \t");
+        //System.out.print("visitStms -> \t");
 
         StmsNode res;
 
@@ -475,7 +475,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitStmAssignment(StmAssignmentContext stmAsmContext) {
-        System.out.print("visitStmAssignment -> \t");
+        //System.out.print("visitStmAssignment -> \t");
 
         INode expNode;
 
@@ -490,7 +490,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitStmIfExp(StmIfExpContext stmIfExpContext) {
-        System.out.print("visitStmIfExp -> \t");
+        //System.out.print("visitStmIfExp -> \t");
         INode cond = visit(stmIfExpContext.cond);
         INode stmThen = visit(stmIfExpContext.thenBranch);
         INode stmElse = visit(stmIfExpContext.elseBranch);
@@ -500,7 +500,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
     @Override
     public INode visitMethod(MethodContext methodContext) {
-        System.out.print("visitMethod -> \t");
+        //System.out.print("visitMethod -> \t");
         try {
             FunContext funContext = methodContext.fun();
 

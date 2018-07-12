@@ -23,7 +23,7 @@ public class TermNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("TermNode: checkSemantics -> \n");
+        //System.out.print("TermNode: checkSemantics -> \n");
         //create the result
         ArrayList<String> res = new ArrayList<String>();
 
@@ -36,7 +36,7 @@ public class TermNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        System.out.println("TermNode: typeCheck ->\t");
+        //System.out.println("TermNode: typeCheck ->\t");
         if (!(leftNode.typeCheck().isSubType(new IntType()) && rightNode.typeCheck().isSubType(new IntType()))) {
             throw new TypeException("Tipo incompatibile per " + operation + ". È richiesto un intero.", termContext);
         }
