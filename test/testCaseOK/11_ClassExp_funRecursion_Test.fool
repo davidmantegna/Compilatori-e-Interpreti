@@ -2,7 +2,7 @@ class B (int ciao){
     int g(int a)
         a + 5
     ;
-};
+}
 
 class A extends B(int a, B b){
     int funzI(int a)
@@ -20,7 +20,7 @@ class A extends B(int a, B b){
     bool h(int c)
         c == 3
     ;
-}
+};
 
 let
     int x = 5;

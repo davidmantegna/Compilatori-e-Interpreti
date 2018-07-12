@@ -1,0 +1,3 @@
+1 * true;
+
+// Errore: "Tipo incompatibile per Times. È richiesto un intero." Errore alla linea 1

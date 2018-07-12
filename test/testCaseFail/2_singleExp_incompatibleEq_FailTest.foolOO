@@ -1,0 +1,4 @@
+true == 1;
+
+// Errore: "Tipo incompatibile per Eq. È richiesto il medesimo tipo (int or bool).
+// Tipi passati: (op1: bool op2: int)" Errore alla linea 1

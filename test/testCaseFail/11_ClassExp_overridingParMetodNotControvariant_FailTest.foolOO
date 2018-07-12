@@ -1,0 +1,33 @@
+class A (int a){
+    A funz (B b)
+        b
+    ;
+}
+class B extends A(int b){
+    A funz (int a)
+        a
+    ;
+}
+class C extends B(int c){
+
+}
+class D (E e){
+
+}
+class E (C b){
+
+}
+class F extends E (B b){
+
+};
+
+let
+    int x = 3;
+    B ogg = null;
+in
+    ogg = new B(x,3);
+;
+
+// Override incompatibile del metodo 'funz' della classe 'B'
+// L'identificativo 'b' della classe 'F' è stato dichiarato già nella classe madre: E
+// b: identificativo già definito. Il tipo di 'b' nello scope attuale è stato precedentemente definito come Object: C 

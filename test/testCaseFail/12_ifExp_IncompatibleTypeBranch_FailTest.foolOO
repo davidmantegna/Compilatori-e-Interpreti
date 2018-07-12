@@ -1,0 +1,31 @@
+class A (int a){
+    A funz (B b)
+        b
+    ;
+}
+class B extends A(int b){
+    A funz (A a)
+        a
+    ;
+}
+class C extends B(int c){
+
+}
+class D(bool t){
+
+};
+let
+    int x = 3;
+    bool cond = true&&false;
+    A a = new A(5);
+    B b = new B(x,x);
+    D prova = new D(true);
+in
+    if(cond)then {
+       a
+    } else {
+       prova
+    }
+;
+
+// Errore: "Tipi non compatibili nel then e nell'else". Errore alla linea 24

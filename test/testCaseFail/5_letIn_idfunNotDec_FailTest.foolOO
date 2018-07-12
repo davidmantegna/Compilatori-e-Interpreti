@@ -1,0 +1,7 @@
+let
+    int x = 0;
+in
+    f(x)
+;
+
+// Errore: f: identificativo non definito

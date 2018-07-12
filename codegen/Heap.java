@@ -41,22 +41,6 @@ public class Heap {
         return res; //Si ritorna la testa della lista (collegata a tutte le altre)
     }
 
-
-    void deallocate(HeapCell firstCell) {
-        int spazioRecuperato = 1;
-        HeapCell curr = firstCell;
-
-        while (curr.next != null) {
-            spazioRecuperato++;
-            curr = curr.next;
-        }
-        curr.next = head;  // L'ultimo elemento della lista restituita va fatto puntare a head
-
-
-        head = firstCell;  // La testa della listaDiCelle sara' il primo elemento della lista deallocata
-        heapSize = heapSize + spazioRecuperato;
-    }
-
     int getFreeIndex() {
         if (head != null) {
             return head.getIndex();

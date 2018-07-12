@@ -1,0 +1,11 @@
+class A (int b, B prova){};
+class B extends A(int a){};
+let
+    int x = 3;
+    B ogg = null;
+in
+    ogg = new B(x);
+;
+
+// Non si può usare una sottoclasse nel costruttore della superclasse
+// Instanziazione di una nuova classe B con numero errato di parametri
