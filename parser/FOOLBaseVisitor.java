@@ -1,4 +1,4 @@
-// Generated from D:/Coding/Intellij/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
+// Generated from C:/Users/massi/Documents/IntelliJProject/Compilatori-e-Interpreti/grammar\FOOL.g4 by ANTLR 4.7
 package parser;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
@@ -9,12 +9,12 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
  * of the available methods.
  *
  * @param <T> The return type of the visit operation. Use {@link Void} for
- *            operations with no return type.
+ * operations with no return type.
  */
 public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements FOOLVisitor<T> {
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -25,7 +25,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -36,7 +36,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -47,7 +47,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -58,7 +58,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -69,7 +69,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -80,7 +80,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -91,7 +91,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -102,7 +102,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -113,7 +113,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -124,7 +124,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -135,7 +135,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -146,7 +146,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -157,7 +157,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -168,7 +168,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -179,7 +179,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -190,7 +190,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -201,7 +201,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -212,7 +212,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -223,7 +223,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -234,7 +234,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -245,7 +245,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -256,7 +256,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -267,7 +267,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -278,7 +278,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -289,7 +289,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -300,7 +300,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
@@ -311,7 +311,7 @@ public class FOOLBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */

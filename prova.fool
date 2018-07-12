@@ -1,42 +1,25 @@
-class B (int ciao){
-    int g(int a)
-        a * 5
-    ;
-}
-
-class A extends B(int a, B b){
-    int funzI(int a)
-        b.g(a)
-    ;
-    bool funzB(bool b)
+class A (int a){
+    A funz (B b)
         b
     ;
-    bool f(int a)
-        h(a)
+}
+class B extends A(int b){
+    C funz (A a)
+        let
+            C c = new C(6,7,8);
+        in
+            c
     ;
-    int g(int b)
-        b + 23
-    ;
-    bool h(int c)
-        c == 3
-    ;
+}
+class C extends B(int c){
+
 };
 
 let
-    int x = 5;
-    int y = 2;
-    bool z = false;
-    B b = new B(2);
-    A a = new A(45, 11, b);
+    int x = -3;
+    B ogg = null;
 in
-    x = a.g(2);
-    y = b.g(10);
-    z = a.f(3);
+    ogg = new B(x,3);
 ;
 
-// Risultato: 1236
-// x = 25
-// y = 15
-// z = 1
-// b = 1234
-// a = 1236
+// Risultato: 1235 <- indirizzo di memoria di 'ogg'
