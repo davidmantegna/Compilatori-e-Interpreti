@@ -1,18 +1,16 @@
 package nodes;
 
+import codegen.VM.FunctionCode;
+import codegen.VM.Label;
 import exceptions.MultipleIDException;
-import exceptions.TypeException;
-import exceptions.UndeclaredIDException;
 import org.antlr.v4.runtime.ParserRuleContext;
-import type.ClassType;
+import symboltable.SymbolTable;
 import type.FunType;
 import type.IType;
 import type.ObjectType;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
+import type.VoidType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MethodNode extends FunNode {
 
@@ -26,9 +24,10 @@ public class MethodNode extends FunNode {
         this.idClass = idClass;
     }
 
+
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("MethodNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("MethodNode: checkSemantics -> \n");
 
         ArrayList<String> res = new ArrayList<>();
 
@@ -52,18 +51,17 @@ public class MethodNode extends FunNode {
         }
 
         // entro in un nuovo livello di scope
-        HashMap<String, SymbolTableEntry> hm = new HashMap<>();
-        env.pushHashMap(hm);
+        env.entryNewScope();
 
         // checkSemantics di tutti i parametri
-        for (ParameterNode parameter:parameterNodeArrayList){
+        for (ParameterNode parameter : parameterNodeArrayList) {
             res.addAll(parameter.checkSemantics(env));
         }
 
         // checkSemantics di tutte le dichiarazioni interne al metodo
-        if(declarationsArrayList.size()>0){
+        if (declarationsArrayList.size() > 0) {
             env.setOffset(-2);
-            for (INode node: declarationsArrayList){
+            for (INode node : declarationsArrayList) {
                 res.addAll(node.checkSemantics(env));
             }
         }
@@ -72,7 +70,7 @@ public class MethodNode extends FunNode {
         res.addAll(body.checkSemantics(env));
 
         //esco dal livello di scope
-        env.popHashMap();
+        env.exitLastScope();
 
         //ritorno eventuali errori rilevati
         return res;
@@ -81,7 +79,60 @@ public class MethodNode extends FunNode {
     @Override
     public String codeGeneration() {
         System.out.print("MethodNode: codeGeneration ->\t");
-        // TODO codeGeneration MethodNode
-        return super.codeGeneration();
+
+        //variabili dichiarate internamente
+        StringBuilder localDeclarations = new StringBuilder();
+        //variabili da togliere dallo stack al termine del record di attivazione
+        StringBuilder popLocalDeclarations = new StringBuilder();
+        if (declarationsArrayList.size() > 0)
+            for (INode dec : declarationsArrayList) {
+                localDeclarations.append(dec.codeGeneration());
+                popLocalDeclarations.append("pop\n");
+            }
+        //parametri in input da togliere dallo stack al termine del record di attivazione
+        StringBuilder popInputParameters = new StringBuilder();
+        for (int i = 0; i < parameterNodeArrayList.size(); i++) {
+            popInputParameters.append("pop\n");
+        }
+        String methodLabel = Label.nuovaLabelMetodoString(idFunzione.toUpperCase());
+
+        if (returnType instanceof VoidType) {
+
+            // siccome il return è Void vengono rimosse le operazioni per restituire returnvalue
+
+            FunctionCode.insertFunctionsCode(methodLabel + ":\n" +
+                    "cfp\n" + //$fp diventa uguale al valore di $sp
+                    "lra\n" + //push return address
+                    localDeclarations + //push dichiarazioni locali
+                    body.codeGeneration() +
+                    popLocalDeclarations +
+                    "sra\n" + // pop del return address
+                    "pop\n" + // pop dell'access link, per ritornare al vecchio livello di scope
+                    popInputParameters +
+                    "sfp\n" +  // $fp diventa uguale al valore del control link
+                    "lra\n" + // push del return address
+                    "js\n" // jump al return address per continuare dall'istruzione dopo
+            );
+        } else {
+            //inserisco il codice della funzione in fondo al main, davanti alla label
+            FunctionCode.insertFunctionsCode(methodLabel + ":\n" +
+                    "cfp\n" + //$fp diventa uguale al valore di $sp
+                    "lra\n" + //push return address
+                    localDeclarations + //push dichiarazioni locali
+                    body.codeGeneration() +
+                    "srv\n" + //pop del return value
+                    popLocalDeclarations +
+                    "sra\n" + // pop del return address
+                    "pop\n" + // pop dell'access link, per ritornare al vecchio livello di scope
+                    popInputParameters +
+                    "sfp\n" +  // $fp diventa uguale al valore del control link
+                    "lrv\n" + // push del risultato
+                    "lra\n" + // push del return address
+                    "js\n" // jump al return address per continuare dall'istruzione dopo
+            );
+        }
+
+
+        return methodLabel + "\n";
     }
 }

@@ -1,9 +1,9 @@
 package nodes;
 
+import exceptions.TypeException;
+import symboltable.SymbolTable;
 import type.IType;
 import type.IntType;
-import exceptions.TypeException;
-import util.Semantic.SymbolTable;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class IntNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("IntNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("IntNode: checkSemantics -> \n");
         return new ArrayList<>(); //non crea livelli di annidamento
     }
 

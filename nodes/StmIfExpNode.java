@@ -1,11 +1,11 @@
 package nodes;
 
-import type.BoolType;
-import type.IType;
+import codegen.VM.Label;
 import exceptions.TypeException;
 import parser.FOOLParser.StmIfExpContext;
-import util.Semantic.SymbolTable;
-import util.VM.Label;
+import symboltable.SymbolTable;
+import type.BoolType;
+import type.IType;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class StmIfExpNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("StmIfExpNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("StmIfExpNode: checkSemantics -> \n");
         ArrayList<String> result = new ArrayList<>();
         //checkSemantic sulla condizione
         result.addAll(conditionNode.checkSemantics(env));
@@ -39,26 +39,27 @@ public class StmIfExpNode implements INode {
     @Override
     public IType typeCheck() throws TypeException {
         System.out.print("StmIfExpNode: typeCheck -> \t");
-        if(!conditionNode.typeCheck().isSubType(new BoolType()))
+        if (!conditionNode.typeCheck().isSubType(new BoolType()))
             throw new TypeException("Condizione non booleana", ctx);
         IType stmsThenType = stmsThen.typeCheck();
         IType stmsElType = stmsElse.typeCheck();
-        if(stmsThenType.isSubType(stmsElType)) return stmsElType ;
-        else if(stmsElType .isSubType(stmsThenType)) return stmsElType ;
+        if (stmsThenType.isSubType(stmsElType)) return stmsElType;
+        else if (stmsElType.isSubType(stmsThenType)) return stmsElType;
         else throw new TypeException("Incompatibilità di tipo nel then e nell'else", ctx);
     }
 
     @Override
     public String codeGeneration() {
-        String thenBranch = Label.nuovaLabel();
-        String exit = Label.nuovaLabel();
-        return conditionNode.codeGeneration() +
-                "push 1\n" +
-                "beq" + thenBranch + "\n" +
-                stmsThen.codeGeneration() +
-                "b " + exit + "\n" +
-                thenBranch + ":\n" +
-                stmsElse.codeGeneration() +
-                exit + ":\n";
+
+        String thenBranch = Label.nuovaLabelString("Then");
+        String exit = Label.nuovaLabelString("Exit");
+        return conditionNode.codeGeneration()
+                + "push 1\n"
+                + "beq " + thenBranch + "\n"
+                + stmsElse.codeGeneration()
+                + "b " + exit + "\n\n"
+                + thenBranch + ":\n"
+                + stmsThen.codeGeneration() + "\n\n"
+                + exit + ":\n";
     }
 }

@@ -1,12 +1,10 @@
 package nodes;
 
-import type.BoolType;
-import type.IType;
-import type.IntType;
+import codegen.VM.Label;
 import exceptions.TypeException;
 import parser.FOOLParser.FactorContext;
-import util.Semantic.SymbolTable;
-import util.VM.Label;
+import symboltable.SymbolTable;
+import type.*;
 
 import java.util.ArrayList;
 
@@ -25,12 +23,11 @@ public class FactorNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FactorNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("FactorNode: checkSemantics -> \n");
         //create the result
         ArrayList<String> res = new ArrayList<String>();
 
         //check semantics in the left and in the right exp
-
         res.addAll(leftNode.checkSemantics(env));
         res.addAll(rightNode.checkSemantics(env));
 
@@ -44,111 +41,95 @@ public class FactorNode implements INode {
         IType leftType = leftNode.typeCheck();
         IType rightType = rightNode.typeCheck();
 
-        if(operator.equals("And")||(operator.equals("Or"))) {
+
+        if (leftNode instanceof FunCallNode || rightNode instanceof FunCallNode) {
+            if (leftType instanceof VoidType || rightType instanceof VoidType) {
+                throw new TypeException("Tipo incompatibile per " + operator + ". Non è possbile inserire delle funzioni con Return Void come condizione", factorContext);
+            }
+        }
+
+        if (leftType instanceof ObjectType || rightType instanceof ObjectType) {
+            throw new TypeException("Tipo incompatibile per " + operator + ". Non è possbile inserire degli Oggetti nella condizione", factorContext);
+        }
+
+
+        if (operator.equals("And") || (operator.equals("Or"))) {
             if (!leftType.isSubType(new BoolType()) || !rightType.isSubType(new BoolType())) {
                 throw new TypeException("Tipo incompatibile per " + operator + ". È richiesto un booleano.", factorContext);
             }
-        }
-        else {
+        } else if (operator.equals("Eq")) {
+            if (!leftType.isSubType(rightType)) {
+                throw new TypeException("Tipo incompatibile per " + operator + ". È richiesto il medesimo tipo (int or bool).\nTipi passati: (op1: " + leftType.toPrint() + " op2: " + rightType.toPrint() + ")", factorContext);
+            }
+        } else {
             if (!leftType.isSubType(new IntType()) || !rightType.isSubType(new IntType())) {
                 throw new TypeException("Tipo incompatibile per " + operator + ". È richiesto un intero.", factorContext);
             }
         }
-
+        System.out.println("\nTipi compatibili per '" + operator + "'. (op1 = " + leftType.toPrint() + " op2 = " + rightType.toPrint() + ")\n");
         return new BoolType();
     }
 
     @Override
     public String codeGeneration() {
-        String label = Label.nuovaLabel();
-        String exit = Label.nuovaLabel();
+        String labelThen = Label.nuovaLabelString("Then");
+        String exit = Label.nuovaLabelString("Exit");
         String codeGen = "";
+        String condition = "";
 
-        //TODO codegen
         switch (operator) {
             case "And":
                 codeGen = leftNode.codeGeneration()
                         + "push 0\n"
-                        + "beq " + label + "\n"
+                        + "beq " + labelThen + "\n\n"
                         + rightNode.codeGeneration()
                         + "push 0\n"
-                        + "beq " + label + "\n"
+                        + "beq " + labelThen + "\n\n"
                         + "push 1\n"
-                        + "b " + exit + "\n"
-                        + label + ":\n"
+                        + "b " + exit + "\n\n"
+                        + labelThen + ":\n"
                         + "push 0\n"
                         + exit + ":\n";
                 break;
             case "Or":
                 codeGen = leftNode.codeGeneration()
                         + "push 1\n"
-                        + "beq " + label + "\n"
+                        + "beq " + labelThen + "\n\n"
                         + rightNode.codeGeneration()
                         + "push 1\n"
-                        + "beq " + label + "\n"
+                        + "beq " + labelThen + "\n\n"
                         + "push 0\n"
-                        + "b " + exit + "\n"
-                        + label + ":\n"
+                        + "b " + exit + "\n\n"
+                        + labelThen + ":\n"
                         + "push 1\n"
                         + exit + ":\n";
                 break;
             case "Eq":
-                codeGen = leftNode.codeGeneration() +
-                        rightNode.codeGeneration() +
-                        "beq " + label + "\n" +
-                        "push 0\n" +
-                        "b " + exit + "\n" +
-                        label + ":\n" +
-                        "push 1\n" +
-                        exit + ":\n";
+                condition = "beq " + labelThen + "\n";
                 break;
             case "GreaterEq":
-                codeGen = rightNode.codeGeneration() +
-                        leftNode.codeGeneration() +
-                        "bge " + label + "\n" +
-                        "push 0\n" +
-                        "b " + exit + "\n" +
-                        label + ":\n" +
-                        "push 1\n" +
-                        exit + ":\n";
+                condition = "bge " + labelThen + "\n";
                 break;
             case "LessEq":
-                codeGen = leftNode.codeGeneration() +
-                        rightNode.codeGeneration() +
-                        "ble " + label + "\n" +
-                        "push 0\n" +
-                        "b " + exit + "\n" +
-                        label + ":\n" +
-                        "push 1\n" +
-                        exit + ":\n";
+                condition = "ble " + labelThen + "\n";
                 break;
             case "Greater":
-                codeGen = rightNode.codeGeneration() +
-                        "push 1\n" +
-                        "add\n" +
-                        leftNode.codeGeneration() +
-                        "bgt " + label + "\n" +
-                        "push 0\n" +
-                        "b " + exit + "\n" +
-                        label + ":\n" +
-                        "push 1\n" +
-                        exit + ":\n";
+                condition = "bgt " + labelThen + "\n";
                 break;
             case "Less":
-                codeGen = leftNode.codeGeneration() +
-                        "push 1\n" +
-                        "add\n" +
-                        rightNode.codeGeneration() +
-                        "blt " + label + "\n" +
-                        "push 0\n" +
-                        "b " + exit + "\n" +
-                        label + ":\n" +
-                        "push 1\n" +
-                        exit + ":\n";
+                condition = "blt " + labelThen + "\n";
                 break;
-            default:
-                codeGen = "default";
-                break;
+        }
+
+        if (!operator.equals("And") && !operator.equals("Or")) {
+            codeGen = rightNode.codeGeneration()
+                    + leftNode.codeGeneration()
+                    + condition
+                    + "push 0\n"
+                    + "b " + exit + "\n\n"
+                    + labelThen + ":\n"
+                    + "push 1\n\n"
+                    + exit + ":\n";
         }
         return codeGen;
     }

@@ -12,11 +12,9 @@ grammar FOOL;
  * PARSER RULES
  *------------------------------------------------------------------*/
 
-//TODO i campi sono modificabili
-
 prog   : exp  SEMIC                                                                           #singleExp
        | let ((exp SEMIC)| stms)                                                              #letInExp
-       | (classdec (SEMIC)?)+ SEMIC  (let)? ((exp SEMIC)| stms)	                                       #classExp
+       | (classdec (SEMIC)?)+ SEMIC  (let)? ((exp SEMIC)| stms)	                              #classExp
        ;
 
 classdec : CLASS ID (EXTENDS ID)? LPAR (vardec (COMMA vardec)*)? RPAR CLPAR (method SEMIC)* CRPAR ;
@@ -27,7 +25,7 @@ letnest: LET (varasm SEMIC)+ IN;
 
 vardec : type ID ;
 
-varasm : vardec ASM exp ;
+varasm : vardec ASM (exp | NULL) ;
 
 fun    : (type | VOID) ID LPAR ( vardec ( COMMA vardec)* )? RPAR (letnest)? ((exp)| stms ) ;
 
@@ -46,7 +44,7 @@ term   : left=factor (operator=(TIMES | DIV) right=term)? ;
    
 factor : left=value  (operator=(AND | OR | EQ | GEQ | LEQ | GREATER | LESS) right=value)? ;
 
-funcall: ID (LPAR (exp (COMMA exp)* )? RPAR)? ;
+funcall: ID LPAR (exp (COMMA exp)* )? RPAR;
 
 newexp : NEW ID LPAR (exp (COMMA exp)* )? RPAR;
 
@@ -58,12 +56,11 @@ value  : (MINUS)? INTEGER                                                       
        | funcall                                                                        #funExp
        | ID DOT funcall                                                                 #methodExp
        | newexp                                                                         #newMethod
-       | NULL                                                                           #nullExp
        ;
 
 stms   : ( stm )+ ;
 
-stm    : ID ASM exp (SEMIC)?                                                              #stmAssignment
+stm    : ID ASM (exp | NULL )(SEMIC)?                                                              #stmAssignment
        | IF cond=exp THEN CLPAR thenBranch=stms CRPAR ELSE CLPAR elseBranch=stms CRPAR  #stmIfExp
        ;
 

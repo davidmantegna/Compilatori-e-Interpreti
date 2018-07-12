@@ -1,10 +1,10 @@
 package nodes;
 
 
+import exceptions.TypeException;
+import symboltable.SymbolTable;
 import type.BoolType;
 import type.IType;
-import exceptions.TypeException;
-import util.Semantic.SymbolTable;
 
 import java.util.ArrayList;
 
@@ -18,8 +18,8 @@ public class BoolNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("BoolNode: checkSemantics -> \n\t" + env.toString() + "\n");
-        // new ArrayList<>() -> vuota perchè il chechSemantics è andato a buon fine. Quidi lista vuota di errori
+        System.out.print("BoolNode: checkSemantics -> \n");
+        // new ArrayList<>() -> vuota perchè il checkSemantics è andato a buon fine. Quindi lista vuota di errori
         return new ArrayList<>(); //non crea livelli di scope
     }
 

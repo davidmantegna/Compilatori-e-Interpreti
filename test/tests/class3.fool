@@ -1,0 +1,12 @@
+class Numero(int a){
+    int ciao(int c)
+        a + c;
+}
+class X(){};
+let
+    X num = new X();
+in
+    num.ciao(9)
+;
+
+// Exception: ciao: metodo non dichiarato nella classe X.

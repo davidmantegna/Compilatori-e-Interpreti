@@ -2,16 +2,15 @@ package nodes;
 
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
-import parser.FOOLParser;
+import symboltable.Field;
+import symboltable.SymbolTable;
 import type.ClassType;
 import type.IType;
 import type.ObjectType;
-import util.Semantic.Field;
-import util.Semantic.SymbolTable;
 
 import java.util.ArrayList;
 
-import static parser.FOOLParser.*;
+import static parser.FOOLParser.NewexpContext;
 
 public class NewNode implements INode {
 
@@ -25,11 +24,12 @@ public class NewNode implements INode {
         this.idClass = idClass;
         this.argumentsArrayList = argumentsArrayList;
         this.newMethodContext = newMethodContext;
+
     }
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("VarAsmNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("VarAsmNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         try {
@@ -50,7 +50,6 @@ public class NewNode implements INode {
             } catch (Exception e1) {
                 throw new UndeclaredIDException(idClass);
             }
-
         } catch (UndeclaredIDException e) {
             res.add(e.getMessage());
         }
@@ -67,7 +66,7 @@ public class NewNode implements INode {
             IType argumentType = argumentsArrayList.get(i).typeCheck();
             IType fieldType = fieldArrayList.get(i).getFieldType();
             if (!argumentType.isSubType(fieldType)) {
-                throw new TypeException("Tipo errato per il parametro " + (i + 1) + " nell'invocazione del costruttore di " + idClass + "\n", newMethodContext);
+                throw new TypeException("Tipo errato per il parametro " + (i + 1) + " nell'invocazione del costruttore di " + idClass, newMethodContext);
             }
         }
         return new ObjectType(classType);
@@ -75,7 +74,15 @@ public class NewNode implements INode {
 
     @Override
     public String codeGeneration() {
-        // TODO codeGeneration NewMethod
-        return null;
+
+        //new push, in ordine, gli argomenti, il numero di argomenti e la label della classe
+        StringBuilder argsCode = new StringBuilder();
+        for (INode arg : argumentsArrayList) {
+            argsCode.append(arg.codeGeneration());
+        }
+        return argsCode
+                + "push " + argumentsArrayList.size() + "\n"
+                + "push class" + idClass + "\n"
+                + "new\n";
     }
 }

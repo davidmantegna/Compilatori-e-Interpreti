@@ -1,19 +1,23 @@
 package nodes;
 
 import exceptions.TypeException;
-import type.ClassType;
+import symboltable.SymbolTable;
 import type.IType;
-import type.ObjectType;
 import type.VoidType;
-import util.Semantic.SymbolTable;
 
 import java.util.ArrayList;
 
 public class NullNode implements INode {
 
+    public String classID;
+
+    public NullNode(String classID) {
+        this.classID = classID;
+    }
+
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("NullNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("NullNode: checkSemantics -> \n");
         return new ArrayList<>(); //non crea livelli di scope
     }
 
@@ -24,6 +28,8 @@ public class NullNode implements INode {
 
     @Override
     public String codeGeneration() {
-        return null;
+        return "push 0\n" +
+                "push class" + classID + "\n" +
+                "new\n";
     }
 }

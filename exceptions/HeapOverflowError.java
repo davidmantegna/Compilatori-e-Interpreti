@@ -1,7 +1,7 @@
 package exceptions;
 
 public class HeapOverflowError extends Error {
-    public HeapOverflowError(){
+    public HeapOverflowError() {
         super("Heap Overflow");
     }
 }

@@ -1,0 +1,13 @@
+class A extends B(int a){
+};
+let
+    int x = 3;
+    A ogg = null;
+in
+    ogg = new A(x);
+;
+
+// B: identificativo non dichiarato.
+// La superclasse B non è definita
+// La superclasse B non è definita 
+// B: identificativo non dichiarato.

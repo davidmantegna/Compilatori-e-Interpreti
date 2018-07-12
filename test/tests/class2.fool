@@ -1,0 +1,12 @@
+class Numero(int a){
+    int ciao(int c)
+        a + c;
+}
+class X(){};
+let
+    Numero num = new X();
+in
+    num.ciao(9)
+;
+
+// Errore: "Valore incompatibile per la variabile: num" Errore alla linea 7

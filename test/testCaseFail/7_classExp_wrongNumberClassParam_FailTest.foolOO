@@ -1,0 +1,10 @@
+class A (bool a, bool b){
+};
+let
+    int x = 3;
+    A ogg = null;
+in
+    ogg = new A(x);
+;
+
+// Risultato: Instanziazione di una nuova classe A con numero errato di parametri

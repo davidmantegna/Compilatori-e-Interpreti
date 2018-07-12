@@ -1,11 +1,13 @@
 package nodes;
 
-import type.BoolType;
-import type.IType;
+import codegen.VM.Label;
 import exceptions.TypeException;
 import parser.FOOLParser.IfExpContext;
-import util.Semantic.SymbolTable;
-import util.VM.Label;
+import symboltable.SymbolTable;
+import type.BoolType;
+import type.ClassType;
+import type.IType;
+import type.ObjectType;
 
 import java.util.ArrayList;
 
@@ -33,7 +35,7 @@ public class IfNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("IfNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("IfNode: checkSemantics -> \n");
         ArrayList<String> result = new ArrayList<>();
 
         //checkSemantic sulla condizione
@@ -48,26 +50,50 @@ public class IfNode implements INode {
 
     @Override
     public IType typeCheck() throws TypeException {
-        if(!conditionNode.typeCheck().isSubType(new BoolType()))
+        if (!conditionNode.typeCheck().isSubType(new BoolType()))
             throw new TypeException("Condizione non booleana", ctx);
         IType thenType = thenNode.typeCheck();
         IType elType = elseNode.typeCheck();
-        if(thenType.isSubType(elType)) return elType;
-        else if(elType.isSubType(thenType)) return elType;
+        ClassType superClassThen, superClassElse;
+
+        if (elType instanceof ObjectType && thenType instanceof ObjectType) {
+            ClassType classThen = ((ObjectType) thenType).getClassType();
+            ClassType classElse = ((ObjectType) elType).getClassType();
+
+            superClassThen = classThen.getSuperClassType();
+            superClassElse = classElse.getSuperClassType();
+
+            if (superClassThen != null || superClassElse != null) {
+                while (superClassThen.getSuperClassType() != null) {
+                    superClassThen = superClassThen.getSuperClassType();
+                }
+
+                while (superClassElse.getSuperClassType() != null) {
+                    superClassElse = superClassElse.getSuperClassType();
+                }
+
+                if (superClassThen.getClassID() == superClassElse.getClassID())
+                    return superClassThen;
+            }
+        }
+
+        if (thenType.isSubType(elType)) return thenType;
+        else if (elType.isSubType(thenType)) return elType;
         else throw new TypeException("Tipi non compatibili nel then e nell'else", ctx);
     }
 
     @Override
     public String codeGeneration() {
-        String thenBranch = Label.nuovaLabel();
-        String exit = Label.nuovaLabel();
-        return conditionNode.codeGeneration() +
-                "push 1\n" +
-                "beq" + thenBranch + "\n" +
-                elseNode.codeGeneration() +
-                "b " + exit + "\n" +
-                thenBranch + ":\n" +
-                thenNode.codeGeneration() +
-                exit + ":\n";
+
+        String thenBranch = Label.nuovaLabelString("Then");
+        String exit = Label.nuovaLabelString("Exit");
+        return conditionNode.codeGeneration()
+                + "push 1\n"
+                + "beq " + thenBranch + "\n"
+                + elseNode.codeGeneration()
+                + "b " + exit + "\n\n"
+                + thenBranch + ":\n"
+                + thenNode.codeGeneration() + "\n\n"
+                + exit + ":\n";
     }
 }

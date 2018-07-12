@@ -1,35 +1,61 @@
 package nodes;
 
-import type.IType;
-import type.VoidType;
+import exceptions.MultipleIDException;
 import exceptions.TypeException;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
+import symboltable.SymbolTable;
+import type.FunType;
+import type.IType;
+import type.ObjectType;
+import type.VoidType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LetNode implements INode {
     private ArrayList<INode> declarationArrayList;
-    private String infoInvocation;
 
-    public LetNode(ArrayList<INode> declarationArrayList, String infoInvocation) {
+
+    public LetNode(ArrayList<INode> declarationArrayList) {
         this.declarationArrayList = declarationArrayList;
-        this.infoInvocation = infoInvocation;
-        System.out.println(infoInvocation);
     }
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("LetNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("LetNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         //CheckSemantic nella lista di dichiarazioni
         if (declarationArrayList.size() > 0) {
-            env.setOffset(-2);
+            env.setOffset(-1);
+
             //Checksemantic nei figli
-            for (INode n : declarationArrayList)
-                res.addAll(n.checkSemantics(env));
+            for (INode n : declarationArrayList) {
+                // utile per le funzioni mutuamente ricorsive
+                if (n instanceof FunNode) {
+                    FunNode funNode = (FunNode) n;
+                    ArrayList<IType> parameterTypeArrayList = new ArrayList<>();
+                    for (ParameterNode parameterNode : funNode.parameterNodeArrayList) {
+                        parameterTypeArrayList.add(parameterNode.getType());
+                    }
+                    if (funNode.returnType instanceof ObjectType) {
+                        ObjectType objectType = (ObjectType) funNode.returnType;
+                        res.addAll(objectType.updateClassType(env));
+                    }
+                    try {
+                        env.processDeclaration(funNode.idFunzione, new FunType(parameterTypeArrayList, funNode.returnType), env.getOffset());
+                        env.decreaseOffset();
+                    } catch (MultipleIDException e) {
+                        res.add("La funzione " + funNode.idFunzione + " è già stata dichiarata");
+                    }
+                } else {
+                    res.addAll(n.checkSemantics(env));
+                }
+            }
+
+            for (INode n : declarationArrayList) {
+                if (n instanceof FunNode) {
+                    res.addAll(n.checkSemantics(env));
+                }
+            }
         }
 
         return res;
@@ -46,9 +72,12 @@ public class LetNode implements INode {
 
     @Override
     public String codeGeneration() {
+
         StringBuilder declCode = new StringBuilder();
         for (INode dec : declarationArrayList)
             declCode.append(dec.codeGeneration());
         return declCode.toString();
     }
+
+
 }

@@ -1,0 +1,23 @@
+let
+    bool x = false;
+    void f(int a, int b)
+        let
+            int x = 0;
+        in
+            if ( a < x)then{
+                a = x;
+            }else{
+                b = x;
+            }
+    ;
+    void g()
+        if( x < 10)then{
+            f(4,5)
+        }else{
+            f(5,4)
+        }
+        ;
+in
+    x;
+
+//Errore: "Tipo incompatibile per Less. È richiesto un intero." Errore alla linea 14

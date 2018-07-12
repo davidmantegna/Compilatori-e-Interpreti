@@ -2,12 +2,11 @@ package nodes;
 
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
-import type.IType;
 import parser.FOOLParser.StmAssignmentContext;
-import type.ObjectType;
+import symboltable.SymbolTable;
+import symboltable.SymbolTableEntry;
+import type.IType;
 import type.VoidType;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
 
 import java.util.ArrayList;
 
@@ -33,34 +32,30 @@ public class StmAsmNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("StmAsmNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("StmAsmNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
+
 
         try {
             idType = env.getTypeOf(id);
             entry = env.processUseIgnoreFun(id);
             nestingLevel = env.getNestingLevel();
+
+            if (exp instanceof NewNode) {
+                if (entry.isInitialized()) {
+                    // res.add("L'oggetto '" + id + "' è già stato istanziato\n");
+                } else {
+                    entry.setInitialized(true);
+                }
+            } else if (exp instanceof MethodCallNode) {
+                entry.setInitialized(true);
+            }
+
         } catch (UndeclaredIDException e) {
-            res.add(id + ": identificativo non definito\n");
+            res.add("Errore: " + id + ": identificativo non definito\n");
         }
 
         res.addAll(exp.checkSemantics(env));
-
-        // TODO Probabilmente da fare nel codeGen
-/*        if (idType instanceof ObjectType) {
-            boolean istanziato = entry.isInstanziato();
-            System.out.println("-----------------------------" + istanziato);
-            switch (exp.getClass().getName()) {
-                case "nodes.NewNode":
-                    istanziato = true;
-                    break;
-                case "nodes.NullNode":
-                    istanziato = false;
-                    break;
-            }
-            entry.setInstanziato(istanziato);
-        }*/
-        // TODO Probabilmente da fare nel codeGen
 
         return res;
     }
@@ -68,6 +63,11 @@ public class StmAsmNode implements INode {
     @Override
     public IType typeCheck() throws TypeException {
         System.out.print("StmAsmNode: typeCheck -> \t");
+
+        if (exp instanceof NullNode) {
+            throw new TypeException("Oggetto già istanziato, impossibile annullare l'istanza di '" + id + "'", stmAssignmentContext);
+        }
+
         if (!exp.typeCheck().isSubType(idType)) {
             throw new TypeException("Valore incompatibile per la variabile " + id, stmAssignmentContext.exp());
         }
@@ -76,6 +76,16 @@ public class StmAsmNode implements INode {
 
     @Override
     public String codeGeneration() {
-        return exp.codeGeneration() + "\n";
+
+        StringBuilder lwActivationRecord = new StringBuilder();
+        for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++)
+            lwActivationRecord.append("lw\n");
+
+        return exp.codeGeneration()
+                + "push " + entry.getOffset() + "\n"
+                + "lfp \n" +
+                lwActivationRecord
+                + "add \n"
+                + "sw \n";
     }
 }

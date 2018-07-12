@@ -1,0 +1,11 @@
+let
+    int x = 3;
+    B b = new B();
+in
+    a = new A(x);
+;
+
+// B: identificativo non dichiarato.
+// B: identificativo non dichiarato.
+// a: identificativo non definito
+// A: identificativo non dichiarato.

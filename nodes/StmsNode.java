@@ -1,9 +1,9 @@
 package nodes;
 
+import exceptions.TypeException;
+import symboltable.SymbolTable;
 import type.IType;
 import type.VoidType;
-import exceptions.TypeException;
-import util.Semantic.SymbolTable;
 
 import java.util.ArrayList;
 
@@ -17,8 +17,8 @@ public class StmsNode implements INode {
     }
 
     @Override
-    public ArrayList<String> checkSemantics(SymbolTable env){
-        System.out.print("StmsNode: checkSemantics -> \n\t" + env.toString() + "\n");
+    public ArrayList<String> checkSemantics(SymbolTable env) {
+        System.out.print("StmsNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         for (INode stm : stmsArrayList)
@@ -30,7 +30,7 @@ public class StmsNode implements INode {
     @Override
     public IType typeCheck() throws TypeException {
         System.out.print("StmsNode: typeCheck -> \t");
-        for (INode stm: stmsArrayList)
+        for (INode stm : stmsArrayList)
             stm.typeCheck();
         return new VoidType();
     }

@@ -1,10 +1,9 @@
 package nodes;
 
+import exceptions.TypeException;
+import symboltable.SymbolTable;
 import type.BoolType;
 import type.IType;
-import exceptions.TypeException;
-import util.Semantic.SymbolTable;
-import util.VM.Label;
 
 import java.util.ArrayList;
 
@@ -18,7 +17,7 @@ public class NotNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("NotNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("NotNode: checkSemantics -> \n");
         return new ArrayList<>();
     }
 
@@ -30,15 +29,6 @@ public class NotNode implements INode {
 
     @Override
     public String codeGeneration() {
-        String label = Label.nuovaLabel();
-        String exit = Label.nuovaLabel();
-        return value.codeGeneration() +
-                "push 1\n" +
-                "beq " + label + "\n" +
-                "push 1\n" +
-                "b " + exit + "\n" +
-                label + ":\n" +
-                "push 0\n" +
-                exit + ":\n";
+        return value.codeGeneration();
     }
 }

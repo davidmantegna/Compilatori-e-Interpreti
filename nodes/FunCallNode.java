@@ -3,19 +3,19 @@ package nodes;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
 import parser.FOOLParser.FuncallContext;
+import symboltable.SymbolTable;
+import symboltable.SymbolTableEntry;
 import type.FunType;
 import type.IType;
-import util.Semantic.SymbolTable;
-import util.Semantic.SymbolTableEntry;
 
 import java.util.ArrayList;
 
 public class FunCallNode implements INode {
 
-    private String id;
-    private ArrayList<INode> argumentsArrayList;
-    private SymbolTableEntry entry = null;
-    private int calledNestingLevel;
+    protected String id;
+    protected ArrayList<INode> argumentsArrayList;
+    protected SymbolTableEntry entry = null;
+    protected int calledNestingLevel;
     private FuncallContext funcallContext;
 
     public FunCallNode(String id, ArrayList<INode> argumentsArrayList, FuncallContext funcallContext) {
@@ -32,39 +32,32 @@ public class FunCallNode implements INode {
         return argumentsArrayList;
     }
 
-    public SymbolTableEntry getEntry() {
-        return entry;
-    }
-
-    public int getCalledNestingLevel() {
-        return calledNestingLevel;
-    }
-
     public FuncallContext getFuncallContext() {
         return funcallContext;
     }
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FunCallNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("FunCallNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         try {
-
             entry = env.processUse(id);
-            calledNestingLevel = env.getNestingLevel();
-
-            int index = 1;
-            for (INode argument : argumentsArrayList) {
-                if (argument.getClass().getName().equals("nodes.FunCallNode")) {
-                    res.add("La funzione '" + id + "' ha una funzione come " + index + "° parametro\n");
-                } else {
-                    res.addAll(argument.checkSemantics(env));
-                }
-                index++;
-            }
         } catch (UndeclaredIDException e) {
-            res.add(id + ": identificativo non definito\n");
+
+            res.add("Errore: " + id + ": identificativo non definito\n");
+        }
+
+        calledNestingLevel = env.getNestingLevel();
+
+        int index = 1;
+        for (INode argument : argumentsArrayList) {
+            if (argument instanceof FunCallNode) {
+                res.add("Errore: La funzione '" + id + "' ha una funzione come " + index + "° parametro\n");
+            } else {
+                res.addAll(argument.checkSemantics(env));
+            }
+            index++;
         }
 
         return res;
@@ -78,9 +71,7 @@ public class FunCallNode implements INode {
 
         if (entry.getType().getID().equals(IType.IDType.FUN)) {
             funType = (FunType) entry.getType();
-        }/* else {
-            throw new TypeException("Invocazione di una non funzione " + id, funcallContext);
-        }*/
+        }
 
         ArrayList<IType> funTypeArrayList = funType.getParametersTypeArrayList();
         if (!(funTypeArrayList.size() == argumentsArrayList.size())) {
@@ -98,19 +89,21 @@ public class FunCallNode implements INode {
 
     @Override
     public String codeGeneration() {
+
         StringBuilder parameterCode = new StringBuilder();
         //parametri in ordine inverso
-        for (int i = argumentsArrayList.size() - 1; i >= 0; i--)
+        for (int i = argumentsArrayList.size() - 1; i >= 0; i--) {
             parameterCode.append(argumentsArrayList.get(i).codeGeneration());
+        }
 
-        //utilizzato per gestire le funzioni annidate
+        //utilizzato per gestire le funzioni
         StringBuilder getActivationRecord = new StringBuilder();
         for (int i = 0; i < calledNestingLevel - entry.getNestinglevel(); i++)
             getActivationRecord.append("lw\n");
 
-        return "lfp\n" + //pusho frame pointer e parametri
+        return "lfp\n" + //push frame pointer e parametri
                 parameterCode +
-                "lfp\n" + getActivationRecord + //pusho access link (lw consecutivamente)
+                "lfp\n" + getActivationRecord + //push access link (lw consecutivamente)
                 // così si potrà risalire la catena statica
                 "push " + entry.getOffset() + "\n" + // pusho l'offset logico per
                 // accedere al codice della funzione

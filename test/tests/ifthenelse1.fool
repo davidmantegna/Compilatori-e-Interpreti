@@ -1,0 +1,12 @@
+let
+    int x = 0;
+in
+    if(true)
+        then{
+            x==2
+        }else{
+            3
+        }
+;
+
+//“Tipi non compatibili nel then e nell'else”

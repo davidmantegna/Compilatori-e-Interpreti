@@ -3,7 +3,7 @@ grammar SVM;
 @header {
 import java.util.HashMap;
 import java.util.ArrayList;
-import virtualMachine.ExecuteVM;
+import codegen.ExecuteVM;
 }
 
 @lexer::members {
@@ -39,8 +39,11 @@ assembly:
 	  | POP		                    {   code.add(POP);        }
       | ADD		                    {   code.add(ADD);        }
       | SUB		                    {   code.add(SUB);        }
-      | TIMES	                    {   code.add(TIMES);       }
+      | MULT	                    {   code.add(MULT);      }
       | DIV		                    {   code.add(DIV);        }
+
+      | AND		                    {   code.add(AND);        }
+      | OR		                    {   code.add(OR);         }
       | STOREW	                    {   code.add(STOREW);     }
       | LOADW                       {   code.add(LOADW);      }
 	  | l=LABEL COL                 {   labelAdd.put($l.text, code.size());   }
@@ -77,7 +80,7 @@ assembly:
 	  | STOREHP                     {   code.add(STOREHP);    }
 	  | PRINT                       {   code.add(PRINT);      }
 	  | NEW                         {   code.add(NEW);        }
-	  //| LOADC                       {   code.add(LOADC);      }
+	  | LOADC                       {   code.add(LOADC);      }
 	  | HALT                        {   code.add(HALT);       }
 	  | l=LABEL                     {   labelRef.put(code.size(), $l.text);
 	                                    code.add(0);          }
@@ -99,8 +102,12 @@ POP	               : 'pop' ; 	     // pops from stack
 
 ADD	               : 'add' ;  	     // add two values from the stack
 SUB	               : 'sub' ;         // sub two values from the stack
-TIMES	           : 'times' ;       // times two values from the stack
+MULT	           : 'mult' ;       // times two values from the stack
 DIV	               : 'div' ;	     // div two values from the stack
+NOT	               : 'not' ;	     // not value from the stack
+
+AND	               : 'and' ;	     // AND between two values from the stack
+OR	               : 'or' ;	         // OR between two values from the stack
 
 STOREW	           : 'sw' ; 	     // store in the memory cell pointed by top the value next
 LOADW	           : 'lw' ;	         // load a value from the memory cell pointed by top
@@ -113,8 +120,6 @@ BRANCHLESSEQ       : 'ble' ;        // jump to label if top <= next
 
 BRANCHGREATHER     : 'bgt' ;         // jump to label if top > next
 BRANCHGREATHEREQ   : 'bge' ;         // jump to label if top >= next
-
-// ??? AND, OR, NOT
 
 JS	               : 'js' ;	         // jump to instruction pointed by top of stack and store next instruction in ra
 LOADRA	           : 'lra' ;	     // load from ra
@@ -130,7 +135,7 @@ PRINT	           : 'print' ;	     // print top of stack
 HALT	           : 'halt' ;	     // stop execution
 NEW                : 'new' ;         // alloca un'area di memoria nello heap
 
-//LOADC              : 'loadc' ;       // data la dispatch table di una classe mette sullo stack il codice
+LOADC              : 'loadc' ;       // data la dispatch table di una classe mette sullo stack il codice
                                      // del primo metodo
 COPY               : 'copy' ;        // duplica il valore in cima allo stack.
 HEAPOFFSET         : 'heapoffset' ;  // converte l'offset di un campo di un oggetto

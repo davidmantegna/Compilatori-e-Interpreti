@@ -1,0 +1,22 @@
+class A(){};
+class B extends A(){};
+class D extends B(){};
+
+class C extends A(){};
+class E extends C(){};
+class F extends E(){};
+
+
+let
+    D d = new D();
+    F f = new F();
+in
+    if(true)
+        then{
+            d
+        }else{
+            f
+        }
+;
+
+// type checking ok! Il tipo del programma è: Object: A

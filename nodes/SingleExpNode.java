@@ -1,8 +1,8 @@
 package nodes;
 
-import type.IType;
 import exceptions.TypeException;
-import util.Semantic.SymbolTable;
+import symboltable.SymbolTable;
+import type.IType;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public class SingleExpNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("SingleExpNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("SingleExpNode: checkSemantics -> \n");
         return expression.checkSemantics(env);
     }
 
@@ -28,6 +28,7 @@ public class SingleExpNode implements INode {
 
     @Override
     public String codeGeneration() {
-        return expression.codeGeneration() + "halt\n";
+        return expression.codeGeneration()
+                + "halt\n";
     }
 }

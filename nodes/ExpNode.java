@@ -1,10 +1,10 @@
 package nodes;
 
-import type.IType;
-import type.IntType;
 import exceptions.TypeException;
 import parser.FOOLParser.ExpContext;
-import util.Semantic.SymbolTable;
+import symboltable.SymbolTable;
+import type.IType;
+import type.IntType;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class ExpNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("ExpNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("ExpNode: checkSemantics -> \n");
         //create the result
         ArrayList<String> res = new ArrayList<String>();
 
@@ -46,9 +46,13 @@ public class ExpNode implements INode {
     @Override
     public String codeGeneration() {
         if (operation.equals("Plus")) {
-            return leftNode.codeGeneration() + rightNode.codeGeneration() + "add\n";
+            return leftNode.codeGeneration()
+                    + rightNode.codeGeneration()
+                    + "add\n";
         } else {
-            return leftNode.codeGeneration() + rightNode.codeGeneration() + "sub\n";
+            return leftNode.codeGeneration()
+                    + rightNode.codeGeneration()
+                    + "sub\n";
         }
     }
 }

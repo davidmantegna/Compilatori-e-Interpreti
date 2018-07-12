@@ -1,10 +1,10 @@
 package nodes;
 
-import type.IType;
-import type.IntType;
 import exceptions.TypeException;
 import parser.FOOLParser.TermContext;
-import util.Semantic.SymbolTable;
+import symboltable.SymbolTable;
+import type.IType;
+import type.IntType;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class TermNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("TermNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("TermNode: checkSemantics -> \n");
         //create the result
         ArrayList<String> res = new ArrayList<String>();
 

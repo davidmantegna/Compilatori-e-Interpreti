@@ -1,7 +1,7 @@
 package type;
 
 import exceptions.UndeclaredIDException;
-import util.Semantic.SymbolTable;
+import symboltable.SymbolTable;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class ObjectType implements IType {
 
     @Override
     public boolean isSubType(IType type) {
-        // classType parametro passato, it2 oarametro richiesto
+        // classType parametro passato, it2 parametro richiesto
         if (type instanceof ObjectType) {
             ObjectType it2 = (ObjectType) type;
             return classType.isSubType(it2.getClassType());

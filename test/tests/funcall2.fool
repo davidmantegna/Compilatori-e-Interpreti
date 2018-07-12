@@ -1,0 +1,9 @@
+let
+    int x = 0;
+    bool ciao(int a, bool c)
+         4 < 3;
+in
+    ciao(2,2);
+;
+
+//"Tipo errato per il parametro 2 nell'invocazione di ciao"

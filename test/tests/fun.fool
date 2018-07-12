@@ -1,0 +1,10 @@
+let
+    int x = 0;
+    int ciao(int a, bool c)
+        x = a;
+    ;
+in
+    9
+;
+
+//Errore: "Il tipo restituito dal corpo della funzione 'ciao' è 'void'. Il tipo richiesto è 'int'

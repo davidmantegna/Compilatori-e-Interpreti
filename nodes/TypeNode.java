@@ -1,9 +1,9 @@
 package nodes;
 
-import type.*;
 import exceptions.TypeException;
 import exceptions.UndeclaredIDException;
-import util.Semantic.SymbolTable;
+import symboltable.SymbolTable;
+import type.*;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class TypeNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("TypeNode: checkSemantics -> \n\t" + env.toString() + "\n");
+        System.out.print("TypeNode: checkSemantics -> \n");
 
         ArrayList<String> result = new ArrayList<>();
         try {
@@ -37,11 +37,6 @@ public class TypeNode implements INode {
         return type;
     }
 
-    @Override
-    public String codeGeneration() {
-        return " - TypeCode - ";
-    }
-
     private IType verificaType(String assignedType) {
         switch (assignedType) {
             case "int":
@@ -51,5 +46,10 @@ public class TypeNode implements INode {
             default:
                 return new ObjectType(new ClassType(assignedType));
         }
+    }
+
+    @Override
+    public String codeGeneration() {
+        return "";
     }
 }

@@ -1,0 +1,27 @@
+class A (int a){
+    B funz (B b)
+        b
+    ;
+}
+class B extends A(int b){
+    A funz (A a)
+        let
+            C c = new C(1, b, b/2);
+        in
+            c
+    ;
+}
+class C extends B(int c){
+
+};
+
+let
+    int x = 3;
+    B ogg = null;
+in
+    ogg = new B(x,x*8);
+;
+
+// CONTROVARIANZA: Parametri: A è sovratipo di B -> true
+// COVARIANZA: 	Ritorno: A è sottotipo di B -> false
+// Override incompatibile del metodo 'funz' della classe 'B'

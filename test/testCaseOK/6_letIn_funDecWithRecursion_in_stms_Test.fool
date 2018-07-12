@@ -1,0 +1,19 @@
+let
+    bool f(int a)
+        h(3)
+    ;
+    int g(int b)
+        b
+    ;
+    bool h(int c)
+        c==3
+    ;
+    int x = 3;
+    bool b = true;
+in
+    x = 4;
+    b = f(x);
+    x = x + g(5);
+;
+
+// Risultato: 1; b =1; x = 9;

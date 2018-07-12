@@ -1,0 +1,10 @@
+class A (bool a){
+};
+let
+    int x = 3;
+    A ogg = null;
+in
+    ogg = new A(x);
+;
+
+// Errore: "Tipo errato per il parametro 1 nell'invocazione del costruttore di A". Errore alla linea 7

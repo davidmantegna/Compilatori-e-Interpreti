@@ -1,0 +1,17 @@
+class Numero(int a){
+    int ciao(int c)
+        a + c;
+}
+class X(int a){
+    void ciao(int c)
+        c = 0;;
+};
+let
+    bool y = false;
+    int x = 5;
+    X num = new X(x);
+in
+    y = num.ciao(9)
+;
+
+// Errore: "Valore incompatibile per la variabile y" Errore alla linea 14

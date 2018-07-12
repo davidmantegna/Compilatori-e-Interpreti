@@ -1,9 +1,8 @@
 package type;
 
-import exceptions.UndeclaredIDException;
 import exceptions.UndeclaredMethodIDException;
-import util.Semantic.Field;
-import util.Semantic.Method;
+import symboltable.Field;
+import symboltable.Method;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +45,10 @@ public class ClassType implements IType {
         return fields;
     }
 
+    public ArrayList<Method> getMethods() {
+        return methods;
+    }
+
     public void setSuperClassType(ClassType superClassType) {
         this.superClassType = superClassType;
     }
@@ -57,7 +60,7 @@ public class ClassType implements IType {
 
     @Override
     public boolean isSubType(IType t) {
-        //A è sottotipo di B, A.isSubTypeOf(B)
+        // A è sottotipo di B, A.isSubTypeOf(B)
         // t parametro richiesto, this parametro passato
 
         // Controllo se altro tipo è classe
@@ -99,8 +102,8 @@ public class ClassType implements IType {
         return "Object: " + classID;
     }
 
-    //funzioni ausiliarie utilizzate nella checksemantics
-    //ritorna un'HashMap di tutti i metodi di questa classe, con nome ed offset
+    // funzioni ausiliarie utilizzate nella checksemantics
+    // ritorna un'HashMap di tutti i metodi di questa classe, con nome ed offset
     public HashMap<String, FunType> getMethodsMap() {
         HashMap<String, FunType> methodsMap = new HashMap<>();
         if (superClassType != null) {
@@ -114,7 +117,7 @@ public class ClassType implements IType {
         return methodsMap;
     }
 
-    //ritorna l'offset del metodo situato nella dispatchTable
+    // ritorna l'offset del metodo situato nella dispatchTable
     public int getOffsetOfMethod(String methodID) throws UndeclaredMethodIDException {
         HashMap<String, Integer> methodsHashMap = methodsHashMapFromSuperClass();
         Integer offset = methodsHashMap.get(methodID);
@@ -126,7 +129,41 @@ public class ClassType implements IType {
         }
     }
 
-    //ritorna un'HashMap dei metodi della superclasse, con nome ed offset
+    public HashMap<String, IType> getFieldsMap() {
+        HashMap<String, IType> methodsMap = new HashMap<>();
+        if (superClassType != null) {
+            HashMap<String, IType> superFieldsMap = superClassType.getFieldsMap();
+            for (String m : superFieldsMap.keySet())
+                methodsMap.put(m, superFieldsMap.get(m));
+        }
+        for (Field m : fields) {
+            methodsMap.put(m.getFieldID(), m.getFieldType());
+        }
+        return methodsMap;
+    }
+
+    public HashMap<String, Integer> fieldHashMapFromSuperClass() {
+        if (superClassType == null) {
+            HashMap<String, Integer> fieldsHashMap = new HashMap<>();
+            for (Field field : fields) {
+                fieldsHashMap.put(field.getFieldID(), fieldsHashMap.size() + 1);
+            }
+            return fieldsHashMap;
+        } else {
+            HashMap<String, Integer> superFieldsMap = superClassType.fieldHashMapFromSuperClass();
+            for (Field field : fields) {
+                if (!superFieldsMap.containsKey(field.getFieldID())) {
+                    superFieldsMap.put(field.getFieldID(), superFieldsMap.size());
+                } else {
+                    // aggiorno il valore dell'offset per via dell'override
+                    superFieldsMap.put(field.getFieldID(), superFieldsMap.size());
+                }
+            }
+            return superFieldsMap;
+        }
+    }
+
+    // ritorna un'HashMap dei metodi della superclasse, con nome ed offset
     public HashMap<String, Integer> methodsHashMapFromSuperClass() {
         if (superClassType == null) {
             HashMap<String, Integer> methodsHashMap = new HashMap<>();
@@ -145,7 +182,7 @@ public class ClassType implements IType {
         }
     }
 
-    //ritorna il tipo di un metodo dato l'ID
+    // ritorna il tipo di un metodo dato l'ID
     public IType getTypeOfMethod(String id) {
         Method method = this.methods
                 .stream()

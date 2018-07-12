@@ -1,0 +1,12 @@
+class Numero(int a){
+    int ciao(int c)
+        a + c;
+}
+class X(){};
+let
+    Numero num = new Numero(true);
+in
+    num.ciao(9)
+;
+
+// Errore: "Tipo errato per il parametro 1 nell'invocazione del costruttore di Numero" Errore alla linea 7
