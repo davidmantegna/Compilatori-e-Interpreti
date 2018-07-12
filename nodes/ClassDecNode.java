@@ -47,7 +47,7 @@ public class ClassDecNode implements INode {
                             fieldArrayList.add(field);
                         }
                     } catch (UndeclaredIDException e) {
-                        e.printStackTrace();
+                        res.add(e.getMessage());
                     }
                 }
 

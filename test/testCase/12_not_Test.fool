@@ -1,3 +1,9 @@
+class B (int ciao){
+    void g(int a)
+        a = 0;
+    ;
+}
+
 class A extends B(int a, B b){
     void funzI(int a)
         b.g(a)
@@ -5,14 +11,7 @@ class A extends B(int a, B b){
     bool funzB(bool b)
         !b
     ;
-}
-
-class B (int ciao){
-    void g(int a)
-        a = 0;
-    ;
 };
-
 let
     int x = 5;
     int y = 2;

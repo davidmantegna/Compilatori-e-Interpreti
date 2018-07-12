@@ -241,7 +241,7 @@ public class ClassNode implements INode {
                     }
                 }
             } catch (UndeclaredIDException e) {
-                res.add("La superclasse " + idSuperClass + " non è definita " + e.getMessage());
+                res.add("La superclasse " + idSuperClass + " non è definita \n" + e.getMessage());
             }
         }
 
