@@ -1,0 +1,17 @@
+let
+    int a=0;
+    int b=0;
+    bool c = false;
+in
+    if c then
+    {
+        a=a+1;
+    }
+    else
+    {
+        b=b+a+10/2;
+    }
+    a=b-1;
+;
+
+//Risultato: 0; -> a = 4, b = 5

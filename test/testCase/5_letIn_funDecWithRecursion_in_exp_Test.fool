@@ -1,0 +1,16 @@
+let
+    bool f(int a)
+        1==1
+    ;
+    int g(int b)
+        b
+    ;
+    bool h(int c)
+        f(3)
+    ;
+    int x = 3;
+in
+    f(3)||h(5)
+;
+
+// Risulato: 1 ; x = 3;

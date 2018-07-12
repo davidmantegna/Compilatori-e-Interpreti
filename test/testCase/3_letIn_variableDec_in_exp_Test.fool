@@ -1,0 +1,8 @@
+let
+    int a=3;
+    int b=3;
+in
+    a==b
+;
+
+// Risultato: 1 <- true 

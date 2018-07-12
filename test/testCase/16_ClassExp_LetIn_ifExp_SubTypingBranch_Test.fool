@@ -1,0 +1,44 @@
+class A (int a){
+    A funz (B b)
+        b
+    ;
+}
+class B extends A(int b){
+    A funz (A a)
+        a
+    ;
+}
+class C extends B(int c){
+
+};
+
+let
+    int x = 3;
+    bool cond = true&&false;
+    A agg = new A(5);
+    B ogg = new B(x, x-2);
+    B prova = new C(x+3, x-2, x*3);
+    A ris = null;
+    int xx = 10;
+in
+    if(cond)then {
+        if(cond)then {
+            ris = agg;
+        }
+        else{
+            ris = ogg;
+        }
+    }
+    else{
+        ris = prova;
+    }
+;
+
+// Risultato: 10
+// x = 3
+// cond = 0
+// agg = 1234
+// ogg = 1236
+// prova = 1239
+// ris = 1239 <- prova
+// xx = 10

@@ -1,0 +1,22 @@
+class B (){
+
+}
+class C extends B(){
+
+}
+class E (B b){
+
+}
+class F extends E (C b){
+
+};
+
+let
+    int x = 3;
+
+in
+    x + 1
+;
+
+//L'identificativo 'b' della classe 'F' è stato dichiarato già nella classe madre: E
+// b: identificativo già definito. Il tipo di 'b' nello scope attuale è stato precedentemente definito come Object: B 
