@@ -11,6 +11,7 @@ class A extends B(int a, B b){
     bool funzB(bool b)
         !b
     ;
+
 };
 let
     int x = 5;
