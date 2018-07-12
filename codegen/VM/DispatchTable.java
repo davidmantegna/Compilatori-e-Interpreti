@@ -41,7 +41,6 @@ public class DispatchTable {
     }
 
     public static void reset() {
-
         dispatchTables = new HashMap<>();
     }
 }

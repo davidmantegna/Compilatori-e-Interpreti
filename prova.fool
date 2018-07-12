@@ -1,32 +1,42 @@
 class B (int ciao){
-    void g(int a)
-        a = 0;
+    int g(int a)
+        a * 5
     ;
 }
 
 class A extends B(int a, B b){
-    void funzI(int a)
+    int funzI(int a)
         b.g(a)
     ;
     bool funzB(bool b)
-        !b
+        b
+    ;
+    bool f(int a)
+        h(a)
+    ;
+    int g(int b)
+        b + 23
+    ;
+    bool h(int c)
+        c == 3
     ;
 };
+
 let
     int x = 5;
     int y = 2;
-    bool c = false;
-    bool xx = false;
+    bool z = false;
     B b = new B(2);
-    A a = new A(45, 8, b);
+    A a = new A(45, 11, b);
 in
-    xx  = ! c;
+    x = a.g(2);
+    y = b.g(10);
+    z = a.f(3);
 ;
 
 // Risultato: 1236
-// x = 5
-// y = 2
-// c = 0 <- false
-// xx = 1 <- true
+// x = 25
+// y = 15
+// z = 1
 // b = 1234
 // a = 1236

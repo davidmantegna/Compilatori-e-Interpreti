@@ -120,7 +120,7 @@ public class VarExpNode implements INode {
         }
 
         if (isNegative) {
-            stringBuilder.append("push -1\n" + "times\n");
+            stringBuilder.append("push -1\n" + "mult\n");
         } else if (isNot) {
             String thenBranch = Label.nuovaLabelString("Then");
             String exit = Label.nuovaLabelString("Exit");

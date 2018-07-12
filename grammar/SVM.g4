@@ -39,7 +39,7 @@ assembly:
 	  | POP		                    {   code.add(POP);        }
       | ADD		                    {   code.add(ADD);        }
       | SUB		                    {   code.add(SUB);        }
-      | TIMES	                    {   code.add(TIMES);      }
+      | MULT	                    {   code.add(MULT);      }
       | DIV		                    {   code.add(DIV);        }
 
       | AND		                    {   code.add(AND);        }
@@ -102,7 +102,7 @@ POP	               : 'pop' ; 	     // pops from stack
 
 ADD	               : 'add' ;  	     // add two values from the stack
 SUB	               : 'sub' ;         // sub two values from the stack
-TIMES	           : 'times' ;       // times two values from the stack
+MULT	           : 'mult' ;       // times two values from the stack
 DIV	               : 'div' ;	     // div two values from the stack
 NOT	               : 'not' ;	     // not value from the stack
 

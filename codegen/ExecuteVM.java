@@ -9,8 +9,8 @@ import java.util.*;
 
 public class ExecuteVM {
 
-    public static final int START_ADDRESS = 1234;   //indirizzo di partenza
-    private static final int MEMSIZE = 135;        //dimensione totale della memoria
+    public static final int START_ADDRESS = 100;     //indirizzo di partenza <- parte da 100 per non avere valore equivoci nel risultato
+    private static final int MEMSIZE = 500;          //dimensione totale della memoria
 
     private ArrayList<String> output = new ArrayList<>();   //contiene l'esito della print o gli errori
 
@@ -80,6 +80,44 @@ public class ExecuteVM {
                     case SVMParser.POP:
                         pop();
                         break;
+                    case SVMParser.ADD:
+                        v1 = pop(); //   register address
+                        v2 = pop(); //   offset
+                        push(v2 + v1);
+                        break;
+                    case SVMParser.SUB:
+                        v1 = pop();
+                        v2 = pop();
+                        push(v2 - v1);
+                        break;
+                    case SVMParser.MULT:
+                        v1 = pop();
+                        v2 = pop();
+                        push(v2 * v1);
+                        break;
+                    case SVMParser.DIV:
+                        v1 = pop();
+                        v2 = pop();
+                        push(v2 / v1);
+                        break;
+                    case SVMParser.AND:
+                        v1 = pop();
+                        v2 = pop();
+                        if ((v1 == 1) && (v2 == 1)) {
+                            push(1);
+                        } else {
+                            push(0);
+                        }
+                        break;
+                    case SVMParser.OR:
+                        v1 = pop();
+                        v2 = pop();
+                        if ((v1 == 0) && (v2 == 0)) {
+                            push(0);
+                        } else {
+                            push(1);
+                        }
+                        break;
                     case SVMParser.STOREW: //store in the memory cell pointed by top the value next
                         address = pop();
                         setMemory(address, pop());
@@ -126,27 +164,20 @@ public class ExecuteVM {
                         ra = ip;
                         ip = address;
                         break;
-                    case SVMParser.STORERA: // store top into ra
-                        ra = pop();
-                        break;
                     case SVMParser.LOADRA:  // load from ra
                         push(ra);
                         break;
-                    case SVMParser.STORERV: // store top into rv
-                        rv = pop();
-                        break;
-                    case SVMParser.LOADC: //mette sullo stack l'indirizzo del metodo all'interno di code
-                        int indirizzoCodice = pop();
-                        push(code[indirizzoCodice]);
+                    case SVMParser.STORERA: // store top into ra
+                        ra = pop();
                         break;
                     case SVMParser.LOADRV: // load from rv
                         push(rv);
                         break;
+                    case SVMParser.STORERV: // store top into rv
+                        rv = pop();
+                        break;
                     case SVMParser.LOADFP: // load frame pointer in the stack
                         push(fp);
-                        break;
-                    case SVMParser.LOADHP: // load heap pointer in the stack
-                        push(hp);
                         break;
                     case SVMParser.STOREFP: // store top into frame pointer
                         fp = pop();
@@ -154,62 +185,15 @@ public class ExecuteVM {
                     case SVMParser.COPYFP: // copy stack pointer into frame pointer
                         fp = sp;
                         break;
-                    case SVMParser.ADD:
-                        v1 = pop(); //   register address
-                        v2 = pop(); //   offset
-                        push(v2 + v1);
+                    case SVMParser.LOADHP: // load heap pointer in the stack
+                        push(hp);
                         break;
-                    case SVMParser.TIMES:
-                        v1 = pop();
-                        v2 = pop();
-                        push(v2 * v1);
+                    case SVMParser.STOREHP:
+                        hp = pop();
                         break;
-                    case SVMParser.DIV:
-                        v1 = pop();
-                        v2 = pop();
-                        push(v2 / v1);
-                        break;
-                    case SVMParser.SUB:
-                        v1 = pop();
-                        v2 = pop();
-                        push(v2 - v1);
-                        break;
-                    case SVMParser.AND:
-                        v1 = pop();
-                        v2 = pop();
-                        if ((v1 == 1) && (v2 == 1)) {
-                            push(1);
-                        } else {
-                            push(0);
-                        }
-                        break;
-                    case SVMParser.OR:
-                        v1 = pop();
-                        v2 = pop();
-                        if ((v1 == 0) && (v2 == 0)) {
-                            push(0);
-                        } else {
-                            push(1);
-                        }
-                        break;
-                    case SVMParser.COPY:    //duplica il valore in cima allo stack
-                        push(getMemory(sp));
-                        break;
-                    case SVMParser.HEAPOFFSET:  //converte l'offset di un campo di un oggetto
-                        // nell'offset reale tra l'indirizzo dell'oggetto nello heap e l'indirizzo del campo
-                        int indirizzoOggetto = pop(); // indirizzo dell'oggetto del quale si richiede il valore del campo
-                        int offsettOggetto = pop();  // offset dell'oggetto rispetto all'inizio del suo spazio nello heap
-                        HeapCell heapCell = heapInUso
-                                .stream()
-                                .filter(cell -> cell.getIndex() == indirizzoOggetto)
-                                .reduce(new HeapCell(0, null), (prev, curr) -> curr);
-                        for (int i = 0; i < offsettOggetto; i++) {
-                            heapCell = heapCell.next;
-                        }
-                        int indirizzoCampo = heapCell.getIndex();
-                        int offsettReale = indirizzoCampo - indirizzoOggetto;
-                        push(offsettReale);
-                        push(indirizzoOggetto);
+                    case SVMParser.PRINT:
+                        output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
+                        pop();
                         break;
                     case SVMParser.NEW:
                         // Sulla testa dello stack deve esserci l'indirizzo della propria dispatch table, il numero degli argomenti e il valore degli argomenti
@@ -246,9 +230,28 @@ public class ExecuteVM {
                             hp = heap.getFreeIndex();
                         }
                         break;
-                    case SVMParser.PRINT:
-                        output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
-                        pop();
+                    case SVMParser.LOADC: //mette sullo stack l'indirizzo del metodo all'interno di code
+                        int indirizzoCodice = pop();
+                        push(code[indirizzoCodice]);
+                        break;
+                    case SVMParser.COPY:    //duplica il valore in cima allo stack
+                        push(getMemory(sp));
+                        break;
+                    case SVMParser.HEAPOFFSET:  //converte l'offset di un campo di un oggetto
+                        // nell'offset reale tra l'indirizzo dell'oggetto nello heap e l'indirizzo del campo
+                        int indirizzoOggetto = pop(); // indirizzo dell'oggetto del quale si richiede il valore del campo
+                        int offsettOggetto = pop();  // offset dell'oggetto rispetto all'inizio del suo spazio nello heap
+                        HeapCell heapCell = heapInUso
+                                .stream()
+                                .filter(cell -> cell.getIndex() == indirizzoOggetto)
+                                .reduce(new HeapCell(0, null), (prev, curr) -> curr);
+                        for (int i = 0; i < offsettOggetto; i++) {
+                            heapCell = heapCell.next;
+                        }
+                        int indirizzoCampo = heapCell.getIndex();
+                        int offsettReale = indirizzoCampo - indirizzoOggetto;
+                        push(offsettReale);
+                        push(indirizzoOggetto);
                         break;
                     case SVMParser.HALT:
                         for (int i = MEMSIZE - 1; i >= 0; i--) {
