@@ -27,7 +27,7 @@ public class ClassDecNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("ClassDecNode: checkSemantics -> \n"/*+ env.toString() + "\n"*/);
+        System.out.print("ClassDecNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         // entro in un nuovo livello di scope
@@ -97,7 +97,6 @@ public class ClassDecNode implements INode {
     @Override
     public String codeGeneration() {
 
-        //TODO Codegen
         ArrayList<ClassNode> classNodeArrayList = new ArrayList<>();
         HashMap<String, ClassNode> classHashMap = new HashMap<>();
         String nameDeclaration = "";
@@ -118,7 +117,7 @@ public class ClassDecNode implements INode {
                 iterator.remove();
             }
         }
-        //se entro dentro a questo while, vuole dire che è presente almeno una classe che ne estende un'altra
+        //se entro dentro questo while, vuole dire che è presente almeno una classe che ne estende un'altra
         while (classDeclarationsArrayList.size() != 0) {
             //per ripartire dall'inizio
             iterator = classDeclarationsArrayList.listIterator();
@@ -131,7 +130,7 @@ public class ClassDecNode implements INode {
                 ClassNode superClass = classHashMap.get(superClassName);
                 //nel caso si estenda una classe ancora non dichiarata si entra in questo if
                 if (superClass != null) {
-                    //aggiungo alle classi dichiarati la sottoclasse
+                    //aggiungo alle classi dichiarate la sottoclasse
                     classNodeArrayList.add(subClass);
                     //aggiungo alla hashmap l'identificatore della sottoclasse e la sua dichiarazione
                     classHashMap.put(subClass.getIdClass(), subClass);

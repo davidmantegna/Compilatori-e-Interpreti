@@ -17,7 +17,6 @@ public class NewNode implements INode {
     private String idClass;
     private ArrayList<INode> argumentsArrayList;
     private NewexpContext newMethodContext;
-    private boolean istanziato;
 
     private ClassType classType;
 
@@ -30,7 +29,7 @@ public class NewNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("VarAsmNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
+        System.out.print("VarAsmNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         try {
@@ -75,7 +74,6 @@ public class NewNode implements INode {
 
     @Override
     public String codeGeneration() {
-        // TODO codeGeneration NewMethod
 
         //new push, in ordine, gli argomenti, il numero di argomenti e la label della classe
         StringBuilder argsCode = new StringBuilder();

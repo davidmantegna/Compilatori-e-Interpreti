@@ -25,7 +25,7 @@ public class StmIfExpNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("StmIfExpNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
+        System.out.print("StmIfExpNode: checkSemantics -> \n");
         ArrayList<String> result = new ArrayList<>();
         //checkSemantic sulla condizione
         result.addAll(conditionNode.checkSemantics(env));

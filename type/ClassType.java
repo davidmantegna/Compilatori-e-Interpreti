@@ -60,7 +60,7 @@ public class ClassType implements IType {
 
     @Override
     public boolean isSubType(IType t) {
-        //A è sottotipo di B, A.isSubTypeOf(B)
+        // A è sottotipo di B, A.isSubTypeOf(B)
         // t parametro richiesto, this parametro passato
 
         // Controllo se altro tipo è classe
@@ -182,7 +182,7 @@ public class ClassType implements IType {
         }
     }
 
-    //ritorna il tipo di un metodo dato l'ID
+    // ritorna il tipo di un metodo dato l'ID
     public IType getTypeOfMethod(String id) {
         Method method = this.methods
                 .stream()

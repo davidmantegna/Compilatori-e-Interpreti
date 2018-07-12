@@ -17,7 +17,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     @Override
     public INode visitSingleExp(SingleExpContext singleExpContext) {
         System.out.print("visitSingleExp -> \t");
-        //serve per la singola espressione print *qualcosa*
+
         return new SingleExpNode(visit(singleExpContext.exp()));
     }
 
@@ -117,7 +117,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         for (DecContext dc : letContext.dec()) {
             declarations.add(visit(dc));
         }
-        res = new LetNode(declarations, "visitLet");
+        res = new LetNode(declarations);
 
         return res;
     }
@@ -131,7 +131,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         for (VarasmContext vc : letnestContext.varasm()) {
             declarations.add(visit(vc));
         }
-        res = new LetNode(declarations, "visitLetnest");
+        res = new LetNode(declarations);
 
         return res;
     }
@@ -382,7 +382,6 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
     public INode visitBoolVal(BoolValContext boolValContext) {
         System.out.print("visitBoolVal -> \t");
 
-        String text = boolValContext.getText().replace("!", "");
 
         if (boolValContext.NOT() == null) {
             return new BoolNode(Boolean.parseBoolean(boolValContext.getText()));
@@ -461,7 +460,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
         StmsNode res;
 
-        ArrayList<INode> statements = new ArrayList<INode>();
+        ArrayList<INode> statements = new ArrayList<>();
 
         for (StmContext stm : stmsContext.stm()) {
             statements.add(visit(stm));
@@ -506,7 +505,7 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
 
             //gestisco i parametri
             for (int i = 0; i < funContext.vardec().size(); i++) {
-                VardecContext vardecContext = funContext.vardec().get(i); //TODO settato insideCLass a False per prendere i parametri del metodo
+                VardecContext vardecContext = funContext.vardec().get(i); // settato insideCLass a False per prendere i parametri del metodo
                 parameterNodeArrayList.add(new ParameterNode(vardecContext.ID().getText(), visit(vardecContext.type()).typeCheck(), i + 1, false, vardecContext));
             }
 

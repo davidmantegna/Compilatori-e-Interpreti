@@ -41,21 +41,21 @@ public class MethodCallNode extends FunCallNode {
         ArrayList<String> res = new ArrayList<>();
         nestinglevel = env.getNestingLevel();   //  level della chiamata del metodo
 
-        //prendo l'offset e il tipo di oggetto e metodo e poi effettuo vari controlli
+        // prendo l'offset e il tipo di oggetto e metodo e poi effettuo vari controlli
         try {
             ClassType classType = null;
-            //ricavo informazioni del metodo per accedere alla DT
+            // ricavo informazioni del metodo per accedere alla DT
             if (classID.equals("this")) {
                 objectOffset = 0;       // se si sta utilizzando this ci si riferisce per forza alla classe corrente	 perciò il valore di $fp è sempre 0
                 objectNestingLevel = 3; // nel livello 3 della entry ci sono i metodi
-                //prendo la STentry dell'oggetto dalla Symbol Table
+                // prendo la STentry dell'oggetto dalla Symbol Table
                 SymbolTableEntry objectSTentry = env.processUse(classID);
                 if (objectSTentry.getType() instanceof ClassType) {
                     classType = (ClassType) objectSTentry.getType();
                 }
             } else {
                 // vengono calcolati gli offset dalla dispatch table per avere accesso all'oggetto del metodo
-                //prendo la STentry dell'oggetto dalla Symbol Table
+                // prendo la STentry dell'oggetto dalla Symbol Table
                 SymbolTableEntry objectSTentry = env.processUse(classID);
 
                 if (!objectSTentry.isInitialized()) {
@@ -121,7 +121,7 @@ public class MethodCallNode extends FunCallNode {
 
     @Override
     public String codeGeneration() {
-        //TODO test codeGeneration
+
         StringBuilder parameterCode = new StringBuilder();
         for (int i = argumentsArrayList.size() - 1; i >= 0; i--)
             parameterCode.append(argumentsArrayList.get(i).codeGeneration());
@@ -135,7 +135,7 @@ public class MethodCallNode extends FunCallNode {
                 + parameterCode
                 + "push " + objectOffset + "\n"         // pusho l'offset logico dell'oggetto (dispatch table)
                 + "lfp\n"
-                + getActivationRecord                   //pusho access link (lw consecutivamente) così si potrà risalire la catena statica
+                + getActivationRecord                   // pusho access link (lw consecutivamente) così si potrà risalire la catena statica
                 + "add\n"                               // $fp + offset
                 + "lw\n"                                // pusho indirizzo di memoria in cui si trova l'indirizzo della dispatch table
                 + "copy\n"                              // copio

@@ -4,7 +4,7 @@ import type.IType;
 
 public class SymbolTableEntry {
 
-    private int nestingLevel; //nestinglevel
+    private int nestingLevel;
     private IType type;
     private int offset;
     private boolean initialized;

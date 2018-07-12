@@ -30,7 +30,7 @@ public class FunType implements IType {
         return IDType.FUN;
     }
 
-/*Il tipo di una funzione f1 e` sottotipo del tipo di una funzione f2 se il tipo ritornato da f1
+    /*Il tipo di una funzione f1 e` sottotipo del tipo di una funzione f2 se il tipo ritornato da f1
     e` sottotipo del tipo ritornato da f2, se hanno il medesimo numero di parametri,
     e se ogni tipo di paramentro di f1 e` sopratipo del corrisponde tipo di parametro di f2. */
 

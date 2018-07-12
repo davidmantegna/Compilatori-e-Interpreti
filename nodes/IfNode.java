@@ -35,7 +35,7 @@ public class IfNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("IfNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
+        System.out.print("IfNode: checkSemantics -> \n");
         ArrayList<String> result = new ArrayList<>();
 
         //checkSemantic sulla condizione

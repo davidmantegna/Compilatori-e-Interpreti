@@ -27,7 +27,7 @@ public class MethodNode extends FunNode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("MethodNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
+        System.out.print("MethodNode: checkSemantics -> \n");
 
         ArrayList<String> res = new ArrayList<>();
 
@@ -79,7 +79,6 @@ public class MethodNode extends FunNode {
     @Override
     public String codeGeneration() {
         System.out.print("MethodNode: codeGeneration ->\t");
-        // TODO codeGeneration
 
         //variabili dichiarate internamente
         StringBuilder localDeclarations = new StringBuilder();
@@ -98,7 +97,9 @@ public class MethodNode extends FunNode {
         String methodLabel = Label.nuovaLabelMetodoString(idFunzione.toUpperCase());
 
         if (returnType instanceof VoidType) {
+
             // siccome il return è Void vengono rimosse le operazioni per restituire returnvalue
+
             FunctionCode.insertFunctionsCode(methodLabel + ":\n" +
                     "cfp\n" + //$fp diventa uguale al valore di $sp
                     "lra\n" + //push return address

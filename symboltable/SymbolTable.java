@@ -37,16 +37,8 @@ public class SymbolTable {
         offset = n;
     }
 
-    public void increaseOffset() {
-        offset = offset + 1;
-    }
-
     public void decreaseOffset() {
         offset = offset - 1;
-    }
-
-    public LinkedList<HashMap<String, SymbolTableEntry>> getSymtable() {
-        return symTable;
     }
 
     public IType getTypeOf(String id) throws UndeclaredIDException {
@@ -96,7 +88,7 @@ public class SymbolTable {
     //se non presente, l'ID non è definito e viene lanciata l'eccezione
     public SymbolTableEntry processUse(String id) throws UndeclaredIDException {
         ListIterator<HashMap<String, SymbolTableEntry>> li = symTable.listIterator(symTable.size());
-        //System.out.println("Size symbol table: " + symTable.size());
+
         while (li.hasPrevious()) {
             HashMap<String, SymbolTableEntry> current = li.previous();
             if (current.containsKey(id)) {
@@ -107,7 +99,7 @@ public class SymbolTable {
     }
 
     // verifico se id (identificatore) utilizzato nell in è stato precedentemente dichiarato
-    //uguale a processUse ma ignora le entry di tipo funzione
+    // uguale a processUse ma ignora le entry di tipo funzione
     public SymbolTableEntry processUseIgnoreFun(String id) throws UndeclaredIDException {
         ListIterator<HashMap<String, SymbolTableEntry>> li = symTable.listIterator(symTable.size());
         while (li.hasPrevious()) {
@@ -139,7 +131,7 @@ public class SymbolTable {
                 .get(this.symTable.size() - 1)
                 .put(id, nuovaEntry);
         if (vecchiaEntry != null) {
-            // ci entro solo se voglio ridefinire un identificativo nello stesso scope
+            // entro solo se voglio ridefinire un identificativo nello stesso scope
             throw new MultipleIDException(id, vecchiaEntry.getType().toPrint());
         }
     }

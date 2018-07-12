@@ -32,7 +32,7 @@ public class StmAsmNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("StmAsmNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
+        System.out.print("StmAsmNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
 

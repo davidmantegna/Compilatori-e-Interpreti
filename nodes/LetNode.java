@@ -12,22 +12,20 @@ import java.util.ArrayList;
 
 public class LetNode implements INode {
     private ArrayList<INode> declarationArrayList;
-    private String infoInvocation;
 
-    public LetNode(ArrayList<INode> declarationArrayList, String infoInvocation) {
+
+    public LetNode(ArrayList<INode> declarationArrayList) {
         this.declarationArrayList = declarationArrayList;
-        this.infoInvocation = infoInvocation;
-        System.out.println(infoInvocation);
     }
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("LetNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
+        System.out.print("LetNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         //CheckSemantic nella lista di dichiarazioni
         if (declarationArrayList.size() > 0) {
-            env.setOffset(-1); //TODO era -2
+            env.setOffset(-1);
 
             //Checksemantic nei figli
             for (INode n : declarationArrayList) {
@@ -52,7 +50,6 @@ public class LetNode implements INode {
                     res.addAll(n.checkSemantics(env));
                 }
             }
-
 
             for (INode n : declarationArrayList) {
                 if (n instanceof FunNode) {

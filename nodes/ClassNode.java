@@ -52,23 +52,15 @@ public class ClassNode implements INode {
         return methodDeclarationArraylist;
     }
 
-    public ClassType getClassType() {
-        return classType;
-    }
-
-    public void setFieldDeclarationArraylist(ArrayList<ParameterNode> fieldDeclarationArraylist) {
-        this.fieldDeclarationArraylist = fieldDeclarationArraylist;
-    }
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("ClassNode: checkSemantics -> \n"/*+ env.toString() + "\n"*/);
+        System.out.print("ClassNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         ArrayList<Field> fieldArrayList = new ArrayList<>();
         ArrayList<Method> methodArrayList = new ArrayList<>();
 
-        // TODO  Test superclasse
         ClassType superclassType;
 
         //controllo se la classe ha una superclasse per aggiornare correttamente la SymbolTable
@@ -121,11 +113,10 @@ public class ClassNode implements INode {
             methodHashMap.put(methodNode.getID(), new FunType(parameterTypeArrayList, methodNode.getReturnType()));
         }
 
-
         // all'ID dichiarato si setta il tipo classe nella SymbolTableEntry
         try {
             classType = new ClassType(idClass, superclassType, fieldArrayList, methodArrayList);
-            env.setDeclarationType(idClass, classType, 0); // TODO punto in cui viene dichiarato il tipo
+            env.setDeclarationType(idClass, classType, 0);
         } catch (UndeclaredIDException e) {
             res.add(e.getMessage());
         }
@@ -223,7 +214,7 @@ public class ClassNode implements INode {
 
             try {
                 //controllo ovveride se possibile
-                // TODO verificare campi, override metodi
+
                 //prendo entry e tipo della superclasse
                 SymbolTableEntry superClassEntry = env.processUse(idSuperClass);
                 ClassType superClassType = (ClassType) superClassEntry.getType();
@@ -266,7 +257,6 @@ public class ClassNode implements INode {
 
     @Override
     public String codeGeneration() {
-        // TODO Da rivedere e testare
 
         ArrayList<DispatchTableEntry> dispatchTable;
         // Creo una nuova dispatch table da zero se la classe non ha superclasse

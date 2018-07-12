@@ -33,7 +33,7 @@ public class VarExpNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("VarExpNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
+        System.out.print("VarExpNode: checkSemantics -> \n");
 
         //cercare ID nella symbol table, con casi particolari per le classi
         ArrayList<String> res = new ArrayList<>();
@@ -52,7 +52,6 @@ public class VarExpNode implements INode {
             nestingLevel = env.getNestingLevel();
 
             //serve per assegnare il supertipo dinamicamente agli oggetti
-            //vedi Test
 
             if (entry.getType() instanceof ObjectType) {
                 if (!entry.isInitialized()) {
@@ -102,7 +101,6 @@ public class VarExpNode implements INode {
             stringBuilder.append(
                     "push " + entry.getOffset() + "\n" + // pusho offset dell'ID
                             "lfp\n" + getActivationRecord +
-                            //"lw \n"+// TODO in caso di errore nella heapoffset settare solo 1 lw; <- decommentare
                             "heapoffset\n" +  // converto l'offset logico nell'offset fisico a cui l'identificatore si riferisce, poi lo carica sullo stack, utilizzato solo per i parametri dei metodi all'interno delle classi
                             "add\n" +
                             "lw\n"//carico sullo stack il valore dell'indirizzo ottenuto

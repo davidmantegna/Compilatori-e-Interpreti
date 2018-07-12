@@ -32,18 +32,17 @@ public class VarAsmNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("VarAsmNode: checkSemantics -> \n"/*+ env.toString() + "\n"*/);
+        System.out.print("VarAsmNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
-        // al momento gestisco così il tipo ID
-        //Se sto instanziando un nuovo oggetto, aggiorno le informazioni
+        // gestisco il tipo ID
+        // Se sto instanziando un nuovo oggetto, aggiorno le informazioni
         if (assignedType instanceof ObjectType) {
             ObjectType decType = (ObjectType) assignedType;
             res.addAll(decType.updateClassType(env));
         }
 
         res.addAll(exp.checkSemantics(env));
-        // TODO test null
 
         try {
             env.processDeclarationClass(id, assignedType, env.getOffset(), initialized, insideClass);

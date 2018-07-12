@@ -17,7 +17,7 @@ public class IntNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("IntNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
+        System.out.print("IntNode: checkSemantics -> \n");
         return new ArrayList<>(); //non crea livelli di annidamento
     }
 

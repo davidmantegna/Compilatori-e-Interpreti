@@ -20,7 +20,7 @@ public class TypeNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("TypeNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
+        System.out.print("TypeNode: checkSemantics -> \n");
 
         ArrayList<String> result = new ArrayList<>();
         try {

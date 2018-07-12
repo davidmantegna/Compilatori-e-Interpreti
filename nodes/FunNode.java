@@ -44,7 +44,7 @@ public class FunNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FunNode: checkSemantics -> \n"/*+ env.toString() + "\n"*/);
+        System.out.print("FunNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         // entro in un nuovo livello di scope
@@ -100,7 +100,7 @@ public class FunNode implements INode {
 
     @Override
     public String codeGeneration() {
-        //TODO test codeGeneration
+
         //  variabili dichiarate internamente e variabili da togliere dallo stack al termine del record di attivazione
         StringBuilder localDeclarations = new StringBuilder();
         StringBuilder popLocalDeclarations = new StringBuilder();

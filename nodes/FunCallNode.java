@@ -32,21 +32,13 @@ public class FunCallNode implements INode {
         return argumentsArrayList;
     }
 
-    public SymbolTableEntry getEntry() {
-        return entry;
-    }
-
-    public int getCalledNestingLevel() {
-        return calledNestingLevel;
-    }
-
     public FuncallContext getFuncallContext() {
         return funcallContext;
     }
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FunCallNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
+        System.out.print("FunCallNode: checkSemantics -> \n");
         ArrayList<String> res = new ArrayList<>();
 
         try {
@@ -97,14 +89,12 @@ public class FunCallNode implements INode {
 
     @Override
     public String codeGeneration() {
-        //TODO test codeGeneration, r
 
         StringBuilder parameterCode = new StringBuilder();
         //parametri in ordine inverso
         for (int i = argumentsArrayList.size() - 1; i >= 0; i--) {
             parameterCode.append(argumentsArrayList.get(i).codeGeneration());
         }
-
 
         //utilizzato per gestire le funzioni
         StringBuilder getActivationRecord = new StringBuilder();

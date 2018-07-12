@@ -23,12 +23,11 @@ public class FactorNode implements INode {
 
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
-        System.out.print("FactorNode: checkSemantics -> \n" /*+ env.toString() + "\n"*/);
+        System.out.print("FactorNode: checkSemantics -> \n");
         //create the result
         ArrayList<String> res = new ArrayList<String>();
 
         //check semantics in the left and in the right exp
-
         res.addAll(leftNode.checkSemantics(env));
         res.addAll(rightNode.checkSemantics(env));
 
@@ -43,13 +42,13 @@ public class FactorNode implements INode {
         IType rightType = rightNode.typeCheck();
 
 
-        if (leftNode instanceof FunCallNode || rightNode instanceof FunCallNode) {// TODO non è possibile inserire delle funzioni con Return Void come condizione
+        if (leftNode instanceof FunCallNode || rightNode instanceof FunCallNode) {
             if (leftType instanceof VoidType || rightType instanceof VoidType) {
                 throw new TypeException("Tipo incompatibile per " + operator + ". Non è possbile inserire delle funzioni con Return Void come condizione", factorContext);
             }
         }
 
-        if (leftType instanceof ObjectType || rightType instanceof ObjectType) {// TODO non è possibile inserire degli oggetti come condizione
+        if (leftType instanceof ObjectType || rightType instanceof ObjectType) {
             throw new TypeException("Tipo incompatibile per " + operator + ". Non è possbile inserire degli Oggetti nella condizione", factorContext);
         }
 
@@ -67,8 +66,7 @@ public class FactorNode implements INode {
                 throw new TypeException("Tipo incompatibile per " + operator + ". È richiesto un intero.", factorContext);
             }
         }
-        System.out.println("\nTipi compatibili per '" + operator + "'. (op1 = " + leftType.toPrint() + " op2 = " + rightType.toPrint() + ")\n"); // TODO al momento vengono accettati i seguenti tipi: int, bool, ID
-
+        System.out.println("\nTipi compatibili per '" + operator + "'. (op1 = " + leftType.toPrint() + " op2 = " + rightType.toPrint() + ")\n");
         return new BoolType();
     }
 
