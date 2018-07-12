@@ -1,3 +1,9 @@
+class B (int ciao){
+    int g(int a)
+        a + 5
+    ;
+};
+
 class A extends B(int a, B b){
     int funzI(int a)
         b.g(a)
@@ -15,12 +21,6 @@ class A extends B(int a, B b){
         c == 3
     ;
 }
-
-class B (int ciao){
-    int g(int a)
-        a + 5
-    ;
-};
 
 let
     int x = 5;
