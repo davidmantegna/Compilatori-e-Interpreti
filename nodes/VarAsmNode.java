@@ -36,7 +36,7 @@ public class VarAsmNode implements INode {
         ArrayList<String> res = new ArrayList<>();
 
         // gestisco il tipo ID
-        // Se sto instanziando un nuovo oggetto, aggiorno le informazioni
+        // Se sto instanziando un nuovo oggetto, aggiorno le informazioni, e verifico se la classe esiste
         if (assignedType instanceof ObjectType) {
             ObjectType decType = (ObjectType) assignedType;
             res.addAll(decType.updateClassType(env));

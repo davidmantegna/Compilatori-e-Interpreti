@@ -124,7 +124,7 @@ public class ClassNode implements INode {
         // entro in un nuovo livello di scope
         env.entryNewScope();
 
-        // eredito i campi della superClasse
+        // inserisco nella SymbolTable i campi della superclasse e determino il nuovo offset per i campi della classe attuale
         if (superclassType != null) {
             HashMap<String, Integer> info = superclassType.fieldHashMapFromSuperClass();
             int lastOff = 0;
@@ -172,14 +172,13 @@ public class ClassNode implements INode {
         // entro in un nuovo livello di scope
         env.entryNewScope();
 
-        // eredito i metodi senza 'override' dalla superclasse
+        // inserisco nella SymbolTable i metodi senza 'override' della superclasse
         if (superclassType != null) {
             HashMap<String, Integer> info = superclassType.methodsHashMapFromSuperClass();
             for (String s : info.keySet()) {
                 if (!methodHashMap.containsKey(s)) {
                     try {
                         int off = info.get(s);
-                        System.out.println("Metodi senza override");
                         env.processDeclaration(s, superclassType.getMethodsMap().get(s), off);
                     } catch (MultipleIDException e) {
                         e.printStackTrace();

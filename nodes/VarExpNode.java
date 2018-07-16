@@ -39,17 +39,15 @@ public class VarExpNode implements INode {
         ArrayList<String> res = new ArrayList<>();
 
         try {
-            //è utilizzato per poter definire un oggetto con lo stesso nome di un metodo
-            //all'interno di una classe
+            // è utilizzato per accedere ad un campo della classe
             entry = env.processUseIgnoreFun(identificatore);
             // true quando si è dentro ad una classe
             if (entry.isInsideClass()) {
-                SymbolTableEntry thisPointer = env.processUse("this");
-                thisNestingLevel = thisPointer.getNestinglevel();
-                thisOffset = thisPointer.getOffset();
-                System.out.println(identificatore + " è un campo della classe -> nestingLevel: " + thisNestingLevel + " offset: " + thisOffset);
+                SymbolTableEntry thisPointer = env.processUse("this"); // ottengo le informazioni relative alla classe; this
+                thisNestingLevel = thisPointer.getNestinglevel(); // scope di this (metodi) -> 2
+                thisOffset = thisPointer.getOffset(); // offset del this (parte da 0) -> 0
             }
-            nestingLevel = env.getNestingLevel();
+            nestingLevel = env.getNestingLevel(); // scope interno al metodo (per parametri e body)
 
             //serve per assegnare il supertipo dinamicamente agli oggetti
 
@@ -90,28 +88,27 @@ public class VarExpNode implements INode {
 
     @Override
     public String codeGeneration() {
-        //for e getActivationRecord per gestire le funzioni annidate
-        StringBuilder getActivationRecord = new StringBuilder();
+        //for e lwActivationRecord per gestire le funzioni annidate
+        StringBuilder lwActivationRecord = new StringBuilder();
         StringBuilder stringBuilder = new StringBuilder();
 
         if (entry.isInsideClass()) {
             for (int i = 0; i < nestingLevel - thisNestingLevel; i++)
-                getActivationRecord.append("lw\n");
+                lwActivationRecord.append("lw\n");
 
-            stringBuilder.append(
-                    "push " + entry.getOffset() + "\n" + // pusho offset dell'ID
-                            "lfp\n" + getActivationRecord +
-                            "heapoffset\n" +  // converto l'offset logico nell'offset fisico a cui l'identificatore si riferisce, poi lo carica sullo stack, utilizzato solo per i parametri dei metodi all'interno delle classi
-                            "add\n" +
-                            "lw\n"//carico sullo stack il valore dell'indirizzo ottenuto
+            stringBuilder.append("push " + entry.getOffset() + "\n" + // pusho offset dell'ID
+                    "lfp\n" + lwActivationRecord +
+                    "heapoffset\n" +  // converto l'offset logico nell'offset fisico a cui l'identificatore si riferisce, poi lo carica sullo stack, utilizzato solo per i parametri dei metodi all'interno delle classi
+                    "add\n" +
+                    "lw\n"//carico sullo stack il valore dell'indirizzo ottenuto
             );
 
         } else {
-            for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++) {
-                getActivationRecord.append("lw\n");
+            for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++) {// utilizzato al di fuori delle classi, per accedee alle variabili dichiarate nel Let
+                lwActivationRecord.append("lw\n");
             }
-            stringBuilder.append("push " + entry.getOffset() + "\n" + //metto offset sullo stack
-                    "lfp\n" + getActivationRecord + //risalgo la catena statica
+            stringBuilder.append("push " + entry.getOffset() + "\n" + //metto offset dell'ID sullo stack
+                    "lfp\n" + lwActivationRecord + //risalgo la catena statica
                     "add\n" +
                     "lw\n" //carico sullo stack il valore all'indirizzo ottenuto
             );

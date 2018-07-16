@@ -29,15 +29,15 @@ public class TestCase {
             System.out.println("Rilevazione Input...\n");
             String fileNameFool = "";
             String fileName;
-            //String packageName = "test/testCaseOK/";
-            String packageName = "test/testCaseFail/";
+            String packageName = "test/testCaseOK/";
+            //String packageName = "test/testCaseFail/";
 
             final File folder = new File(packageName);
 
             //int rand = ThreadLocalRandom.current().nextInt(1, folder.listFiles().length);
             //fileName = listFilesForFolder(folder, String.valueOf(rand));
 
-            fileName = listFilesForFolder(folder, "64_");
+            fileName = listFilesForFolder(folder, "20_");
 
             System.out.println("File: " + fileName + "\n");
 
@@ -108,7 +108,7 @@ public class TestCase {
             System.out.println("Codice SVM generato: (" + code.split("\n").length + " linee). Output visibile in codice.svm.");
 
             //Scommenta se vuoi vedere l'output del codice a console
-            System.out.println(code);
+            //System.out.println(code);
 
             printPhase("CODE GENERATION EXECUTION");
 

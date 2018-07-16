@@ -63,15 +63,19 @@ public class IfNode implements INode {
             superClassThen = classThen.getSuperClassType();
             superClassElse = classElse.getSuperClassType();
 
-            if (superClassThen != null || superClassElse != null) {
+            if (superClassThen != null) {
                 while (superClassThen.getSuperClassType() != null) {
                     superClassThen = superClassThen.getSuperClassType();
                 }
+            }
 
+            if (superClassElse != null) {
                 while (superClassElse.getSuperClassType() != null) {
                     superClassElse = superClassElse.getSuperClassType();
                 }
+            }
 
+            if (superClassThen != null && superClassElse != null) {
                 if (superClassThen.getClassID() == superClassElse.getClassID())
                     return superClassThen;
             }

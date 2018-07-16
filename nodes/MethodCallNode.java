@@ -97,8 +97,19 @@ public class MethodCallNode extends FunCallNode {
             }
 
             //CheckSemantic per ogni argomento
-            for (INode node : getArgumentsArrayList())
-                res.addAll(node.checkSemantics(env));
+            int index = 1;
+            for (INode argument : getArgumentsArrayList()) {
+                if (argument instanceof FunCallNode) {
+                    String args = "una funzione";
+                    if (argument instanceof MethodCallNode) {
+                        args = "un metodo";
+                    }
+                    res.add("Errore: Il metodo '" + id + "' ha " + args + " come " + index + "° parametro\n"); // Vietato passare Funzioni e Metodi come parametri
+                } else {
+                    res.addAll(argument.checkSemantics(env));
+                }
+                index++;
+            }
 
         } catch (UndeclaredIDException | UndeclaredMethodIDException e) {
             res.add(e.getMessage());
@@ -126,16 +137,16 @@ public class MethodCallNode extends FunCallNode {
         for (int i = argumentsArrayList.size() - 1; i >= 0; i--)
             parameterCode.append(argumentsArrayList.get(i).codeGeneration());
 
-        StringBuilder getActivationRecord = new StringBuilder();
+        StringBuilder lwActivationRecord = new StringBuilder();
 
         for (int i = 0; i < nestinglevel - objectNestingLevel; i++)
-            getActivationRecord.append("lw\n");
+            lwActivationRecord.append("lw\n");
 
         return "lfp\n"                                  // pusho frame pointer e parametri
                 + parameterCode
                 + "push " + objectOffset + "\n"         // pusho l'offset logico dell'oggetto (dispatch table)
                 + "lfp\n"
-                + getActivationRecord                   // pusho access link (lw consecutivamente) così si potrà risalire la catena statica
+                + lwActivationRecord                    // pusho access link (lw consecutivamente) così si potrà risalire la catena statica
                 + "add\n"                               // $fp + offset
                 + "lw\n"                                // pusho indirizzo di memoria in cui si trova l'indirizzo della dispatch table
                 + "copy\n"                              // copio

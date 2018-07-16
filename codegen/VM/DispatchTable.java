@@ -30,10 +30,10 @@ public class DispatchTable {
         // Per ogni classe
         for (Map.Entry<String, ArrayList<DispatchTableEntry>> dt : dispatchTables.entrySet()) {
             //Genera le label delle classi
-            stringBuilder.append("class" + dt.getKey() + ":\n"); // nuovaLabelPerDispatchTable
+            stringBuilder.append("\nclass" + dt.getKey() + ":\n"); // nuovaLabelPerDispatchTable
             // Per ogni elemento della dispatch table
             for (DispatchTableEntry entry : dispatchTables.get(dt.getKey())) {
-                //Aggiunge sotto alla label della classe le label delle funzioni a cui si riferisce
+                //Aggiunge sotto alla label della classe le label del metodo a cui si riferisce
                 stringBuilder.append(entry.getMethodLabel());
             }
         }

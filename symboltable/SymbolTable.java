@@ -73,8 +73,8 @@ public class SymbolTable {
         return this;
     }
 
-    //aggiorna l'attributo type della SymbolTableEntry con chiave IDType
-    //è utilizzato per aggiornare il supertipo delle classi (dopo tutte le classdec)
+    // aggiorna l'attributo type della SymbolTableEntry con chiave IDType
+    // è utilizzato per aggiornare il supertipo delle classi (dopo tutte le classdec)
     public SymbolTable setDeclarationType(String id, IType newtype, int offset) throws UndeclaredIDException {
         SymbolTableEntry nuovaEntry = new SymbolTableEntry(getNestingLevel(), newtype, offset);
         SymbolTableEntry vecchiaEntry = symTable.get(getNestingLevel()).replace(id, nuovaEntry);

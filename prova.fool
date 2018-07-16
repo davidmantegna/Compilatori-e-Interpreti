@@ -1,25 +1,9 @@
 class A (int a){
-    A funz (B b)
-        b
-    ;
-}
-class B extends A(int b){
-    C funz (A a)
-        let
-            C c = new C(6,7,8);
-        in
-            c
-    ;
-}
-class C extends B(int c){
-
+    void setA(int b)
+        a = b;
 };
-
 let
-    int x = -3;
-    B ogg = null;
+    A a = new A(5);
 in
-    ogg = new B(x,3);
+    a.setA(10)
 ;
-
-// Risultato: 1235 <- indirizzo di memoria di 'ogg'

@@ -97,7 +97,6 @@ public class MethodNode extends FunNode {
         String methodLabel = Label.nuovaLabelMetodoString(idFunzione.toUpperCase());
 
         if (returnType instanceof VoidType) {
-
             // siccome il return è Void vengono rimosse le operazioni per restituire returnvalue
 
             FunctionCode.insertFunctionsCode(methodLabel + ":\n" +
