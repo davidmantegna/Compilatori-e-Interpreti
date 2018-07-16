@@ -56,11 +56,11 @@ public class SymbolTableEntry {
     @Override
     public String toString() {
         return "SymbolTableEntry {" +
-                "nestingLevel= " + nestingLevel +
-                ", type= " + type.toPrint() +
-                ", offset= " + offset +
-                ", istanziato= " + initialized +
-                ", insideClass= " + insideClass +
+                "nestingLevel = " + nestingLevel +
+                ", type = " + type.toPrint() +
+                ", offset = " + offset +
+                ", initialized = " + initialized +
+                ", insideClass = " + insideClass +
                 "}";
     }
 }

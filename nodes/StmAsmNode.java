@@ -22,6 +22,9 @@ public class StmAsmNode implements INode {
     private SymbolTableEntry entry;
     private IType idType;
 
+    private int thisNestingLevel;
+    private int thisOffset;
+
     public StmAsmNode(String id, INode e, StmAssignmentContext c) {
         this.exp = e;
         this.stmAssignmentContext = c;
@@ -39,8 +42,14 @@ public class StmAsmNode implements INode {
 
 
         try {
-            idType = env.getTypeOf(id);
+            idType = env.getTypeOf(id); // info ottenuta dal nestingLevel 1, dove sono dichiarati tutti i campi della classe
             entry = env.processUseIgnoreFun(id);
+
+            if (entry.isInsideClass()) {
+                SymbolTableEntry thisPointer = env.processUse("this"); // ottengo le informazioni relative alla classe; this
+                thisNestingLevel = thisPointer.getNestinglevel(); // scope di this (metodi) -> 2
+                thisOffset = thisPointer.getOffset(); // offset del this (parte da 0) -> 0
+            }
             nestingLevel = env.getNestingLevel();
 
             if ((entry.getType() instanceof IntType || entry.getType() instanceof BoolType) && exp instanceof NullNode) {
@@ -83,16 +92,27 @@ public class StmAsmNode implements INode {
 
     @Override
     public String codeGeneration() {
-
         StringBuilder lwActivationRecord = new StringBuilder();
-        for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++)
-            lwActivationRecord.append("lw\n");
+        if (entry.isInsideClass()) {
+            for (int i = 0; i < nestingLevel - thisNestingLevel; i++)
+                lwActivationRecord.append("lw\n");
 
-        return exp.codeGeneration()
-                + "push " + entry.getOffset() + "\n"
-                + "lfp \n" +
-                lwActivationRecord
-                + "add \n"
-                + "sw \n";
+            return exp.codeGeneration()
+                    + "push " + entry.getOffset() + "\n" // push offset dell'ID
+                    + "lfp \n" + lwActivationRecord  //risalgo la catena statica
+                    + "heapoffset\n"   // converto l'offset logico nell'offset fisico a cui l'identificatore si riferisce, poi lo carica sullo stack, utilizzato solo per i parametri dei metodi all'interno delle classi
+                    + "add\n"
+                    + "sw\n"; // aggiorno il valore dell'ID
+
+        } else {
+            for (int i = 0; i < nestingLevel - entry.getNestinglevel(); i++)
+                lwActivationRecord.append("lw\n");
+
+            return exp.codeGeneration()
+                    + "push " + entry.getOffset() + "\n"
+                    + "lfp \n" + lwActivationRecord //risalgo la catena statica
+                    + "add \n"
+                    + "sw \n";
+        }
     }
 }

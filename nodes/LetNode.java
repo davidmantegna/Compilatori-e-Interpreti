@@ -40,11 +40,12 @@ public class LetNode implements INode {
                         ObjectType objectType = (ObjectType) funNode.returnType;
                         res.addAll(objectType.updateClassType(env));
                     }
+
                     try {
                         env.processDeclaration(funNode.idFunzione, new FunType(parameterTypeArrayList, funNode.returnType), env.getOffset());
                         env.decreaseOffset();
                     } catch (MultipleIDException e) {
-                        res.add("La funzione " + funNode.idFunzione + " è già stata dichiarata");
+                        res.add(e.getMessage());
                     }
                 } else {
                     res.addAll(n.checkSemantics(env));

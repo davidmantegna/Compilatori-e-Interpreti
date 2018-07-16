@@ -52,7 +52,11 @@ public class FunCallNode implements INode {
         int index = 1;
         for (INode argument : argumentsArrayList) {
             if (argument instanceof FunCallNode) {
-                res.add("Errore: La funzione '" + id + "' ha una funzione come " + index + "° parametro\n");
+                String args = "una funzione";
+                if (argument instanceof MethodCallNode) {
+                    args = "un metodo";
+                }
+                res.add("Errore: La funzione '" + id + "' ha " + args + " come " + index + "° parametro\n"); // Vietato passare Funzioni e Metodi come parametri
             } else {
                 res.addAll(argument.checkSemantics(env));
             }

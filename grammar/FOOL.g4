@@ -14,7 +14,7 @@ grammar FOOL;
 
 prog   : exp  SEMIC                                                                           #singleExp
        | let ((exp SEMIC)| stms)                                                              #letInExp
-       | (classdec (SEMIC)?)+ SEMIC  (let)? ((exp SEMIC)| stms)	                              #classExp
+       | (classdec (SEMIC)?)+ SEMIC  (let)? ((exp SEMIC)| stms)	                            #classExp
        ;
 
 classdec : CLASS ID (EXTENDS ID)? LPAR (vardec (COMMA vardec)*)? RPAR CLPAR (method SEMIC)* CRPAR ;
@@ -60,7 +60,7 @@ value  : (MINUS)? INTEGER                                                       
 
 stms   : ( stm )+ ;
 
-stm    : ID ASM (exp | NULL )(SEMIC)?                                                              #stmAssignment
+stm    : ID ASM (exp | NULL )(SEMIC)?                                                   #stmAssignment
        | IF cond=exp THEN CLPAR thenBranch=stms CRPAR ELSE CLPAR elseBranch=stms CRPAR  #stmIfExp
        ;
 

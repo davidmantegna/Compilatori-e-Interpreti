@@ -124,7 +124,7 @@ public class ClassNode implements INode {
         // entro in un nuovo livello di scope
         env.entryNewScope();
 
-        // eredito i campi della superClasse
+        // inserisco nella SymbolTable i campi della superclasse e determino il nuovo offset per i campi della classe attuale
         if (superclassType != null) {
             HashMap<String, Integer> info = superclassType.fieldHashMapFromSuperClass();
             int lastOff = 0;
@@ -135,7 +135,7 @@ public class ClassNode implements INode {
                         lastOff = off;
                         env.processDeclarationClass(s, superclassType.getFieldsMap().get(s), off, true, true);
                     } catch (MultipleIDException e) {
-                        e.printStackTrace();
+                        res.add(e.getMessage());
                     }
                 }
             }
@@ -172,14 +172,13 @@ public class ClassNode implements INode {
         // entro in un nuovo livello di scope
         env.entryNewScope();
 
-        // eredito i metodi senza 'override' dalla superclasse
+        // inserisco nella SymbolTable i metodi senza 'override' della superclasse
         if (superclassType != null) {
             HashMap<String, Integer> info = superclassType.methodsHashMapFromSuperClass();
             for (String s : info.keySet()) {
                 if (!methodHashMap.containsKey(s)) {
                     try {
                         int off = info.get(s);
-                        System.out.println("Metodi senza override");
                         env.processDeclaration(s, superclassType.getMethodsMap().get(s), off);
                     } catch (MultipleIDException e) {
                         e.printStackTrace();
@@ -224,8 +223,8 @@ public class ClassNode implements INode {
                 HashMap<String, FunType> superClassMethodsHashMap = superClassType.getMethodsMap();
                 for (String method : methodHashMap.keySet()) {
                     if (superClassMethodsHashMap.containsKey(method)) {
-                        infoType(methodHashMap.get(method), env);
-                        infoType(superClassMethodsHashMap.get(method), env);
+                        infoSuperClassType(methodHashMap.get(method), env);
+                        infoSuperClassType(superClassMethodsHashMap.get(method), env);
                         if (!methodHashMap.get(method).isSubType(superClassMethodsHashMap.get(method))) {
                             res.add("Override incompatibile del metodo '" + method + "' della classe '" + idClass + "'\n");
                         }
@@ -332,7 +331,7 @@ public class ClassNode implements INode {
             System.out.println("\n\t\t\t" +
                     t.getClassID() + " {" + supClass + "} [ #campi: " +
                     t.getFields().size() + " | " + sFun
-                    + "]\n"
+                    + "]\n\t\t ---------------------------------------------\n"
             );
         } catch (UndeclaredIDException e) {
             e.printStackTrace();
@@ -366,7 +365,7 @@ public class ClassNode implements INode {
         }
     }
 
-    private void infoType(FunType funType, SymbolTable env) {
+    private void infoSuperClassType(FunType funType, SymbolTable env) {
         ArrayList<IType> parametersTypeArrayList = funType.getParametersTypeArrayList();
         IType returnType = funType.getReturnType();
 
