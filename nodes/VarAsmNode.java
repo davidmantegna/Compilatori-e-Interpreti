@@ -67,7 +67,9 @@ public class VarAsmNode implements INode {
                 if (ifNode.getThenNode() instanceof NullNode && ifNode.getElseNode() instanceof NullNode) {
                     return assignedType;
                 }
+                assignedType = ((ObjectType) assignedType).getClassType();
             }
+
         } else {
             if (exp instanceof NullNode) {
                 throw new TypeException("Valore incompatibile per la variabile: " + id, varasmContext);

@@ -1,28 +1,18 @@
 class A (int a){
-    void setA(int b)
-        a = b;
+
 };
 class B extends A (){
-    int getA()
-        a;
 
 };
-class C extends B(int c){
-    void setA(int b)
-        c = getA();
+class C extends A(){};
 
-    int getA()
-        let int b = 123;
-        in b;
-};
-class D extends C (){
-
-};
 let
-    A a = new A(5);
-    B b = new B(8);
-    C c = new C(7, 11);
-    D d = new D(20, 12);
+    C c = new C(5);
+    B b = new B(1);
+    A a = new A(1);
 in
-    d.setA(10)
+    a = if(false)then{
+                                    b
+                                 }else{
+                                     c};
 ;
