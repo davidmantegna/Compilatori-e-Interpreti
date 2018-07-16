@@ -2,8 +2,27 @@ class A (int a){
     void setA(int b)
         a = b;
 };
+class B extends A (){
+    int getA()
+        a;
+
+};
+class C extends B(int c){
+    void setA(int b)
+        c = getA();
+
+    int getA()
+        let int b = 123;
+        in b;
+};
+class D extends C (){
+
+};
 let
     A a = new A(5);
+    B b = new B(8);
+    C c = new C(7, 11);
+    D d = new D(20, 12);
 in
-    a.setA(10)
+    d.setA(10)
 ;

@@ -135,7 +135,7 @@ public class ClassNode implements INode {
                         lastOff = off;
                         env.processDeclarationClass(s, superclassType.getFieldsMap().get(s), off, true, true);
                     } catch (MultipleIDException e) {
-                        e.printStackTrace();
+                        res.add(e.getMessage());
                     }
                 }
             }
@@ -223,8 +223,8 @@ public class ClassNode implements INode {
                 HashMap<String, FunType> superClassMethodsHashMap = superClassType.getMethodsMap();
                 for (String method : methodHashMap.keySet()) {
                     if (superClassMethodsHashMap.containsKey(method)) {
-                        infoType(methodHashMap.get(method), env);
-                        infoType(superClassMethodsHashMap.get(method), env);
+                        infoSuperClassType(methodHashMap.get(method), env);
+                        infoSuperClassType(superClassMethodsHashMap.get(method), env);
                         if (!methodHashMap.get(method).isSubType(superClassMethodsHashMap.get(method))) {
                             res.add("Override incompatibile del metodo '" + method + "' della classe '" + idClass + "'\n");
                         }
@@ -331,7 +331,7 @@ public class ClassNode implements INode {
             System.out.println("\n\t\t\t" +
                     t.getClassID() + " {" + supClass + "} [ #campi: " +
                     t.getFields().size() + " | " + sFun
-                    + "]\n"
+                    + "]\n\t\t ---------------------------------------------\n"
             );
         } catch (UndeclaredIDException e) {
             e.printStackTrace();
@@ -365,7 +365,7 @@ public class ClassNode implements INode {
         }
     }
 
-    private void infoType(FunType funType, SymbolTable env) {
+    private void infoSuperClassType(FunType funType, SymbolTable env) {
         ArrayList<IType> parametersTypeArrayList = funType.getParametersTypeArrayList();
         IType returnType = funType.getReturnType();
 

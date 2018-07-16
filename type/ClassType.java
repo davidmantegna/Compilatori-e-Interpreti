@@ -143,13 +143,13 @@ public class ClassType implements IType {
     }
 
     public HashMap<String, Integer> fieldHashMapFromSuperClass() {
-        if (superClassType == null) {
+//        if (superClassType == null) {
             HashMap<String, Integer> fieldsHashMap = new HashMap<>();
             for (Field field : fields) {
                 fieldsHashMap.put(field.getFieldID(), fieldsHashMap.size() + 1);
             }
             return fieldsHashMap;
-        } else {
+/*        } else {
             HashMap<String, Integer> superFieldsMap = superClassType.fieldHashMapFromSuperClass();
             for (Field field : fields) {
                 if (!superFieldsMap.containsKey(field.getFieldID())) {
@@ -160,7 +160,7 @@ public class ClassType implements IType {
                 }
             }
             return superFieldsMap;
-        }
+        }*/
     }
 
     // ritorna un'HashMap dei metodi della superclasse, con nome ed offset

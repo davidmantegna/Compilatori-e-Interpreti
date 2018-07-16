@@ -47,7 +47,7 @@ public class MethodCallNode extends FunCallNode {
             // ricavo informazioni del metodo per accedere alla DT
             if (classID.equals("this")) {
                 objectOffset = 0;       // se si sta utilizzando this ci si riferisce per forza alla classe corrente	 perciò il valore di $fp è sempre 0
-                objectNestingLevel = 3; // nel livello 3 della entry ci sono i metodi
+                objectNestingLevel = 3; // il livello 3 della entry corrisponde al Body di un metodo
                 // prendo la STentry dell'oggetto dalla Symbol Table
                 SymbolTableEntry objectSTentry = env.processUse(classID);
                 if (objectSTentry.getType() instanceof ClassType) {

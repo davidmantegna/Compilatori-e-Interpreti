@@ -42,7 +42,7 @@ public class StmAsmNode implements INode {
 
 
         try {
-            idType = env.getTypeOf(id);
+            idType = env.getTypeOf(id); // info ottenuta dal nestingLevel 1, dove sono dichiarati tutti i campi della classe
             entry = env.processUseIgnoreFun(id);
 
             if (entry.isInsideClass()) {

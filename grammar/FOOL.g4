@@ -60,7 +60,7 @@ value  : (MINUS)? INTEGER                                                       
 
 stms   : ( stm )+ ;
 
-stm    : ID ASM (exp | NULL )(SEMIC)?                                                              #stmAssignment
+stm    : ID ASM (exp | NULL )(SEMIC)?                                                   #stmAssignment
        | IF cond=exp THEN CLPAR thenBranch=stms CRPAR ELSE CLPAR elseBranch=stms CRPAR  #stmIfExp
        ;
 
