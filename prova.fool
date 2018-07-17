@@ -19,6 +19,6 @@ class D extends C(int d){};
 
 let
     int x = 10;
-    C c = new C(1, 2,3);
+    C c  = new C(1, 2,3);
 in
     c.getA();
