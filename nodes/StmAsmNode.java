@@ -81,10 +81,11 @@ public class StmAsmNode implements INode {
             throw new TypeException("Oggetto istanziato, impossibile annullare l'istanza di '" + id + "'", stmAssignmentContext);
         }
 
-        if (idType instanceof ObjectType)
+        IType expType = exp.typeCheck();
+        if (!(expType instanceof ObjectType) && idType instanceof ObjectType)
             idType = ((ObjectType) idType).getClassType();
 
-        if (!exp.typeCheck().isSubType(idType)) {
+        if (!expType.isSubType(idType)) {
             throw new TypeException("Valore incompatibile per la variabile " + id, stmAssignmentContext.exp());
         }
         return new VoidType();

@@ -126,8 +126,6 @@ public class TestAll {
                 ExecuteVM vm = new ExecuteVM(bytecode);
                 String risultato = "No output";
                 ArrayList<String> output = vm.cpu();
-                vm.getMemoryFinalMap();
-                vm.print();
                 if (output.size() > 0) {
                     StringBuilder stringBuilder = new StringBuilder();
                     for (String s : output) {
