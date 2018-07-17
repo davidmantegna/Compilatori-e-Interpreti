@@ -10,7 +10,7 @@ import java.util.*;
 public class ExecuteVM {
 
     public static final int START_ADDRESS = 100;     //indirizzo di partenza <- parte da 100 per non avere valore equivoci nel risultato
-    private static final int MEMSIZE = 500;          //dimensione totale della memoria
+    private static final int MEMSIZE = 50;          //dimensione totale della memoria
 
     private ArrayList<String> output = new ArrayList<>();   //contiene l'esito della print o gli errori
 

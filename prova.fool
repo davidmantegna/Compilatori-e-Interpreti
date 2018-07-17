@@ -1,18 +1,17 @@
-class A (int a){
-
+class A(int a){
+    int getA()
+        a;
 };
-class B extends A (){
-
+class B extends A(A a1){
+    int getA()
+        let
+            A a2 = new A(11);
+        in
+            a1.getA();
 };
-class C extends A(){};
-
 let
-    C c = new C(5);
-    B b = new B(1);
-    A a = new A(1);
+    int x = 10;
+    A a = new A(18);
+    B b = new B(x, a);
 in
-    a = if(false)then{
-                                    b
-                                 }else{
-                                     c};
-;
+    b.getA();

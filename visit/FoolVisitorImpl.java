@@ -327,7 +327,6 @@ public class FoolVisitorImpl extends FOOLBaseVisitor<INode> {
         boolean isMethod = false;
         while (funRule.getParent() != null) {
             if (funRule instanceof MethodContext) {
-                System.out.println("MethodContext");
                 isMethod = true;
                 break;
             }
