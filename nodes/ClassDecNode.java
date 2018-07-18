@@ -35,8 +35,7 @@ public class ClassDecNode implements INode {
 
         for (ClassNode classNode : classDeclarationsArrayList) {
             try {
-                // controllo se la classe è già stata definita e se non lo è definisco la classe con tutti i suoi campi e metodi
-
+                // controllo se la classe è già stata definita
                 // se non è dichiarata più volte inserisco nella SymbolTable solo info relative a idClass e idSuperClass
                 ClassType classType = new ClassType(classNode.getIdClass(), new ClassType(classNode.getIdSuperClass()), new ArrayList<>(), new ArrayList<>());
                 env.processDeclaration(classNode.getIdClass(), classType, 0);
@@ -49,6 +48,7 @@ public class ClassDecNode implements INode {
         for (ClassNode classNode : classDeclarationsArrayList) {
             ArrayList<Field> fieldArrayList = new ArrayList<>();
             ArrayList<Method> methodArrayList = new ArrayList<>();
+            HashMap<String, IType> fieldHasmap = new HashMap<>();
             String idSuperClass = classNode.getIdSuperClass();
             ClassType superclassType = null;
 
@@ -59,6 +59,7 @@ public class ClassDecNode implements INode {
                     ArrayList<Field> fieldsSuperClass = ((ClassType) entrySuperClass.getType()).getFields();
                     for (Field field : fieldsSuperClass) {
                         fieldArrayList.add(field);
+                        fieldHasmap.put(field.getFieldID(), field.getFieldType());
                     }
                 } catch (UndeclaredIDException e) {
                     res.add(e.getMessage());
@@ -66,7 +67,12 @@ public class ClassDecNode implements INode {
             }
 
             for (ParameterNode parameterNode : classNode.getFieldDeclarationArraylist()) {
-                fieldArrayList.add(new Field(parameterNode.getId(), parameterNode.getType()));
+                if (!fieldHasmap.containsKey(parameterNode.getId())) {
+                    fieldArrayList.add(new Field(parameterNode.getId(), parameterNode.getType()));
+                    fieldHasmap.put(parameterNode.getId(), parameterNode.getType());
+                } else {
+                    res.add("L'identificativo '" + parameterNode.getId() + "' della classe '" + classNode.getIdClass() + "' è stato dichiarato già nella classe madre: " + idSuperClass + "\n");
+                }
             }
 
             for (MethodNode methodNode : classNode.getMethodDeclarationArraylist()) {

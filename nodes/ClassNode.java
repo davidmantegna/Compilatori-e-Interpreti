@@ -81,8 +81,6 @@ public class ClassNode implements INode {
             if (!result) {
                 fieldArrayList.add(new Field(fieldNode.getId(), fieldNode.getType()));
                 fieldHashMap.put(fieldNode.getId(), fieldNode.getType());
-            } else {
-                res.add("L'identificativo '" + fieldNode.getId() + "' della classe '" + idClass + "' è stato dichiarato già nella classe madre: " + idSuperClass + "\n");
             }
         }
 
