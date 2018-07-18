@@ -35,45 +35,71 @@ public class ClassDecNode implements INode {
 
         for (ClassNode classNode : classDeclarationsArrayList) {
             try {
-                // controllo se la classe è già stata definita e se non lo è definisco la classe con tutti i suoi campi e metodi
-                ArrayList<Field> fieldArrayList = new ArrayList<>();
-                ArrayList<Method> methodArrayList = new ArrayList<>();
-
-                if (!classNode.getIdSuperClass().equals("")) {
-                    try {
-                        SymbolTableEntry entrySuperClass = env.processUse(classNode.getIdSuperClass());
-                        ArrayList<Field> fieldsSuperClass = ((ClassType) entrySuperClass.getType()).getFields();
-                        for (Field field : fieldsSuperClass) {
-                            fieldArrayList.add(field);
-                        }
-                    } catch (UndeclaredIDException e) {
-                        res.add(e.getMessage());
-                    }
-                }
-
-                for (ParameterNode parameterNode : classNode.getFieldDeclarationArraylist()) {
-                    fieldArrayList.add(new Field(parameterNode.getId(), parameterNode.getType()));
-                }
-
-                for (MethodNode methodNode : classNode.getMethodDeclarationArraylist()) {
-                    ArrayList<IType> parameterTypeArrayList = new ArrayList<>();
-                    for (ParameterNode parameterNode : methodNode.getParameterNodeArrayList()) {
-                        parameterTypeArrayList.add(parameterNode.getType());
-                    }
-                    methodArrayList.add(new Method(methodNode.getID(), new FunType(parameterTypeArrayList, methodNode.getReturnType())));
-                }
+                // controllo se la classe è già stata definita
                 // se non è dichiarata più volte inserisco nella SymbolTable solo info relative a idClass e idSuperClass
-                ClassType classType = new ClassType(classNode.getIdClass(), new ClassType(classNode.getIdSuperClass()), fieldArrayList, methodArrayList);
+                ClassType classType = new ClassType(classNode.getIdClass(), new ClassType(classNode.getIdSuperClass()), new ArrayList<>(), new ArrayList<>());
                 env.processDeclaration(classNode.getIdClass(), classType, 0);
             } catch (MultipleIDException e) {
                 res.add("La classe '" + classNode.getIdClass() + "' è dichiarata più volte\n");
             }
         }
 
+        // aggiorno la catena di superclassi e eredito i parametri dalla superclasse
+        for (ClassNode classNode : classDeclarationsArrayList) {
+            ArrayList<Field> fieldArrayList = new ArrayList<>();
+            ArrayList<Method> methodArrayList = new ArrayList<>();
+            HashMap<String, IType> fieldHasmap = new HashMap<>();
+            String idSuperClass = classNode.getIdSuperClass();
+            ClassType superclassType = null;
+
+            if (!idSuperClass.equals("")) {
+                try {
+                    SymbolTableEntry entrySuperClass = env.processUse(idSuperClass);
+                    superclassType = (ClassType) entrySuperClass.getType();
+                    ArrayList<Field> fieldsSuperClass = ((ClassType) entrySuperClass.getType()).getFields();
+                    for (Field field : fieldsSuperClass) {
+                        fieldArrayList.add(field);
+                        fieldHasmap.put(field.getFieldID(), field.getFieldType());
+                    }
+                } catch (UndeclaredIDException e) {
+                    res.add(e.getMessage());
+                }
+            }
+
+            for (ParameterNode parameterNode : classNode.getFieldDeclarationArraylist()) {
+                if (!fieldHasmap.containsKey(parameterNode.getId())) {
+                    fieldArrayList.add(new Field(parameterNode.getId(), parameterNode.getType()));
+                    fieldHasmap.put(parameterNode.getId(), parameterNode.getType());
+                } else {
+                    res.add("L'identificativo '" + parameterNode.getId() + "' della classe '" + classNode.getIdClass() + "' è stato dichiarato già nella classe madre: " + idSuperClass + "\n");
+                }
+            }
+
+            for (MethodNode methodNode : classNode.getMethodDeclarationArraylist()) {
+                ArrayList<IType> parameterTypeArrayList = new ArrayList<>();
+                for (ParameterNode parameterNode : methodNode.getParameterNodeArrayList()) {
+                    parameterTypeArrayList.add(parameterNode.getType());
+                }
+                methodArrayList.add(new Method(methodNode.getID(), new FunType(parameterTypeArrayList, methodNode.getReturnType())));
+            }
+
+
+            try {
+                ClassType classType = new ClassType(classNode.getIdClass(), superclassType, fieldArrayList, methodArrayList);
+                env.setDeclarationType(classNode.getIdClass(), classType, 0);
+            } catch (UndeclaredIDException e) {
+                res.add(e.getMessage());
+            }
+        }
+
+
         //checkSemantic su ogni classe dichiarata
         for (ClassNode classNode : classDeclarationsArrayList) {
             res.addAll(classNode.checkSemantics(env));
         }
+
+        // aggiorno catena superclassi
+
 
         //checksemantic sul letInNode
         res.addAll(letInNode.checkSemantics(env));
@@ -146,5 +172,12 @@ public class ClassDecNode implements INode {
         }
 
         return nameDeclaration + letInNode.codeGeneration();
+    }
+
+    private void infoSuperClass(ClassNode classNode, SymbolTable env) {
+        if (!classNode.getIdSuperClass().equals("")) {
+
+        }
+
     }
 }

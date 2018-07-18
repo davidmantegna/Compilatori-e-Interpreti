@@ -1,28 +1,24 @@
-class A (int a){
-    void setA(int b)
-        a = b;
-};
-class B extends A (){
-    int getA()
-        a;
+class A(int x){
+    int getX() x;
+    int f(int a, B b)
+        if(a==0)
+            then { b.i() + getX() }
+            else { f(a-1, b) }
+        ;
 
-};
-class C extends B(int c){
-    void setA(int b)
-        c = getA();
+}
+class B extends A(){
+    int i() x;
+    int getX() x+1;
+    int getZ() x+5;
+}
+class C extends A(){};
 
-    int getA()
-        let int b = 123;
-        in b;
-};
-class D extends C (){
-
-};
 let
-    A a = new A(5);
-    B b = new B(8);
-    C c = new C(7, 11);
-    D d = new D(20, 12);
+    bool b = true;
+    B bb = new B(3);
+    A a = null;
+    int x = 0;
 in
-    d.setA(10)
-;
+    a = if(b) then { new B(1) } else { new C(2) } ;
+    x = a.f(1,bb);

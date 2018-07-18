@@ -11,7 +11,7 @@ public class FunctionCode {
         return functionsCode;
     }
 
-    public static void reset() {
+    public static void resetFunctionCode() {
         functionsCode = "";
     }
 }

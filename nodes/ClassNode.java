@@ -81,8 +81,6 @@ public class ClassNode implements INode {
             if (!result) {
                 fieldArrayList.add(new Field(fieldNode.getId(), fieldNode.getType()));
                 fieldHashMap.put(fieldNode.getId(), fieldNode.getType());
-            } else {
-                res.add("L'identificativo '" + fieldNode.getId() + "' della classe '" + idClass + "' è stato dichiarato già nella classe madre: " + idSuperClass + "\n");
             }
         }
 
@@ -223,8 +221,6 @@ public class ClassNode implements INode {
                 HashMap<String, FunType> superClassMethodsHashMap = superClassType.getMethodsMap();
                 for (String method : methodHashMap.keySet()) {
                     if (superClassMethodsHashMap.containsKey(method)) {
-                        infoSuperClassType(methodHashMap.get(method), env);
-                        infoSuperClassType(superClassMethodsHashMap.get(method), env);
                         if (!methodHashMap.get(method).isSubType(superClassMethodsHashMap.get(method))) {
                             res.add("Override incompatibile del metodo '" + method + "' della classe '" + idClass + "'\n");
                         }
@@ -336,45 +332,5 @@ public class ClassNode implements INode {
         } catch (UndeclaredIDException e) {
             e.printStackTrace();
         }
-    }
-
-    private void setCatenaSuperType(IType type, SymbolTable env) {
-        if (type instanceof ObjectType) {
-            try {
-                ObjectType objectType = (ObjectType) type;
-                ClassType classType = objectType.getClassType();
-                ClassType infoclass = classType;
-
-                while (classType != null) {
-                    if (classType.getSuperClassType() == null) {
-                        SymbolTableEntry entry = env.processUse(classType.getClassID());
-                        classType = ((ClassType) entry.getType()).getSuperClassType();
-                        if (classType != null) {
-                            infoclass.setSuperClassType(classType);
-                            infoclass = infoclass.getSuperClassType();
-                        }
-                    } else {
-                        classType = classType.getSuperClassType();
-                        infoclass.setSuperClassType(classType);
-                        infoclass = infoclass.getSuperClassType();
-                    }
-                }
-            } catch (UndeclaredIDException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void infoSuperClassType(FunType funType, SymbolTable env) {
-        ArrayList<IType> parametersTypeArrayList = funType.getParametersTypeArrayList();
-        IType returnType = funType.getReturnType();
-
-        for (IType type : parametersTypeArrayList) {
-            if (type instanceof ObjectType) {
-                setCatenaSuperType(type, env);
-            }
-        }
-
-        setCatenaSuperType(returnType, env);
     }
 }

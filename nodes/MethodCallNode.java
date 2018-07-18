@@ -66,6 +66,10 @@ public class MethodCallNode extends FunCallNode {
                 objectOffset = objectSTentry.getOffset();
                 objectNestingLevel = objectSTentry.getNestinglevel();
 
+                if (objectSTentry.isInsideClass()) {    // l'oggetto viene passato come parametro,quindi ha scope 1, mentre i metodi si trovano a scope 2
+                    objectNestingLevel += 1;
+                }
+
                 // check che il metodo sia stato invocato da un oggetto
                 if (objectType instanceof ObjectType) {
                     classType = ((ObjectType) objectType).getClassType();

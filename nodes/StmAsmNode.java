@@ -5,10 +5,7 @@ import exceptions.UndeclaredIDException;
 import parser.FOOLParser.StmAssignmentContext;
 import symboltable.SymbolTable;
 import symboltable.SymbolTableEntry;
-import type.BoolType;
-import type.IType;
-import type.IntType;
-import type.VoidType;
+import type.*;
 
 import java.util.ArrayList;
 
@@ -62,7 +59,7 @@ public class StmAsmNode implements INode {
                 } else {
                     entry.setInitialized(true);
                 }
-            } else if (exp instanceof MethodCallNode) {
+            } else if (exp instanceof MethodCallNode || exp instanceof IfNode) {
                 entry.setInitialized(true);
             }
 
@@ -84,7 +81,11 @@ public class StmAsmNode implements INode {
             throw new TypeException("Oggetto istanziato, impossibile annullare l'istanza di '" + id + "'", stmAssignmentContext);
         }
 
-        if (!exp.typeCheck().isSubType(idType)) {
+        IType expType = exp.typeCheck();
+        if (expType instanceof ClassType && idType instanceof ObjectType)
+            idType = ((ObjectType) idType).getClassType();
+
+        if (!expType.isSubType(idType)) {
             throw new TypeException("Valore incompatibile per la variabile " + id, stmAssignmentContext.exp());
         }
         return new VoidType();

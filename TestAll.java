@@ -21,24 +21,33 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
+
+import static codegen.VM.DispatchTable.resetDispatchTable;
+import static codegen.VM.FunctionCode.resetFunctionCode;
+import static codegen.VM.Label.resetLabel;
 
 public class TestAll {
     public static void main(String[] args) {
-        try {
-            System.out.println("Rilevazione Input...\n");
-            String fileNameFool = "";
-            String fileName;
-            String packageName = "test/testCaseOK/";
-            //String packageName = "test/testCaseFail/";
+        System.out.println("Rilevazione Input...\n");
+        String fileNameFool = "";
+        String fileName = null;
+        String directoryName = "test/testCaseOK/";
+        //String directoryName = "test/testCaseFail/";
+        File directory = new File(directoryName);
+        HashMap<String, String> errors = new HashMap<>();
 
-            final File folder = new File(packageName);
-            for (int i = 1; i < 21; i++) {
-                fileName = listFilesForFolder(folder, i + "_");
+        //get all the files from a directory
+        File[] fList = directory.listFiles();
+        Arrays.sort(fList);
+
+        for (File file : fList) {
+            try {
+                fileName = file.getName();
 
                 System.out.println("File: " + fileName + "\n");
 
-                fileNameFool = packageName + fileName;
+                fileNameFool = directoryName + fileName;
 
                 CharStream input = CharStreams.fromFileName(fileNameFool);
                 printPhase("INPUT");
@@ -126,8 +135,6 @@ public class TestAll {
                 ExecuteVM vm = new ExecuteVM(bytecode);
                 String risultato = "No output";
                 ArrayList<String> output = vm.cpu();
-                vm.getMemoryFinalMap();
-                vm.print();
                 if (output.size() > 0) {
                     StringBuilder stringBuilder = new StringBuilder();
                     for (String s : output) {
@@ -136,9 +143,22 @@ public class TestAll {
                     risultato = String.valueOf(stringBuilder);
                 }
                 printRisultato("Risultato: " + risultato + "\n");
+                resetLabel();
+                resetDispatchTable();
+                resetFunctionCode();
+            } catch (LexerException | IOException | SemanticException | TypeException | ParserException e) {
+                System.err.println(e.getMessage());
+                errors.put(fileName, e.getMessage());
             }
-        } catch (LexerException | IOException | SemanticException | TypeException | ParserException e) {
-            System.err.println(e.getMessage());
+        }
+
+        if (errors.size() > 0) {
+            Map<String, String> map = new TreeMap<>(errors);
+            for (String name : map.keySet()) {
+                String key = name;
+                String value = map.get(name);
+                System.out.println("\033[32;1;2m" + key + "\033[31;1m" + value + "\033[0m");
+            }
         }
     }
 
@@ -148,15 +168,5 @@ public class TestAll {
 
     private static void printRisultato(String risultato) {
         System.out.println("\033[32;1;2m " + risultato + " \033[0m ");
-    }
-
-    private static String listFilesForFolder(final File folder, String fileNumber) {
-        String fileName = "";
-        for (final File fileEntry : folder.listFiles()) {
-            if (fileEntry.getName().contains(fileNumber)) {
-                fileName = fileEntry.getName();
-            }
-        }
-        return fileName;
     }
 }

@@ -40,7 +40,7 @@ public class DispatchTable {
         return stringBuilder.toString();
     }
 
-    public static void reset() {
+    public static void resetDispatchTable() {
         dispatchTables = new HashMap<>();
     }
 }

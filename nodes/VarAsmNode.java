@@ -4,6 +4,7 @@ import exceptions.MultipleIDException;
 import exceptions.TypeException;
 import parser.FOOLParser.VarasmContext;
 import symboltable.SymbolTable;
+import type.ClassType;
 import type.IType;
 import type.ObjectType;
 
@@ -68,13 +69,19 @@ public class VarAsmNode implements INode {
                     return assignedType;
                 }
             }
+
         } else {
             if (exp instanceof NullNode) {
                 throw new TypeException("Valore incompatibile per la variabile: " + id, varasmContext);
             }
         }
 
-        if (!exp.typeCheck().isSubType(assignedType)) {
+
+        IType expType = exp.typeCheck();
+        if (expType instanceof ClassType)
+            assignedType = ((ObjectType) assignedType).getClassType();
+
+        if (!expType.isSubType(assignedType)) {
             throw new TypeException("Valore incompatibile per la variabile: " + id, varasmContext.exp());
         }
         return assignedType;
