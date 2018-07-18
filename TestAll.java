@@ -23,13 +23,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+import static codegen.VM.DispatchTable.resetDispatchTable;
+import static codegen.VM.FunctionCode.resetFunctionCode;
+import static codegen.VM.Label.resetLabel;
+
 public class TestAll {
     public static void main(String[] args) {
         System.out.println("Rilevazione Input...\n");
         String fileNameFool = "";
         String fileName = null;
-        //String directoryName = "test/testCaseOK/";
-        String directoryName = "test/testCaseFail/";
+        String directoryName = "test/testCaseOK/";
+        //String directoryName = "test/testCaseFail/";
         File directory = new File(directoryName);
         HashMap<String, String> errors = new HashMap<>();
 
@@ -139,6 +143,9 @@ public class TestAll {
                     risultato = String.valueOf(stringBuilder);
                 }
                 printRisultato("Risultato: " + risultato + "\n");
+                resetLabel();
+                resetDispatchTable();
+                resetFunctionCode();
             } catch (LexerException | IOException | SemanticException | TypeException | ParserException e) {
                 System.err.println(e.getMessage());
                 errors.put(fileName, e.getMessage());

@@ -67,7 +67,7 @@ public class VarAsmNode implements INode {
                 if (ifNode.getThenNode() instanceof NullNode && ifNode.getElseNode() instanceof NullNode) {
                     return assignedType;
                 }
-                assignedType = ((ObjectType) assignedType).getClassType();
+                //assignedType = ((ObjectType) assignedType).getClassType();
             }
 
         } else {

@@ -59,7 +59,7 @@ public class StmAsmNode implements INode {
                 } else {
                     entry.setInitialized(true);
                 }
-            } else if (exp instanceof MethodCallNode) {
+            } else if (exp instanceof MethodCallNode || exp instanceof IfNode) {
                 entry.setInitialized(true);
             }
 
