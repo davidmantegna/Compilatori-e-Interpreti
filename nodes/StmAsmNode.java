@@ -82,7 +82,7 @@ public class StmAsmNode implements INode {
         }
 
         IType expType = exp.typeCheck();
-        if (!(expType instanceof ObjectType) && idType instanceof ObjectType)
+        if (expType instanceof ClassType && idType instanceof ObjectType)
             idType = ((ObjectType) idType).getClassType();
 
         if (!expType.isSubType(idType)) {

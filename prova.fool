@@ -1,21 +1,24 @@
-class A (int x){
-    int getA()
-        let
-            int y = x + 23;
-        in
-        y;
-};
+class A(int x){
+    int getX() x;
+    int f(int a, B b)
+        if(a==0)
+            then { b.i() + getX() }
+            else { f(a-1, b) }
+        ;
+
+}
 class B extends A(){
-    int getA()
-        x;
-};
+    int i() x;
+    int getX() x+1;
+    int getZ() x+5;
+}
+class C extends A(){};
+
 let
-    int x = 5;
-    bool t = true;
-    A a1 = new A(11);
-    B b1 = new B(22);
+    bool b = true;
+    B bb = new B(3);
     A a = null;
+    int x = 0;
 in
-    x = if(t)then{14}else{12};
-    a = if(t)then{b1}else{a1};
-    x = a.getA();
+    a = if(b) then { new B(1) } else { new C(2) } ;
+    x = a.f(1,bb);
