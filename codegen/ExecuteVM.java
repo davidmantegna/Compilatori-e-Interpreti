@@ -257,9 +257,6 @@ public class ExecuteVM {
                         for (int i = MEMSIZE - 1; i >= 0; i--) {
                             memoryFinalMap.put(i, memory[i]);
                         }
-                        if (output.size() == 0) {
-                            output.add((sp < START_ADDRESS + MEMSIZE) ? Integer.toString(getMemory(sp)) : "Lo stack è vuoto");
-                        }
                         return output;
                 }
             }
