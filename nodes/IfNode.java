@@ -54,7 +54,6 @@ public class IfNode implements INode {
             throw new TypeException("Condizione non booleana", ctx);
         IType thenType = thenNode.typeCheck();
         IType elType = elseNode.typeCheck();
-        ClassType superClassThen, superClassElse;
 
         if (elType instanceof ObjectType && thenType instanceof ObjectType) {
             ClassType classThen = ((ObjectType) thenType).getClassType();
@@ -65,7 +64,6 @@ public class IfNode implements INode {
 
             ArrayList<ClassType> hashMapThen = arrayListSuperClass(classThen);
             ArrayList<ClassType> hashMapElse = arrayListSuperClass(classElse);
-
 
             ClassType returnType;
             if (hashMapThen.size() < hashMapElse.size()) {
@@ -79,28 +77,6 @@ public class IfNode implements INode {
             }
             System.out.println("Tipo restituito dall IF:  prima superclasse in comune-> class " + returnType.getClassID());
             return returnType;
-/*
-
-            superClassThen = classThen.getSuperClassType();
-            superClassElse = classElse.getSuperClassType();
-
-
-            if (superClassThen != null) {
-                while (superClassThen.getSuperClassType() != null) {
-                    superClassThen = superClassThen.getSuperClassType();
-                }
-            }
-
-            if (superClassElse != null) {
-                while (superClassElse.getSuperClassType() != null) {
-                    superClassElse = superClassElse.getSuperClassType();
-                }
-            }
-
-            if (superClassThen != null && superClassElse != null) {
-                if (superClassThen.getClassID() == superClassElse.getClassID())
-                    return superClassThen;
-            }*/
         }
 
         if (thenType.isSubType(elType)) return thenType;

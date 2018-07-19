@@ -91,6 +91,7 @@ public class FunNode implements INode {
 
         //controllo che il corpo ritorni il tipo dichiarato dalla funzione
         IType bodyType = body.typeCheck();
+
         if (!bodyType.isSubType(returnType)) {
             String fun = "della funzione";
             if (this instanceof MethodNode) {

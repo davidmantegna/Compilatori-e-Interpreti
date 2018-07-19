@@ -1,24 +1,26 @@
-class A(int x){
-    int getX() x;
-    int f(int a, B b)
-        if(a==0)
-            then { b.i() + getX() }
-            else { f(a-1, b) }
-        ;
+class A(int a){
+    int ciao()
+        a+1;
+
+    int y ()
+        a;
 
 }
+
 class B extends A(){
-    int i() x;
-    int getX() x+1;
-    int getZ() x+5;
+    int ciao()
+        a;
+    int x()
+        y();
 }
-class C extends A(){};
+class C extends B(){}
+
+class D extends A(){}
+class E extends D(){};
 
 let
-    bool b = true;
-    B bb = new B(3);
-    A a = null;
-    int x = 0;
+    bool x = true;
+    B b = new B(11);
+    A a = new B(22);
 in
-    a = if(b) then { new B(1) } else { new C(2) } ;
-    x = a.f(1,bb);
+    a.y();
