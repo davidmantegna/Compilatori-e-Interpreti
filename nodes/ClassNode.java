@@ -79,8 +79,20 @@ public class ClassNode implements INode {
         for (ParameterNode fieldNode : fieldDeclarationArraylist) {
             Boolean result = env.checkFieldDeclaration(superclassType, fieldNode.getId());
             if (!result) {
-                fieldArrayList.add(new Field(fieldNode.getId(), fieldNode.getType()));
-                fieldHashMap.put(fieldNode.getId(), fieldNode.getType());
+                if (fieldNode.getType() instanceof ObjectType) {
+                    ObjectType fieldType = (ObjectType) fieldNode.getType();
+                    String declaredClass = fieldType.getClassType().getClassID();
+                    try {
+                        ClassType fieldClassType = (ClassType) env.processUse(declaredClass).getType();
+                        fieldArrayList.add(new Field(fieldNode.getId(), fieldClassType));
+                        fieldHashMap.put(fieldNode.getId(), fieldNode.getType());
+                    } catch (UndeclaredIDException e) {
+                        res.add("La classe '" + declaredClass + " non è stata definita (campi)\n");
+                    }
+                } else {
+                    fieldArrayList.add(new Field(fieldNode.getId(), fieldNode.getType()));
+                    fieldHashMap.put(fieldNode.getId(), fieldNode.getType());
+                }
             }
         }
 
@@ -97,7 +109,7 @@ public class ClassNode implements INode {
                         ClassType paramClassType = (ClassType) env.processUse(declaredClass).getType();
                         parameterTypeArrayList.add(new ObjectType(paramClassType));
                     } catch (UndeclaredIDException e) {
-                        res.add("La classe '" + declaredClass + " non è stata definita\n");
+                        res.add("La classe '" + declaredClass + " non è stata definita(metodi)\n");
                     }
                 } else {
                     // se i parametri sono "base", non oggetti
@@ -294,7 +306,6 @@ public class ClassNode implements INode {
             if (superClassMethodsHashMap.get(currentMethodID) == null) {
                 dispatchTable.add(new DispatchTableEntry(currentMethodID, currentClassMethodsHashMap.get(currentMethodID)));
             }
-
         }
 
         //viene aggiunta la dispatch table corrispondente alla classe esaminata

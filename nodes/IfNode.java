@@ -36,16 +36,16 @@ public class IfNode implements INode {
     @Override
     public ArrayList<String> checkSemantics(SymbolTable env) {
         //System.out.print("IfNode: checkSemantics -> \n");
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> res = new ArrayList<>();
 
         //checkSemantic sulla condizione
-        result.addAll(conditionNode.checkSemantics(env));
+        res.addAll(conditionNode.checkSemantics(env));
 
         //checkSemantic sui rami then ed else
-        result.addAll(thenNode.checkSemantics(env));
-        result.addAll(elseNode.checkSemantics(env));
+        res.addAll(thenNode.checkSemantics(env));
+        res.addAll(elseNode.checkSemantics(env));
 
-        return result;
+        return res;
     }
 
     @Override
@@ -60,8 +60,30 @@ public class IfNode implements INode {
             ClassType classThen = ((ObjectType) thenType).getClassType();
             ClassType classElse = ((ObjectType) elType).getClassType();
 
+            if (classThen.getClassID() == classElse.getClassID())
+                return classThen;
+
+            ArrayList<ClassType> hashMapThen = arrayListSuperClass(classThen);
+            ArrayList<ClassType> hashMapElse = arrayListSuperClass(classElse);
+
+
+            ClassType returnType;
+            if (hashMapThen.size() < hashMapElse.size()) {
+                returnType = confronto(hashMapThen, hashMapElse);
+            } else {
+                returnType = confronto(hashMapElse, hashMapThen);
+            }
+
+            if (returnType == null) {
+                throw new TypeException("Tipi non compatibili nel then e nell'else", ctx);
+            }
+            System.out.println("Tipo restituito dall IF:  prima superclasse in comune-> class " + returnType.getClassID());
+            return returnType;
+/*
+
             superClassThen = classThen.getSuperClassType();
             superClassElse = classElse.getSuperClassType();
+
 
             if (superClassThen != null) {
                 while (superClassThen.getSuperClassType() != null) {
@@ -78,7 +100,7 @@ public class IfNode implements INode {
             if (superClassThen != null && superClassElse != null) {
                 if (superClassThen.getClassID() == superClassElse.getClassID())
                     return superClassThen;
-            }
+            }*/
         }
 
         if (thenType.isSubType(elType)) return thenType;
@@ -99,5 +121,33 @@ public class IfNode implements INode {
                 + thenBranch + ":\n"
                 + thenNode.codeGeneration() + "\n\n"
                 + exit + ":\n";
+    }
+
+
+    private ArrayList<ClassType> arrayListSuperClass(ClassType classType) {
+        ClassType superClass = classType.getSuperClassType();
+        ArrayList<ClassType> classTypes = new ArrayList<>();
+
+        classTypes.add(classType);
+        if (superClass != null) {
+            while (superClass != null) {
+                classTypes.add(superClass);
+                superClass = superClass.getSuperClassType();
+            }
+        }
+
+        return classTypes;
+    }
+
+    private ClassType confronto(ArrayList<ClassType> uno, ArrayList<ClassType> due) {
+        // uno arraylist più corto, due arraylist più lungo
+        for (ClassType sUno : uno) {
+            for (ClassType sDue : due) {
+                if (sUno.equals(sDue)) {
+                    return sUno;
+                }
+            }
+        }
+        return null;
     }
 }

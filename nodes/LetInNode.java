@@ -47,9 +47,13 @@ public class LetInNode implements INode {
     @Override
     public String codeGeneration() {
 
+        String print = "halt\n";
+        if (!(stmExp instanceof StmsNode)) {
+            print = "print\n" + print;
+        }
         return let.codeGeneration()
                 + "\n"
-                + stmExp.codeGeneration() + "halt\n"
+                + stmExp.codeGeneration() + print
                 + FunctionCode.getFunctionsCode();
     }
 }

@@ -65,6 +65,8 @@ public class NewNode implements INode {
             //controllo sul costruttore che i tipi dei parametri siano gli stessi dei tipi dei campi
             IType argumentType = argumentsArrayList.get(i).typeCheck();
             IType fieldType = fieldArrayList.get(i).getFieldType();
+            if (fieldType instanceof ClassType)
+                argumentType = ((ObjectType) argumentType).getClassType();
             if (!argumentType.isSubType(fieldType)) {
                 throw new TypeException("Tipo errato per il parametro " + (i + 1) + " nell'invocazione del costruttore di " + idClass, newMethodContext);
             }
