@@ -149,6 +149,7 @@ public class ClassNode implements INode {
                     }
                 }
             }
+            //setta l'offset dei nuovi campi a partire dall'ultimo campo ereditato + 1
             ListIterator<ParameterNode> li = fieldDeclarationArraylist.listIterator();
             while (li.hasNext()) {
                 li.next().setOffset(++lastOff);
