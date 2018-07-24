@@ -62,6 +62,8 @@ public class ClassType implements IType {
     public boolean isSubType(IType t) {
         // A è sottotipo di B, A.isSubTypeOf(B)
         // t parametro richiesto, this parametro passato
+        if (t instanceof ObjectType)
+            t = ((ObjectType) t).getClassType();
 
         // Controllo se altro tipo è classe
         if (t instanceof ClassType) {
@@ -144,11 +146,11 @@ public class ClassType implements IType {
 
     public HashMap<String, Integer> fieldHashMapFromSuperClass() {
 //        if (superClassType == null) {
-            HashMap<String, Integer> fieldsHashMap = new HashMap<>();
-            for (Field field : fields) {
-                fieldsHashMap.put(field.getFieldID(), fieldsHashMap.size() + 1);
-            }
-            return fieldsHashMap;
+        HashMap<String, Integer> fieldsHashMap = new HashMap<>();
+        for (Field field : fields) {
+            fieldsHashMap.put(field.getFieldID(), fieldsHashMap.size() + 1);
+        }
+        return fieldsHashMap;
 /*        } else {
             HashMap<String, Integer> superFieldsMap = superClassType.fieldHashMapFromSuperClass();
             for (Field field : fields) {

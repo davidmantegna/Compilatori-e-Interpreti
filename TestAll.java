@@ -32,8 +32,8 @@ public class TestAll {
         System.out.println("Rilevazione Input...\n");
         String fileNameFool = "";
         String fileName = null;
-        String directoryName = "test/testCaseOK/";
-        //String directoryName = "test/testCaseFail/";
+        //String directoryName = "test/testCaseOK/";
+        String directoryName = "test/testCaseFail/";
         File directory = new File(directoryName);
         HashMap<String, String> errors = new HashMap<>();
 

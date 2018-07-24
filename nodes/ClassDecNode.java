@@ -174,10 +174,4 @@ public class ClassDecNode implements INode {
         return nameDeclaration + letInNode.codeGeneration();
     }
 
-    private void infoSuperClass(ClassNode classNode, SymbolTable env) {
-        if (!classNode.getIdSuperClass().equals("")) {
-
-        }
-
-    }
 }
