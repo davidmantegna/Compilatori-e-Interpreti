@@ -58,7 +58,6 @@ public class LetNode implements INode {
                 }
             }
         }
-
         return res;
     }
 

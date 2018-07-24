@@ -92,14 +92,12 @@ public class ClassDecNode implements INode {
             }
         }
 
-
         //checkSemantic su ogni classe dichiarata
         for (ClassNode classNode : classDeclarationsArrayList) {
             res.addAll(classNode.checkSemantics(env));
         }
 
         // aggiorno catena superclassi
-
 
         //checksemantic sul letInNode
         res.addAll(letInNode.checkSemantics(env));
